@@ -12,7 +12,8 @@
 vgcore.*
 node_modules
 .vscode
-myARPspoof
 cmake*
 CMake*
 .idea
+zappy_server
+zappy_ai
