@@ -5,7 +5,6 @@
 ## Makefile
 ##
 
-PROJECT_ROOT_DIR = ../../
 SRC_DIR		=	src/
 INC_DIR		=	include/
 
@@ -15,24 +14,21 @@ OBJ		=	$(SRC:.c=.o)
 
 CFLAGS		+=	-Wall -Wextra	\
 			-I $(INC_DIR)	\
-			-O3		\
-			-g
+			-O3
 
-NAME		=	zappy_server
+NAME		=	../zappy_ai
 
 all:		$(NAME)
-			@cp $(NAME) $(PROJECT_ROOT_DIR)
 
 $(NAME):	$(OBJ)
-			$(CC) -o $(NAME) $(OBJ)
+		$(CC) -o $(NAME) $(OBJ)
 
 clean:
-			@$(RM) $(OBJ)
+		@$(RM) $(OBJ)
 
 fclean:		clean
-			@$(RM) $(NAME)
-			@$(RM) $(PROJECT_ROOT_DIR)$(NAME)
+		@$(RM) $(NAME)
 
-re:			fclean all
+re:		fclean all
 
 .PHONY:		all clean fclean re
