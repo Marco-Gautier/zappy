@@ -5,7 +5,28 @@
 ** main
 */
 
-int main()
+#include <stdio.h>
+#include "zappy.h"
+
+static void options_dump(struct server_opt *options)
 {
+    printf("\t-p, --port:          %d\n", options->port);
+    printf("\t-f, --frequence:     %d\n", options->freq);
+    printf("\t-x, --width:         %d\n", options->width);
+    printf("\t-y, --height:        %d\n", options->height);
+    printf("\t-c, --clients-nb:    %d\n", options->max_team_nbr);
+    printf("\t-n, --team-names:    ");
+    for (size_t i = 0; options->team_names[i] != NULL; i++)
+        printf("%s ", options->team_names[i]);
+    putchar('\n');
+}
+
+int main(int argc, char **argv)
+{
+    struct server server;
+
+    if (parse_options(&server.options, argc, argv) == -1)
+        return -1;
+    options_dump(&server.options);
     return 0;
 }

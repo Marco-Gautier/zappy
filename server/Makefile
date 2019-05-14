@@ -9,7 +9,8 @@ SRC_DIR		=	src/
 LIB_DIR		=	lib/
 INC_DIR		=	include/
 
-SRC		=	$(SRC_DIR)main.c
+SRC		=	$(SRC_DIR)main.c	\
+			$(SRC_DIR)parse_options.c
 
 OBJ		=	$(SRC:.c=.o)
 
