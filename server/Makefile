@@ -6,6 +6,7 @@
 ##
 
 SRC_DIR		=	src/
+LIB_DIR		=	lib/
 INC_DIR		=	include/
 
 SRC		=	$(SRC_DIR)main.c
@@ -16,12 +17,14 @@ CFLAGS		+=	-Wall -Wextra	\
 			-I $(INC_DIR)	\
 			-O3
 
+LDFLAGS		=	-L $(LIB_DIR) -lmy
+
 NAME		=	../zappy_server
 
 all:		$(NAME)
 
 $(NAME):	$(OBJ)
-		$(CC) -o $(NAME) $(OBJ)
+		$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean:
 		@$(RM) $(OBJ)
