@@ -11,7 +11,7 @@
 
 Test(my_str_to_word_array, hard)
 {
-    char *s = strdup(" je test \t mon my_str_to_word_array  \n");
+    char *s = strdup("  je test \t mon my_str_to_word_array\n");
     char **test = my_str_to_word_array(s, " \t\n");
 
     assert(strcmp(test[0], "je") == 0);

@@ -11,7 +11,7 @@
 
 Test(tabdup, dup)
 {
-    char *tab[] = {
+    static const char * const tab[] = {
         "bonobo",
         "gorille",
         "ouistiti",

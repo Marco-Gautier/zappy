@@ -16,7 +16,7 @@ Test(my_tabndup, 0_len)
 
 Test(my_tabndup, copy)
 {
-        char *tab[] = {
+        static const char * const tab[] = {
                 "bonobo",
                 "gorille",
                 "ouistiti",
@@ -24,6 +24,7 @@ Test(my_tabndup, copy)
                 NULL
         };
         char **copy = my_tabndup(tab, my_tablen(tab));
+
         assert(my_tablen(tab) == 4);
         for (int i = 0; tab[i] != 0; i++)
                 assert(strcmp(tab[i], copy[i]) == 0);

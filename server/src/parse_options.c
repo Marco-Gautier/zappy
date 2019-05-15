@@ -43,7 +43,7 @@ const struct server_opt default_options = {
 };
 
 static int option_get_value(struct server_opt *options, int option_index,
-                            const char *arg_key, const char *arg_value)
+const char *arg_key, const char *arg_value)
 {
     int *flag_ptr = (void *)options + server_opt_helper[option_index].offset;
 
@@ -58,7 +58,7 @@ static int option_get_value(struct server_opt *options, int option_index,
 }
 
 static int option_get_team_names(struct server_opt *options, int i,
-                                 int argc, char **argv)
+int argc, char **argv)
 {
     char *tmp = strdup("");
 
@@ -67,6 +67,7 @@ static int option_get_team_names(struct server_opt *options, int i,
     for (; i < argc; i++) {
         for (int j = 0; server_opt_helper[j].callback != NULL; j++) {
             bool m = !strcmp(server_opt_helper[j].short_opt, argv[i]);
+
             if (m || !strcmp(server_opt_helper[j].long_opt, argv[i]))
                 goto end_of_loop_mdr_le_goto;
         }

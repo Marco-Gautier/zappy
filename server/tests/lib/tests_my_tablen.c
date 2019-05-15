@@ -11,7 +11,7 @@
 
 Test(tablen, simple)
 {
-        char *tab[] = {
+        static const char * const tab[] = {
                 "Lolmdr",
                 NULL
         };
@@ -20,7 +20,7 @@ Test(tablen, simple)
 
 Test(tablen, medium)
 {
-        char *tab[] = {
+        static const char * const tab[] = {
                 "Lolmdr",
                 "Lolmdr",
                 "Lolmdr",

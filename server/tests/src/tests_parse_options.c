@@ -11,13 +11,13 @@
 #include "zappy.h"
 #include "my.h"
 
-static void init()
+static void init(void)
 {
     close(STDOUT_FILENO);
     close(STDERR_FILENO);
 }
 
-Test(parse_options, _default, .init=init)
+Test(parse_options, _default, .init = init)
 {
     struct server_opt options;
     static const char * const argv[] = {
@@ -39,7 +39,7 @@ Test(parse_options, _default, .init=init)
         assert(!strcmp(team_names[i], options.team_names[i]));
 }
 
-Test(parse_options, all, .init=init)
+Test(parse_options, all, .init = init)
 {
     struct server_opt options;
     static const char * const argv[] = {
@@ -65,7 +65,7 @@ Test(parse_options, all, .init=init)
     assert(!strcmp(options.team_names[1], "mdr2"));
 }
 
-Test(parse_options, bad_short_options, .init=init)
+Test(parse_options, bad_short_options, .init = init)
 {
     struct server_opt options;
     static const char * const argv[] = {
@@ -88,7 +88,7 @@ Test(parse_options, bad_short_options, .init=init)
         assert(!strcmp(team_names[i], options.team_names[i]));
 }
 
-Test(parse_options, bad_options, .init=init)
+Test(parse_options, bad_options, .init = init)
 {
     struct server_opt options;
     static const char * const argv[] = {
