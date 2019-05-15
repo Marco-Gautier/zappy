@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <sys/select.h>
+#include "client.h"
 #include "options.h"
 
 #define ARRAY_SIZE(arr)     (sizeof(arr) / sizeof((arr)[0]))
@@ -17,6 +19,11 @@
 struct server {
     struct server_opt   options;
     int                 fd;
+    fd_set              rfds;
+    fd_set              wfds;
+    struct client       *clients;
 };
 
 int init_server(struct server *server);
+int run_server(struct server *server);
+int accept_new_client(struct server *server);

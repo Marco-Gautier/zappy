@@ -14,7 +14,9 @@ SERVER_DIR	=	$(SRC_DIR)server/
 
 SRC		=	$(SRC_DIR)main.c		\
 			$(SRC_DIR)parse_options.c	\
-			$(SERVER_DIR)init_server.c
+			$(SERVER_DIR)init_server.c	\
+			$(SERVER_DIR)run_server.c	\
+			$(SERVER_DIR)accept_new_client.c
 
 OBJ		=	$(SRC:.c=.o)
 

@@ -6,6 +6,7 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "zappy.h"
 
 static void options_dump(struct server_opt *options)
@@ -28,8 +29,11 @@ int main(int argc, char **argv)
     if (parse_options(&server.options, argc, argv) == -1)
         return -1;
     options_dump(&server.options);
-    if (init_server(&server) == -1)
+    if (init_server(&server) == -1) {
         fprintf(stderr, "%s: Cannot start server.\n", argv[0]);
+        return EXIT_FAILURE;
+    }
     printf("%s: Listening on port: %d\n", argv[0], server.options.port);
+    run_server(&server);
     return 0;
 }
