@@ -10,8 +10,11 @@ LIB_DIR		=	lib/
 INC_DIR		=	include/
 TESTS_DIR	=	tests/
 
-SRC		=	$(SRC_DIR)main.c	\
-			$(SRC_DIR)parse_options.c
+SERVER_DIR	=	$(SRC_DIR)server/
+
+SRC		=	$(SRC_DIR)main.c		\
+			$(SRC_DIR)parse_options.c	\
+			$(SERVER_DIR)init_server.c
 
 OBJ		=	$(SRC:.c=.o)
 

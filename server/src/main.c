@@ -28,5 +28,8 @@ int main(int argc, char **argv)
     if (parse_options(&server.options, argc, argv) == -1)
         return -1;
     options_dump(&server.options);
+    if (init_server(&server) == -1)
+        fprintf(stderr, "%s: Cannot start server.\n", argv[0]);
+    printf("%s: Listening on port: %d\n", argv[0], server.options.port);
     return 0;
 }
