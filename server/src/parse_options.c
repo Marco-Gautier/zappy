@@ -45,8 +45,7 @@ const struct server_opt default_options = {
 static int option_get_value(struct server_opt *options, int option_index,
                             const char *arg_key, const char *arg_value)
 {
-    void *tmp = (void *)options + server_opt_helper[option_index].offset;
-    int *flag_ptr = tmp;
+    int *flag_ptr = (void *)options + server_opt_helper[option_index].offset;
 
     for (size_t i = 0; arg_value[i] != '\0'; i++)
         if (!IS_DIGIT(arg_value[i])) {
@@ -112,7 +111,8 @@ int options_value_parser(struct server_opt *options, int ac, char **av, int i)
         long_opt = server_opt_helper[j].long_opt;
         opt_match = !strcmp(short_opt, av[i]) || !strcmp(long_opt, av[i]);
         if (i + 1 < ac && opt_match) {
-            option_get_value(options, j, av[i], av[i + 1]);
+            if (option_get_value(options, j, av[i], av[i + 1]) == -1)
+                return -1;
             i++;
         }
     }
