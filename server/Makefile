@@ -8,6 +8,7 @@
 SRC_DIR		=	src/
 LIB_DIR		=	lib/
 INC_DIR		=	include/
+TESTS_DIR	=	tests/
 
 SRC		=	$(SRC_DIR)main.c	\
 			$(SRC_DIR)parse_options.c
@@ -28,11 +29,22 @@ $(NAME):	$(OBJ)
 		$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean:
+		@$(MAKE) $@ -C $(TESTS_DIR) --no-print-directory
 		@$(RM) $(OBJ)
 
 fclean:		clean
+		@$(MAKE) $@ -C $(TESTS_DIR) --no-print-directory
 		@$(RM) $(NAME)
+
+tests_run:
+		@$(MAKE) $@ -C $(TESTS_DIR) --no-print-directory
+
+lcov:
+		@$(MAKE) $@ -C $(TESTS_DIR) --no-print-directory
+
+gcov:
+		@$(MAKE) $@ -C $(TESTS_DIR) --no-print-directory
 
 re:		fclean all
 
-.PHONY:		all clean fclean re
+.PHONY:		all clean fclean tests_run lcov gcov re

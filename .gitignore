@@ -17,3 +17,6 @@ CMake*
 .idea
 zappy_server
 zappy_ai
+zappy_server_tests
+rapport
+rapport.info
