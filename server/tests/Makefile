@@ -5,25 +5,29 @@
 #
 #
 
-SRC_DIR		=	../src/
-LIB_DIR		=	../lib/
-INC_DIR		=	../include
-TESTS_DIR	=	src/
+SRC_DIR			=	../src/
+SERVER_DIR		=	$(SRC_DIR)server/
+LIB_DIR			=	../lib/
+INC_DIR			=	../include
+TESTS_DIR		=	src/
 
-TESTS_LIB_DIR	=	lib/tests_
-TESTS_SRC_DIR	=	src/tests_
+TESTS_LIB_DIR		=	lib/tests_
+TESTS_SRC_DIR		=	src/tests_
+TESTS_SERVER_DIR	=	src/server/tests_
 
 SRC		=	$(LIB_DIR)my_tabdup.c			\
 			$(LIB_DIR)my_tabndup.c			\
 			$(LIB_DIR)my_tablen.c			\
 			$(LIB_DIR)my_str_to_word_array.c	\
-			$(SRC_DIR)parse_options.c
+			$(SRC_DIR)parse_options.c		\
+			$(SERVER_DIR)init_server.c
 
 TESTS		=	$(TESTS_LIB_DIR)my_tabdup.c		\
 			$(TESTS_LIB_DIR)my_tabndup.c		\
 			$(TESTS_LIB_DIR)my_tablen.c		\
 			$(TESTS_LIB_DIR)my_str_to_word_array.c	\
-			$(TESTS_SRC_DIR)parse_options.c
+			$(TESTS_SRC_DIR)parse_options.c		\
+			$(TESTS_SERVER_DIR)init_server.c
 TESTS		+=	$(SRC)
 
 CFLAGS		=	-Wall -Wextra	\
