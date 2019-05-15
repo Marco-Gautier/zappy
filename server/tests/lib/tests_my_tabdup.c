@@ -18,9 +18,9 @@ Test(tabdup, dup)
         "babouin",
         NULL
     };
-    char **copy = my_tabdup(tab);
+    char **copy = my_tabdup((char **)tab);
 
-    assert(my_tablen(tab) == 4);
+    assert(my_tablen((char **)tab) == 4);
     for (size_t i = 0; tab[i] != NULL; i++)
         assert(!strcmp(tab[i], copy[i]));
 }

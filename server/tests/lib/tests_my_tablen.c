@@ -15,7 +15,7 @@ Test(tablen, simple)
                 "Lolmdr",
                 NULL
         };
-        assert(my_tablen(tab) == 1);
+        assert(my_tablen((char **)tab) == 1);
 }
 
 Test(tablen, medium)
@@ -27,5 +27,5 @@ Test(tablen, medium)
                 "Lolmdr",
                 NULL
         };
-        assert(my_tablen(tab) == 4);
+        assert(my_tablen((char **)tab) == 4);
 }

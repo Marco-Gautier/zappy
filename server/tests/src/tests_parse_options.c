@@ -76,13 +76,13 @@ Test(parse_options, bad_short_options, .init = init)
     int argc = ARRAY_SIZE(argv) - 1;
     char **team_names;
 
-    cr_assert(parse_options(&options, argc, (char **)argv) == -1);
-    cr_assert(options.port == 0);
-    cr_assert(options.freq == default_options.freq);
-    cr_assert(options.width == default_options.width);
-    cr_assert(options.height == default_options.height);
-    cr_assert(options.max_team_nbr == default_options.max_team_nbr);
-    cr_assert(options.team_names != NULL);
+    assert(parse_options(&options, argc, (char **)argv) == -1);
+    assert(options.port == 0);
+    assert(options.freq == default_options.freq);
+    assert(options.width == default_options.width);
+    assert(options.height == default_options.height);
+    assert(options.max_team_nbr == default_options.max_team_nbr);
+    assert(options.team_names != NULL);
     team_names = my_str_to_word_array(strdup(default_team_names), " ");
     for (size_t i = 0; options.team_names[i] != NULL; i++)
         assert(!strcmp(team_names[i], options.team_names[i]));
@@ -101,13 +101,13 @@ Test(parse_options, bad_options, .init = init)
     int argc = ARRAY_SIZE(argv) - 1;
     char **team_names;
 
-    cr_assert(parse_options(&options, argc, (char **)argv) != -1);
-    cr_assert(options.port == default_options.port);
-    cr_assert(options.freq == default_options.freq);
-    cr_assert(options.width == default_options.width);
-    cr_assert(options.height == default_options.height);
-    cr_assert(options.max_team_nbr == 150);
-    cr_assert(options.team_names != NULL);
+    assert(parse_options(&options, argc, (char **)argv) != -1);
+    assert(options.port == default_options.port);
+    assert(options.freq == default_options.freq);
+    assert(options.width == default_options.width);
+    assert(options.height == default_options.height);
+    assert(options.max_team_nbr == 150);
+    assert(options.team_names != NULL);
     team_names = my_str_to_word_array(strdup(default_team_names), " ");
     for (size_t i = 0; options.team_names[i] != NULL; i++)
         assert(!strcmp(team_names[i], options.team_names[i]));
