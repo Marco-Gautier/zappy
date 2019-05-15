@@ -16,12 +16,14 @@ TESTS_SRC_DIR	=	src/tests_
 SRC		=	$(LIB_DIR)my_tabdup.c			\
 			$(LIB_DIR)my_tabndup.c			\
 			$(LIB_DIR)my_tablen.c			\
-			$(LIB_DIR)my_str_to_word_array.c
+			$(LIB_DIR)my_str_to_word_array.c	\
+			$(SRC_DIR)parse_options.c
 
 TESTS		=	$(TESTS_LIB_DIR)my_tabdup.c		\
 			$(TESTS_LIB_DIR)my_tabndup.c		\
 			$(TESTS_LIB_DIR)my_tablen.c		\
-			$(TESTS_LIB_DIR)my_str_to_word_array.c
+			$(TESTS_LIB_DIR)my_str_to_word_array.c	\
+			$(TESTS_SRC_DIR)parse_options.c
 TESTS		+=	$(SRC)
 
 CFLAGS		=	-Wall -Wextra	\
