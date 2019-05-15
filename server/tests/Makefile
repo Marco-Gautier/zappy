@@ -10,7 +10,8 @@ LIB_DIR		=	../lib/
 INC_DIR		=	../include
 TESTS_DIR	=	src/
 
-TESTS_LIB_DIR	=	$(TESTS_DIR)lib/tests_
+TESTS_LIB_DIR	=	lib/tests_
+TESTS_SRC_DIR	=	src/tests_
 
 SRC		=	$(LIB_DIR)my_tabdup.c			\
 			$(LIB_DIR)my_tabndup.c			\

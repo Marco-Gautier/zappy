@@ -30,3 +30,6 @@ struct server_opt_helper {
 };
 
 int parse_options(struct server_opt *options, int argc, char **argv);
+
+extern const char *default_team_names;
+extern const struct server_opt default_options;
