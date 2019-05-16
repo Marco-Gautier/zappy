@@ -11,12 +11,21 @@ INC_DIR		=	include/
 TESTS_DIR	=	tests/
 
 SERVER_DIR	=	$(SRC_DIR)server/
+COMMANDS_DIR	=	$(SERVER_DIR)commands/
+GRAPH_DIR	=	$(COMMANDS_DIR)graph/
+AI_DIR		=	$(COMMANDS_DIR)ai/
 
-SRC		=	$(SRC_DIR)main.c		\
-			$(SRC_DIR)parse_options.c	\
-			$(SERVER_DIR)init_server.c	\
-			$(SERVER_DIR)run_server.c	\
-			$(SERVER_DIR)accept_new_client.c
+SRC		=	$(SRC_DIR)main.c			\
+			$(SRC_DIR)parse_options.c		\
+			$(SERVER_DIR)init_server.c		\
+			$(SERVER_DIR)run_server.c		\
+			$(SERVER_DIR)accept_new_client.c	\
+			$(SERVER_DIR)read_clients_fd.c		\
+			$(SERVER_DIR)exec_client_command.c	\
+			$(SERVER_DIR)kick_client_from_server.c	\
+			$(SERVER_DIR)send_graphical_broadcast.c	\
+			$(COMMANDS_DIR)command_unknown.c	\
+			$(GRAPH_DIR)command_msz.c
 
 OBJ		=	$(SRC:.c=.o)
 

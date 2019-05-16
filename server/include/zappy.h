@@ -24,6 +24,19 @@ struct server {
     struct client       *clients;
 };
 
-int init_server(struct server *server);
-int run_server(struct server *server);
-int accept_new_client(struct server *server);
+struct command {
+    const char          *name;
+    int (*callback)(struct server *server, int client, int argc, char **argv);
+};
+
+int     init_server(struct server *server);
+int     run_server(struct server *server);
+int     accept_new_client(struct server *server);
+void    read_clients_fd(struct server *server);
+int     exec_client_command(struct server *server, int i);
+void    kick_client_from_server(struct server *server, int i);
+void    send_graphical_broadcast(struct server *server, const char *message);
+
+int command_unknown(struct server *server, int client, int argc, char **argv);
+
+int command_msz(struct server *server, int client, int argc, char **argv);
