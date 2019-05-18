@@ -22,19 +22,16 @@ const struct command command_helper[] = {
 ** 3) Then, call the callback
 */
 
-static int exec_client_cmd(struct server *server, int client, char **cmd)
+static int exec_client_cmd(struct server *server, int client, char **command)
 {
-    size_t len;
+    size_t i;
+    int argc;
 
-    for (int i = 0; cmd[i]; i++)
-        printf("%s ", cmd[i]);
-    putchar('\n');
-    for (size_t i = 0; command_helper[i].name != NULL; i++)
-        if (!strcmp(command_helper[i].name, cmd[0]) == 0) {
-            len = my_tablen(cmd);
-            return command_helper[i].callback(server, client, len, cmd);
-        }
-    return -1;
+    for (i = 0; command_helper[i].name != NULL; i++)
+        if (!strcmp(command_helper[i].name, command[0]))
+            break;
+    argc = my_tablen(command);
+    return command_helper[i].callback(server, client, argc, command);
 }
 
 /*
@@ -42,20 +39,21 @@ static int exec_client_cmd(struct server *server, int client, char **cmd)
 ** 2) Erase it from the buffer
 */
 
-char **prepare_command(struct client *client)
+char **prepare_command(struct client *client, char **tmp)
 {
-    char *tmp = client->buffer;
     char *idx = strchr(client->buffer, '\n');
     char **command;
 
+    *tmp = client->buffer;
     if (!idx)
         return NULL;
     *idx = '\0';
     command = my_str_to_word_array(client->buffer, " \t");
-    if (!command || !command[0])
+    if (!command)
         return NULL;
+    if (!command[0])
+        return free(command), NULL;
     client->buffer = strdup(idx + 1);
-    free(tmp);
     return command;
 }
 
@@ -65,16 +63,19 @@ char **prepare_command(struct client *client)
 
 int exec_client_command(struct server *server, int i)
 {
-    char **command = prepare_command(server->clients[i]);
+    char *tmp;
+    char **command = prepare_command(server->clients[i], &tmp);
 
     if (!command)
         return -1;
     for (int i = 0; command[i]; i++)
         printf("%s ", command[i]);
     putchar('\n');
-    if (server->clients[i]->team_name == NULL);
+//    if (server->clients[i]->team_name == NULL);
 //        server_get_client_team_name(server, i);
-    else
-        exec_client_cmd(server, i, command);
+//    else
+    exec_client_cmd(server, i, command);
+    free(tmp);
+    free(command);
     return 0;
 }

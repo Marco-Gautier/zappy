@@ -79,7 +79,7 @@ int run_server(struct server *server)
         if (accept_new_client(server) == -1)
             puts("New client rejected.");
         read_clients_fd(server);
-//        exec_clients_command(server);
+        exec_clients_command(server);
     }
     return 0;
 }
