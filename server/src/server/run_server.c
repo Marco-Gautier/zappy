@@ -24,9 +24,9 @@ static int get_server_process_fd_max(struct server *server)
 
     if (!server->clients)
         return fd;
-    for (size_t i = 0; server->clients[i].fd != -1; i++)
-        if (server->clients[i].fd > fd)
-            fd = server->clients[i].fd;
+    for (size_t i = 0; server->clients[i] != NULL; i++)
+        if (server->clients[i]->fd > fd)
+            fd = server->clients[i]->fd;
     return fd;
 }
 
@@ -43,12 +43,11 @@ static void server_reset_fds(struct server *server)
     FD_ZERO(&server->rfds);
     FD_ZERO(&server->wfds);
     FD_SET(server->fd, &server->rfds);
-    if (!server->clients)
-        return;
-    for (size_t i = 0; server->clients[i].fd != -1; i++) {
-        FD_SET(server->clients[i].fd, &server->rfds);
-        FD_SET(server->clients[i].fd, &server->wfds);
-    }
+    if (server->clients)
+        for (size_t i = 0; server->clients[i] != NULL; i++) {
+            FD_SET(server->clients[i]->fd, &server->rfds);
+            FD_SET(server->clients[i]->fd, &server->wfds);
+        }
 }
 
 /*
@@ -59,10 +58,10 @@ static void server_reset_fds(struct server *server)
 
 static void exec_clients_command(struct server *server)
 {
-    for (size_t i = 0; server->clients[i].fd != -1; i++) {
-        if (!server->clients[i].in_use || !server->clients[i].buffer)
+    for (size_t i = 0; server->clients[i] != NULL; i++) {
+        if (!server->clients[i]->buffer)
             continue;
-        if (strchr(server->clients[i].buffer, '\n') != NULL)
+        if (strchr(server->clients[i]->buffer, '\n') != NULL)
             exec_client_command(server, i);
     }
 }
@@ -70,19 +69,17 @@ static void exec_clients_command(struct server *server)
 int run_server(struct server *server)
 {
     int fdmax;
-    struct timeval time = {0};
+    struct timeval *time = NULL;
 
     while (1) {
         server_reset_fds(server);
         fdmax = get_server_process_fd_max(server);
-        if (select(fdmax + 1, &server->rfds, &server->wfds, NULL, &time) == -1)
+        if (select(fdmax + 1, &server->rfds, &server->wfds, NULL, time) == -1)
             return -1;
-        if (FD_ISSET(server->fd, &server->rfds) == 0)
-            continue;
         if (accept_new_client(server) == -1)
             puts("New client rejected.");
         read_clients_fd(server);
-        exec_clients_command(server);
+//        exec_clients_command(server);
     }
     return 0;
 }

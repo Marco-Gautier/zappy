@@ -67,12 +67,12 @@ static int read_client_fd_to_buffer(struct client *client)
 
 void read_clients_fd(struct server *server)
 {
-    for (size_t i = 0; server->clients[i].fd != -1; i++) {
-        if (server->clients[i].in_use == false)
+    if (!server->clients)
+        return;
+    for (size_t i = 0; server->clients[i] != NULL; i++) {
+        if (FD_ISSET(server->clients[i]->fd, &server->rfds) != true)
             continue;
-        if (FD_ISSET(server->clients[i].fd, &server->rfds) != true)
-            continue;
-        if (read_client_fd_to_buffer(&server->clients[i]) == -1)
+        if (read_client_fd_to_buffer(server->clients[i]) == -1)
             kick_client_from_server(server, i);
     }
 }

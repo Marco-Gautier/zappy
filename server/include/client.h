@@ -28,7 +28,6 @@ struct client {
     int     y;
     int     x;
     int     level;
-    bool    in_use;
     int     egg_id;
     char    *buffer;
     bool    hatched;

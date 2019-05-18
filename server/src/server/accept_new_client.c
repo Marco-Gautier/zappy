@@ -11,14 +11,17 @@
 #include <unistd.h>
 #include "zappy.h"
 
-static void reset_client(struct client *client)
+static struct client *create_new_client(struct server_opt *server_opt, int fd)
 {
-    *client = (struct client) {
-        .fd = -1,
-        .y = 0,
-        .x = 0,
+    struct client *new = malloc(sizeof(struct client));
+
+    if (!new)
+        return NULL;
+    *new = (struct client) {
+        .fd = fd,
+        .y = rand() % server_opt->height,
+        .x = rand() % server_opt->width,
         .level = 1,
-        .in_use = true,
         .egg_id = 0,
         .buffer = NULL,
         .hatched = false,
@@ -27,19 +30,7 @@ static void reset_client(struct client *client)
         .direction = D_NORTH,
 //        .inventory = inventory_create(),
     };
-}
-
-static struct client *init_new_client(struct server_opt *server_opt,
-struct client *client, int fd)
-{
-    reset_client(client);
-    client->fd = fd;
-    client->in_use = true;
-    client->buffer = NULL;
-    client->direction = D_NORTH;
-    client->x = rand() % server_opt->width;
-    client->y = rand() % server_opt->height;
-    return client;
+    return new;
 }
 
 static struct client *add_new_client(struct server *server, int fd)
@@ -48,27 +39,19 @@ static struct client *add_new_client(struct server *server, int fd)
     void *tmp;
 
     if (server->clients)
-        while (server->clients[i].fd != -1)
+        while (server->clients[i] != NULL)
             i++;
     if (i >= MAX_CLIENTS)
         return NULL;
-    tmp = realloc(server->clients, sizeof(struct client) * (i + 2));
+    tmp = realloc(server->clients, sizeof(struct client *) * (i + 2));
     if (!tmp)
         return NULL;
     server->clients = tmp;
-    init_new_client(&server->options, &server->clients[i], fd);
-    reset_client(&server->clients[i + 1]);
-    return &server->clients[i];
-}
-
-static struct client *get_free_client(struct server *server, int fd)
-{
-    if (!server->clients)
-        return add_new_client(server, fd);
-    for (size_t i = 0; server->clients[i].fd != -1; i++)
-        if (server->clients[i].in_use == false)
-            return init_new_client(&server->options, &server->clients[i], fd);
-    return add_new_client(server, fd);
+    server->clients[i] = create_new_client(&server->options, fd);
+    if (!server->clients[i])
+        return NULL;
+    server->clients[i + 1] = NULL;
+    return server->clients[i];
 }
 
 int accept_new_client(struct server *server)
@@ -78,11 +61,13 @@ int accept_new_client(struct server *server)
     struct sockaddr_in addr;
     socklen_t addrlen = sizeof(addr);
 
+    if (FD_ISSET(server->fd, &server->rfds) == 0)
+            return 0;
     puts("New client request.");
     fd = accept(server->fd, (struct sockaddr *)&addr, &addrlen);
     if (fd == -1)
         return puts("Can't accept new client."), -1;
-    new = get_free_client(server, fd);
+    new = add_new_client(server, fd);
     if (!new) {
         puts("Maximum number of client reached.");
         close(fd);

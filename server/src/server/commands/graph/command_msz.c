@@ -15,5 +15,5 @@ int command_msz(struct server *server, int client, int argc, char **argv)
 
     (void)argc;
     (void)argv;
-    return dprintf(server->clients[client].fd, "msz %d %d\n", width, height);
+    return dprintf(server->clients[client]->fd, "msz %d %d\n", width, height);
 }

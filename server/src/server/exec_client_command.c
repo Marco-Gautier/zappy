@@ -26,6 +26,9 @@ static int exec_client_cmd(struct server *server, int client, char **cmd)
 {
     size_t len;
 
+    for (int i = 0; cmd[i]; i++)
+        printf("%s ", cmd[i]);
+    putchar('\n');
     for (size_t i = 0; command_helper[i].name != NULL; i++)
         if (!strcmp(command_helper[i].name, cmd[0]) == 0) {
             len = my_tablen(cmd);
@@ -62,11 +65,14 @@ char **prepare_command(struct client *client)
 
 int exec_client_command(struct server *server, int i)
 {
-    char **command = prepare_command(&server->clients[i]);
+    char **command = prepare_command(server->clients[i]);
 
     if (!command)
         return -1;
-    if (server->clients[i].team_name == NULL);
+    for (int i = 0; command[i]; i++)
+        printf("%s ", command[i]);
+    putchar('\n');
+    if (server->clients[i]->team_name == NULL);
 //        server_get_client_team_name(server, i);
     else
         exec_client_cmd(server, i, command);

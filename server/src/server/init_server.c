@@ -26,7 +26,7 @@ static int server_bind_socket(int fd, int port)
         .sin_port = htons(port)
     };
 
-    if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, (int[]){0}, sizeof(int)) == -1)
+    if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, (int[]){1}, sizeof(int)) == -1)
         return -1;
     if (bind(fd, (const struct sockaddr *)&sockaddr, sizeof(sockaddr)) == -1)
         return -1;

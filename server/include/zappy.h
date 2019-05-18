@@ -21,7 +21,7 @@ struct server {
     int                 fd;
     fd_set              rfds;
     fd_set              wfds;
-    struct client       *clients;
+    struct client       **clients;
 };
 
 struct command {
