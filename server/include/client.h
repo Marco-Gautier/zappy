@@ -25,6 +25,7 @@ enum client_type {
 
 struct client {
     int     fd;
+    int     id;
     int     y;
     int     x;
     int     level;

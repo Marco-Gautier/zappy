@@ -36,6 +36,8 @@ void    read_clients_fd(struct server *server);
 int     exec_client_command(struct server *server, int i);
 void    kick_client_from_server(struct server *server, int i);
 void    send_graphical_broadcast(struct server *server, const char *message);
+int     get_nb_free_team_slot(struct server *server, const char *team_name);
+int     client_join_team(struct server *server, int i, char **command);
 
 int command_unknown(struct server *server, int client, int argc, char **argv);
 

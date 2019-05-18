@@ -71,10 +71,10 @@ int exec_client_command(struct server *server, int i)
     for (int i = 0; command[i]; i++)
         printf("%s ", command[i]);
     putchar('\n');
-//    if (server->clients[i]->team_name == NULL);
-//        server_get_client_team_name(server, i);
-//    else
-    exec_client_cmd(server, i, command);
+    if (!server->clients[i]->team_name)
+        client_join_team(server, i, command);
+    else
+        exec_client_cmd(server, i, command);
     free(tmp);
     free(command);
     return 0;

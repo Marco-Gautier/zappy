@@ -11,7 +11,8 @@
 #include <unistd.h>
 #include "zappy.h"
 
-static struct client *create_new_client(struct server_opt *server_opt, int fd)
+static struct client *create_new_client(struct server_opt *server_opt,
+int fd, int id)
 {
     struct client *new = malloc(sizeof(struct client));
 
@@ -19,6 +20,7 @@ static struct client *create_new_client(struct server_opt *server_opt, int fd)
         return NULL;
     *new = (struct client) {
         .fd = fd,
+        .id = id,
         .y = rand() % server_opt->height,
         .x = rand() % server_opt->width,
         .level = 1,
@@ -47,7 +49,7 @@ static struct client *add_new_client(struct server *server, int fd)
     if (!tmp)
         return NULL;
     server->clients = tmp;
-    server->clients[i] = create_new_client(&server->options, fd);
+    server->clients[i] = create_new_client(&server->options, fd, i);
     if (!server->clients[i])
         return NULL;
     server->clients[i + 1] = NULL;

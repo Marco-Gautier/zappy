@@ -5,6 +5,7 @@
 ** main
 */
 
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "zappy.h"
@@ -34,6 +35,7 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
     printf("%s: Listening on port: %d\n", argv[0], server.options.port);
+    signal(SIGPIPE, SIG_IGN);
     run_server(&server);
     return 0;
 }

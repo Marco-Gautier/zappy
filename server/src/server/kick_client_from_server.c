@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include "zappy.h"
 
@@ -35,8 +36,8 @@ void kick_client_from_server(struct server *server, int i)
     if (server->clients[i]->hatched == true)
         snprintf(buff, sizeof(buff), "edi %d\n", server->clients[i]->egg_id);
     else
-        snprintf(buff, sizeof(buff), "pdi %d\n", i);
-//    send_graphical_broadcast(server, buff);
+        snprintf(buff, sizeof(buff), "pdi %d\n", server->clients[i]->id);
+    send_graphical_broadcast(server, buff);
     dprintf(server->clients[i]->fd, "dead\n");
     remove_client(server, i);
     puts("Client left.");

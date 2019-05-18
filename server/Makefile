@@ -24,6 +24,8 @@ SRC		=	$(SRC_DIR)main.c			\
 			$(SERVER_DIR)exec_client_command.c	\
 			$(SERVER_DIR)kick_client_from_server.c	\
 			$(SERVER_DIR)send_graphical_broadcast.c	\
+			$(SERVER_DIR)client_join_team.c		\
+			$(SERVER_DIR)get_nb_free_team_slot.c	\
 			$(COMMANDS_DIR)command_unknown.c	\
 			$(GRAPH_DIR)command_msz.c
 
