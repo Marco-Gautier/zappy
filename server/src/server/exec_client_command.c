@@ -12,8 +12,8 @@
 #include "my.h"
 
 const struct command command_helper[] = {
-    {"msz",     command_msz},
-    {NULL,      command_unknown}
+    {"msz", API_GRAPH,      command_msz},
+    {NULL,  NO_MIDDLEWARE,  command_unknown}
 };
 
 /*
@@ -22,16 +22,21 @@ const struct command command_helper[] = {
 ** 3) Then, call the callback
 */
 
-static int exec_client_cmd(struct server *server, int client, char **command)
+static int exec_client_cmd(struct server *server, int client, char **argv)
 {
     size_t i;
-    int argc;
+    int argc = my_tablen(argv);
+    middleware_t middleware;
 
     for (i = 0; command_helper[i].name != NULL; i++)
-        if (!strcmp(command_helper[i].name, command[0]))
+        if (!strcmp(command_helper[i].name, argv[0]))
             break;
-    argc = my_tablen(command);
-    return command_helper[i].callback(server, client, argc, command);
+    for (int j = 0; command_helper[i].middleware[j] != NULL; j++) {
+        middleware = command_helper[i].middleware[j];
+        if (middleware(server, client, argc, argv) == -1)
+            return command_unknown(server, client, argc, argv), -1;
+    }
+    return command_helper[i].callback(server, client, argc, argv);
 }
 
 /*
@@ -68,9 +73,6 @@ int exec_client_command(struct server *server, int i)
 
     if (!command)
         return -1;
-    for (int i = 0; command[i]; i++)
-        printf("%s ", command[i]);
-    putchar('\n');
     if (!server->clients[i]->team_name)
         client_join_team(server, i, command);
     else

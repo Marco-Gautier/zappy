@@ -7,10 +7,11 @@
 
 #pragma once
 
-#include "server.h"
+#include "middleware.h"
 
 struct command {
     const char          *name;
+    middleware_t        middleware[MIDDLEWARE_NB];
     int (*callback)(struct server *server, int client, int argc, char **argv);
 };
 

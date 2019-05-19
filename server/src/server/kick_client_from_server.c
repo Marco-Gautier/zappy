@@ -40,5 +40,5 @@ void kick_client_from_server(struct server *server, int i)
     send_graphical_broadcast(server, buff);
     dprintf(server->clients[i]->fd, "dead\n");
     remove_client(server, i);
-    puts("Client left.");
+    printf("Client n°%d left.\n", i);
 }
