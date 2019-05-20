@@ -29,6 +29,8 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(SERVER_DIR)get_nb_free_team_slot.c		\
 			$(MIDDLEWARE_DIR)log_command.c			\
 			$(MIDDLEWARE_DIR)filter_graphic_request.c	\
+			$(MIDDLEWARE_DIR)filter_ai_request.c		\
+			$(MIDDLEWARE_DIR)check_client_target.c		\
 			$(COMMANDS_DIR)command_unknown.c		\
 			$(GRAPH_DIR)command_msz.c			\
 			$(GRAPH_DIR)command_tna.c			\

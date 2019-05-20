@@ -1,21 +1,21 @@
 /*
 ** EPITECH PROJECT, 2018
-** filter_graphic_request
+** filter_ai_request
 ** File description:
-** filter_graphic_request
+** filter_ai_request
 */
 
 #include <stdio.h>
 #include "zappy.h"
 
 /*
-** Middleware use to restrict request to graphical clients
+** Middleware use to restrict request to AI clients
 */
 
-int filter_graphic_request(struct server *server, int i, int argc, char **argv)
+int filter_ai_request(struct server *server, int i, int argc, char **argv)
 {
     (void)argc;
-    if (server->clients[i]->client_type != CT_GRAPHIC) {
+    if (server->clients[i]->client_type != CT_AI) {
         printf("Command [");
         for (int i = 0; i < argc; i++) {
             printf("%s", argv[i]);
@@ -23,7 +23,7 @@ int filter_graphic_request(struct server *server, int i, int argc, char **argv)
                 printf(", ");
         }
         printf("] from client n°%d rejected :\n", i);
-        printf(COMMAND_NO_ACCESS, "graphical");
+        printf(COMMAND_NO_ACCESS, "AI");
         return -1;
     } else
         return 0;
