@@ -35,7 +35,9 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(GRAPH_DIR)command_msz.c			\
 			$(GRAPH_DIR)command_tna.c			\
 			$(GRAPH_DIR)command_sst.c			\
-			$(GRAPH_DIR)command_sgt.c
+			$(GRAPH_DIR)command_sgt.c			\
+			$(GRAPH_DIR)command_plv.c			\
+			$(GRAPH_DIR)command_ppo.c
 
 OBJ		=	$(SRC:.c=.o)
 
