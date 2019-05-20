@@ -30,7 +30,10 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(MIDDLEWARE_DIR)log_command.c			\
 			$(MIDDLEWARE_DIR)filter_graphic_request.c	\
 			$(COMMANDS_DIR)command_unknown.c		\
-			$(GRAPH_DIR)command_msz.c
+			$(GRAPH_DIR)command_msz.c			\
+			$(GRAPH_DIR)command_tna.c			\
+			$(GRAPH_DIR)command_sst.c			\
+			$(GRAPH_DIR)command_sgt.c
 
 OBJ		=	$(SRC:.c=.o)
 

@@ -13,6 +13,9 @@
 
 const struct command command_helper[] = {
     {"msz", API_GRAPH,      command_msz},
+    {"tna", API_GRAPH,      command_tna},
+    {"sst", API_GRAPH,      command_sst},
+    {"sgt", API_GRAPH,      command_sgt},
     {NULL,  NO_MIDDLEWARE,  command_unknown}
 };
 
