@@ -34,6 +34,8 @@ int main(int argc, char **argv)
         fprintf(stderr, "%s: Cannot start server.\n", argv[0]);
         return EXIT_FAILURE;
     }
+    if (init_world(&server.world, &server.options) == -1)
+        return EXIT_FAILURE;
     printf("%s: Listening on port: %d\n", argv[0], server.options.port);
     signal(SIGPIPE, SIG_IGN);
     run_server(&server);

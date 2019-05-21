@@ -23,3 +23,6 @@ int command_sst(struct server *server, int client, int argc, char **argv);
 int command_sgt(struct server *server, int client, int argc, char **argv);
 int command_plv(struct server *server, int client, int argc, char **argv);
 int command_ppo(struct server *server, int client, int argc, char **argv);
+int command_bct(struct server *server, int client, int argc, char **argv);
+int command_mct(struct server *server, int client, int argc, char **argv);
+int command_pin(struct server *server, int client, int argc, char **argv);

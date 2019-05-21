@@ -12,12 +12,15 @@
 #include "my.h"
 
 const struct command command_helper[] = {
+    {"bct", API_GRAPH,      command_bct},
     {"msz", API_GRAPH,      command_msz},
-    {"tna", API_GRAPH,      command_tna},
-    {"sst", API_GRAPH,      command_sst},
-    {"sgt", API_GRAPH,      command_sgt},
+    {"mct", API_GRAPH,      command_mct},
+    {"pin", API_TARGET,     command_pin},
     {"plv", API_TARGET,     command_plv},
     {"ppo", API_TARGET,     command_ppo},
+    {"sgt", API_GRAPH,      command_sgt},
+    {"sst", API_GRAPH,      command_sst},
+    {"tna", API_GRAPH,      command_tna},
     {NULL,  NO_MIDDLEWARE,  command_unknown}
 };
 

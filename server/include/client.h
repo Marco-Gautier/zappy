@@ -8,7 +8,7 @@
 #pragma once
 
 #include <stdbool.h>
-//#include "inventory.h"
+#include "inventory.h"
 
 enum direction {
     D_EAST,
@@ -35,5 +35,5 @@ struct client {
     enum client_type    client_type;
     const char          *team_name;
     enum direction      direction;
-//    struct inventory    inventory;
+    inventory_t         inventory;
 };

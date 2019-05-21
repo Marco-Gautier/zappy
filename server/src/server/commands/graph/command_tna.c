@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "zappy.h"
 
-const char *format = "tna %s\n";
+static const char *format = "tna %s\n";
 
 int command_tna(struct server *server, int i, int argc, char **argv)
 {

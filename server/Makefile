@@ -11,6 +11,7 @@ INC_DIR		=	include/
 TESTS_DIR	=	tests/
 
 SERVER_DIR	=	$(SRC_DIR)server/
+GAME_DIR	=	$(SERVER_DIR)game/
 MIDDLEWARE_DIR	=	$(SERVER_DIR)middleware/
 COMMANDS_DIR	=	$(SERVER_DIR)commands/
 GRAPH_DIR	=	$(COMMANDS_DIR)graph/
@@ -27,6 +28,8 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(SERVER_DIR)send_graphical_broadcast.c		\
 			$(SERVER_DIR)client_join_team.c			\
 			$(SERVER_DIR)get_nb_free_team_slot.c		\
+			$(GAME_DIR)init_world.c				\
+			$(GAME_DIR)cell_utils.c				\
 			$(MIDDLEWARE_DIR)log_command.c			\
 			$(MIDDLEWARE_DIR)filter_graphic_request.c	\
 			$(MIDDLEWARE_DIR)filter_ai_request.c		\
@@ -37,7 +40,10 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(GRAPH_DIR)command_sst.c			\
 			$(GRAPH_DIR)command_sgt.c			\
 			$(GRAPH_DIR)command_plv.c			\
-			$(GRAPH_DIR)command_ppo.c
+			$(GRAPH_DIR)command_ppo.c			\
+			$(GRAPH_DIR)command_bct.c			\
+			$(GRAPH_DIR)command_mct.c			\
+			$(GRAPH_DIR)command_pin.c
 
 OBJ		=	$(SRC:.c=.o)
 
