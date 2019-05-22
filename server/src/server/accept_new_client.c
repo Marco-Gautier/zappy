@@ -75,7 +75,7 @@ int accept_new_client(struct server *server)
         close(fd);
         return -1;
     }
-    puts("New client accepted.");
+    printf("New client accepted with n°%d\n", new->id);
     dprintf(new->fd, "Welcome!\n");
     return 0;
 }
