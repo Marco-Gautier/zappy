@@ -58,14 +58,17 @@ NAME		=	../zappy_server
 all:		$(NAME)
 
 $(NAME):	$(OBJ)
+		@$(MAKE) -C $(LIB_DIR) --no-print-directory
 		$(CC) -o $(NAME) $(OBJ) $(LDFLAGS)
 
 clean:
 		@$(MAKE) $@ -C $(TESTS_DIR) --no-print-directory
+		@$(MAKE) $@ -C $(LIB_DIR) --no-print-directory
 		@$(RM) $(OBJ)
 
 fclean:		clean
 		@$(MAKE) $@ -C $(TESTS_DIR) --no-print-directory
+		@$(MAKE) $@ -C $(LIB_DIR) --no-print-directory
 		@$(RM) $(NAME)
 
 tests_run:
