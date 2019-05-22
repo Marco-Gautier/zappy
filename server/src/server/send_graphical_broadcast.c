@@ -18,6 +18,6 @@ void send_graphical_broadcast(struct server *server, const char *message)
             continue;
         if (strcmp(server->clients[i]->team_name, "GRAPHIC") != 0)
             continue;
-        dprintf(server->clients[i]->fd, message);
+        dprintf(server->clients[i]->fd, "%s",  message);
     }
 }
