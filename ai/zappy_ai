@@ -1,0 +1,44 @@
+#!/bin/env python
+
+import argparse
+import socket
+import re
+
+def parse_options():
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("-p", "--port", type=int, action="store", dest="port", required=True, help="port is the port number")
+    parser.add_argument("-n", "--name", type=str, action="store", dest="name", required=True, help="name is the name of the team")
+    parser.add_argument("-h", "--machine", type=str, action="store", dest="machine", help="machine is the name of the machine; localhost by default", default="localhost")
+    return parser.parse_args()
+
+def join_team(team_name):
+    sockfd.send(team_name + '\n')
+
+args = parse_options()
+
+# print(args.port, args.name, args.machine)
+
+sockfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sockfd.connect((args.machine, args.port))
+
+print("I'm connect to {} on port {}".format(args.machine, args.port))
+
+recv_msg = sockfd.recv(1024)
+if recv_msg != "Welcome!\n":
+    print("server should have responded 'Welcome\\n'")
+    exit(1)
+
+join_team(args.name)
+
+handshake = sockfd.recv(1024)
+if handshake == "ko\n":
+    print("team name '{}' isn't valid").format(args.name)
+    exit(1)
+
+client_id, width, height = re.search(r"^([1-9]\d*)\n([1-9]\d*) ([1-9]\d*)$", handshake).groups()
+
+print("client_id: {}").format(client_id)
+print("width: {}").format(width)
+print("height: {}").format(height)
+
+sockfd.close()

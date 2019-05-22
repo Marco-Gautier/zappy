@@ -5,29 +5,19 @@
 ## Makefile
 ##
 
-SRC_DIR		=	src/
-INC_DIR		=	include/
+SRC			=	zappy_ai
 
-SRC		=	$(SRC_DIR)main.c
+NAME		=	../$(SRC)
 
-OBJ		=	$(SRC:.c=.o)
+all:	$(NAME)
 
-CFLAGS		+=	-Wall -Wextra	\
-			-I $(INC_DIR)	\
-			-O3
-
-NAME		=	../zappy_ai
-
-all:		$(NAME)
-
-$(NAME):	$(OBJ)
-		$(CC) -o $(NAME) $(OBJ)
+$(NAME):
+		cp $(SRC) $(NAME)
 
 clean:
-		@$(RM) $(OBJ)
+		@$(RM) $(NAME)
 
 fclean:		clean
-		@$(RM) $(NAME)
 
 re:		fclean all
 
