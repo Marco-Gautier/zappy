@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+
+from tkinter import *
+
+import argparse
+import socket
+import re
+
+def parse_options():
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("-p", "--port", type=int, action="store", dest="port", required=True, help="port is the port number")
+    parser.add_argument("-h", "--machine", type=str, action="store", dest="machine", help="machine is the name of the machine; localhost by default", default="localhost")
+    return parser.parse_args()
+
+def recv():
+    return sockfd.recv(1024).decode()
+
+def send(message):
+    message += '\n'
+    sockfd.send(message.encode())
+
+""" Connect client to GRAPHIC team """
+def connect_client():
+    sockfd.connect((args.machine, args.port))
+    print("I'm connect to {} on port {}".format(args.machine, args.port))
+    if recv() != "Welcome!\n":
+        print("server should have responded 'Welcome\\n'")
+        exit(1)
+    send("GRAPHIC")
+
+""" Return (width, height) """
+def command_msz():
+    send("msz")
+    tmp = recv()
+    return tuple(map(int, re.search(r"^msz ([1-9]\d*) ([1-9]\d*)$", tmp).groups()))
+
+""" Return ["team_name", "team_name", ...] """
+def command_tna():
+    send("tna")
+    teams = []
+    for team in recv().split('\n'):
+        tmp = re.search(r"^tna (\S+)$", team)
+        if tmp == None:
+            break
+        token = tmp.groups()
+        teams.append(token[0])
+    return teams
+
+def draw_interface():
+    canvas.create_line(400, 0, 400, 1080, fill='white')
+    canvas.create_text(100, 50, text=f"Width:\t{width}", font="Arial 25", fill='white')
+    canvas.create_text(100, 150, text=f"Height:\t{height}", font="Arial 25", fill='white')
+    canvas.create_text(100, 250, text=f" Team Names:", font="Arial 25", fill='white')
+    teams = command_tna()
+    i = 250
+    for team in teams:
+        canvas.create_text(280, i, text=team, font="Arial 25", fill='white')
+        i += 30
+
+def draw_map():
+    for i in range(width):
+        for j in range(height):
+            x = i * 50 + 1920 / 2 - width / 2 * 50
+            y = j * 50 + 1080 / 2 - height / 2 * 50
+            canvas.create_rectangle(x, y, x + 50, y + 50, outline='white',fill='grey')
+
+
+def foo(event):
+    key = event.keysym
+    if key == "Escape":
+        window.destroy()
+    print(event)
+
+
+args = parse_options()
+sockfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+connect_client()
+width, height = command_msz()
+
+window = Tk()
+window.title("Zappy")
+window.geometry("1920x1080")
+
+canvas = Canvas(window, width=1920, height=1080, background='black')
+canvas.pack()
+
+draw_interface()
+draw_map()
+
+canvas.focus_set()
+window.bind("<Key>", foo)
+window.mainloop()
+
+sockfd.close()
