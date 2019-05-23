@@ -11,9 +11,9 @@
 
 #define COMMAND_NO_ACCESS ("Only %s client can access this request.\n")
 
-#define MIDDLEWARE_NB   3
+#define MIDDLEWARE_NB   4
 
-#define NO_MIDDLEWARE   {NULL}
+#define NO_MIDDLEWARE   {}
 #define API_AI          {log_command, filter_ai_request}
 #define API_GRAPH       {log_command, filter_graphic_request}
 #define API_TARGET      {log_command, filter_graphic_request,   \
