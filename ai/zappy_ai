@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import socket
@@ -12,27 +12,28 @@ def parse_options():
     return parser.parse_args()
 
 def join_team(team_name):
-    sockfd.send(team_name + '\n')
+    team_name += '\n'
+    sockfd.send(team_name.encode())
 
 def connect_client():
     sockfd.connect((args.machine, args.port))
     print("I'm connect to {} on port {}".format(args.machine, args.port))
-    if sockfd.recv(1024) != "Welcome!\n":
+    if sockfd.recv(1024).decode() != "Welcome!\n":
         print("server should have responded 'Welcome\\n'")
         exit(1)
     join_team(args.name)
-    handshake = sockfd.recv(1024)
+    handshake = sockfd.recv(1024).decode()
     if handshake == "ko\n":
         print("team name '{}' isn't valid").format(args.name)
         exit(1)
-    return re.search(r"^([1-9]\d*)\n([1-9]\d*) ([1-9]\d*)$", handshake).groups()
+    return tuple(map(int, re.search(r"^([1-9]\d*)\n([1-9]\d*) ([1-9]\d*)$", handshake).groups()))
 
 args = parse_options()
 sockfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_id, width, height = connect_client()
 
-print("client_id: {}").format(client_id)
-print("width: {}").format(width)
-print("height: {}").format(height)
+print(f"client_id: {client_id}")
+print(f"width: {width}")
+print(f"height: {height}")
 
 sockfd.close()
