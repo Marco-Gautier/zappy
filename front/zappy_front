@@ -22,7 +22,6 @@ def send(message):
 """ Connect client to GRAPHIC team """
 def connect_client():
     sockfd.connect((args.machine, args.port))
-    print("I'm connect to {} on port {}".format(args.machine, args.port))
     if recv() != "Welcome!\n":
         print("server should have responded 'Welcome\\n'")
         exit(1)
@@ -59,20 +58,21 @@ def draw_interface():
 
 def draw_map():
     TILE_SIZE = (1080 - 20 - 20) / height
-    x = 1920 / 2 - width / 2 * TILE_SIZE
-    y = 1080 / 2 - height / 2 * TILE_SIZE
     for i in range(width):
         for j in range(height):
-            canvas.create_rectangle(x, y, x + TILE_SIZE, y + TILE_SIZE, outline='white', fill='grey')
-            y += TILE_SIZE
-        x += TILE_SIZE
-        y = 1080 / 2 - height / 2 * TILE_SIZE
+            x = i * TILE_SIZE + 1920 / 2 - width / 2 * TILE_SIZE
+            y = j * TILE_SIZE + 1080 / 2 - height / 2 * TILE_SIZE
+            canvas.create_rectangle(x, y, x + TILE_SIZE, y + TILE_SIZE, outline='white',fill='grey')
 
-def foo(event):
-    key = event.keysym
-    if key == "Escape":
-        window.destroy()
-    print(event)
+def loop():
+    tmp = recv()
+    print(tmp)
+    window.after(1, loop)
+
+def handle_event(event):
+    if event.keysym == "Escape":
+        exit(0)
+    # print(event)
 
 args = parse_options()
 sockfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -91,7 +91,6 @@ draw_interface()
 draw_map()
 
 canvas.focus_set()
-window.bind("<Key>", foo)
+window.bind("<Key>", handle_event)
 window.mainloop()
-
-sockfd.close()
+loop()
