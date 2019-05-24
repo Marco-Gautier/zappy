@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-from tkinter import *
+from tkinter import Tk, Canvas
 
 import argparse
+import select
 import socket
 import re
 
@@ -13,7 +14,11 @@ def parse_options():
     return parser.parse_args()
 
 def recv():
-    return sockfd.recv(1024).decode()
+    rfds, wfds, efds = select.select([sockfd], [], [], 0.1)
+    if len(rfds) != 0:
+        return sockfd.recv(1024).decode()
+    else:
+        return ""
 
 def send(message):
     message += '\n'
@@ -71,7 +76,7 @@ def loop():
 
 def handle_event(event):
     if event.keysym == "Escape":
-        exit(0)
+        window.destroy()
     # print(event)
 
 args = parse_options()
