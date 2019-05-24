@@ -48,29 +48,31 @@ def command_tna():
 
 def draw_interface():
     canvas.create_line(400, 0, 400, 1080, fill='white')
-    canvas.create_text(100, 50, text=f"Width:\t{width}", font="Arial 25", fill='white')
-    canvas.create_text(100, 150, text=f"Height:\t{height}", font="Arial 25", fill='white')
-    canvas.create_text(100, 250, text=f" Team Names:", font="Arial 25", fill='white')
+    canvas.create_text(100, 50, text=f"Width:\t{width}", font="Arial 16", fill='white')
+    canvas.create_text(100, 150, text=f"Height:\t{height}", font="Arial 16", fill='white')
+    canvas.create_text(100, 250, text=f" Team Names:", font="Arial 16", fill='white')
     teams = command_tna()
     i = 250
     for team in teams:
-        canvas.create_text(280, i, text=team, font="Arial 25", fill='white')
+        canvas.create_text(280, i, text=team, font="Arial 16", fill='white')
         i += 30
 
 def draw_map():
+    TILE_SIZE = (1080 - 20 - 20) / height
+    x = 1920 / 2 - width / 2 * TILE_SIZE
+    y = 1080 / 2 - height / 2 * TILE_SIZE
     for i in range(width):
         for j in range(height):
-            x = i * 50 + 1920 / 2 - width / 2 * 50
-            y = j * 50 + 1080 / 2 - height / 2 * 50
-            canvas.create_rectangle(x, y, x + 50, y + 50, outline='white',fill='grey')
-
+            canvas.create_rectangle(x, y, x + TILE_SIZE, y + TILE_SIZE, outline='white', fill='grey')
+            y += TILE_SIZE
+        x += TILE_SIZE
+        y = 1080 / 2 - height / 2 * TILE_SIZE
 
 def foo(event):
     key = event.keysym
     if key == "Escape":
         window.destroy()
     print(event)
-
 
 args = parse_options()
 sockfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -79,6 +81,7 @@ width, height = command_msz()
 
 window = Tk()
 window.title("Zappy")
+window.attributes("-fullscreen", True)
 window.geometry("1920x1080")
 
 canvas = Canvas(window, width=1920, height=1080, background='black')
