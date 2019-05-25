@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from tkinter import Tk, Canvas
+import pygame
 
 import argparse
 import select
@@ -14,11 +14,11 @@ def parse_options():
     return parser.parse_args()
 
 def recv():
-    rfds, wfds, efds = select.select([sockfd], [], [], 0.1)
-    if len(rfds) != 0:
+    fds = select.select([sockfd], [], [], 0.1)
+    if len(fds[0]) != 0 and fds[0][0] == sockfd:
         return sockfd.recv(1024).decode()
     else:
-        return ""
+        return None
 
 def send(message):
     message += '\n'
@@ -50,15 +50,19 @@ def command_tna():
         teams.append(token[0])
     return teams
 
+def draw_text(text, x, y):
+    label = myfont.render(text, 1, (255,255,0))
+    window.blit(label, (x, y))
+
 def draw_interface():
-    canvas.create_line(400, 0, 400, 1080, fill='white')
-    canvas.create_text(100, 50, text=f"Width:\t{width}", font="Arial 16", fill='white')
-    canvas.create_text(100, 150, text=f"Height:\t{height}", font="Arial 16", fill='white')
-    canvas.create_text(100, 250, text=f" Team Names:", font="Arial 16", fill='white')
+    pygame.draw.line(window, 0xFFFFFF, (400, 0), (400, 1080))
+    draw_text(f"Width:  {width}", 100, 50)
+    draw_text(f"Height: {height}", 100, 150)
+    draw_text(f" Team Names:", 100, 250)
     teams = command_tna()
     i = 250
     for team in teams:
-        canvas.create_text(280, i, text=team, font="Arial 16", fill='white')
+        draw_text(team, 280, i)
         i += 30
 
 def draw_map():
@@ -67,35 +71,34 @@ def draw_map():
         for j in range(height):
             x = i * TILE_SIZE + 1920 / 2 - width / 2 * TILE_SIZE
             y = j * TILE_SIZE + 1080 / 2 - height / 2 * TILE_SIZE
-            canvas.create_rectangle(x, y, x + TILE_SIZE, y + TILE_SIZE, outline='white',fill='grey')
+            pygame.draw.rect(window, 0x808080, pygame.Rect(x, y, TILE_SIZE, TILE_SIZE), 4)
 
 def loop():
     tmp = recv()
-    print(tmp)
-    window.after(1, loop)
+    if tmp is None:
+        return
+    if tmp[-1] == '\n':
+        tmp = tmp[:-1]
+    input = tmp.split(' ')
+    print('mdr', input)
 
-def handle_event(event):
-    if event.keysym == "Escape":
-        window.destroy()
-    # print(event)
+def handle_event(event_list):
+    for event in event_list:
+        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            exit(0)
 
 args = parse_options()
 sockfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 connect_client()
 width, height = command_msz()
 
-window = Tk()
-window.title("Zappy")
-window.attributes("-fullscreen", True)
-window.geometry("1920x1080")
-
-canvas = Canvas(window, width=1920, height=1080, background='black')
-canvas.pack()
+pygame.init()
+window = pygame.display.set_mode((1920, 1080))
+myfont = pygame.font.SysFont("arial", 16)
 
 draw_interface()
-draw_map()
-
-canvas.focus_set()
-window.bind("<Key>", handle_event)
-window.mainloop()
-loop()
+while True:
+    handle_event(pygame.event.get())
+    draw_map()
+    loop()
+    pygame.display.flip()
