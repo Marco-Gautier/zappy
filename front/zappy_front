@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from enum import Enum
+
 import pygame
 
 import argparse
@@ -59,11 +61,25 @@ def draw_interface():
     draw_text(f"Width:  {width}", 100, 50)
     draw_text(f"Height: {height}", 100, 150)
     draw_text(f" Team Names:", 100, 250)
-    teams = command_tna()
     i = 250
-    for team in teams:
+    for team in teams_name:
         draw_text(team, 280, i)
         i += 30
+    pygame.draw.line(window, 0xFFFFFF, (1520, 0), (1520, 1080))
+    draw_text("Clients:", 1600, 50)
+    draw_client_interface()
+
+def draw_client_interface():
+    i = 250
+    for client in clients:
+        id = client["id"]
+        x = client["x"]
+        y = client["y"]
+        direction = client["direction"]
+        level = client["level"]
+        team_name = client["team_name"]
+        draw_text(f"#{id} {x} {y} {direction} {level} {team_name}", 1700, i)
+        i += 50
 
 def draw_map():
     TILE_SIZE = (1080 - 20 - 20) / height
@@ -81,6 +97,16 @@ def loop():
         tmp = tmp[:-1]
     input = tmp.split(' ')
     print('mdr', input)
+    if input[0] == 'pnw' and len(input) == 7:
+        id = re.search(r"^#([1-9]+\d*)$", input[1]).groups()
+        clients.append({
+            "id": id[0],
+            "x": int(input[2]),
+            "y": int(input[3]),
+            "direction": int(input[4]),
+            "level": int(input[5]),
+            "team_name": input[6]
+        })
 
 def handle_event(event_list):
     for event in event_list:
@@ -91,14 +117,17 @@ args = parse_options()
 sockfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 connect_client()
 width, height = command_msz()
+teams_name = command_tna()
 
 pygame.init()
-window = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
+window = pygame.display.set_mode((1920, 1080), pygame.RESIZABLE)
 myfont = pygame.font.SysFont("arial", 16)
+clients = []
 
-draw_interface()
 while True:
+    pygame.Surface.fill(window, 0x000000)
     handle_event(pygame.event.get())
     draw_map()
     loop()
+    draw_interface()
     pygame.display.flip()
