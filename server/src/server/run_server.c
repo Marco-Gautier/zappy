@@ -73,8 +73,9 @@ int run_server(struct server *server)
         fdmax = get_server_process_fd_max(server);
         if (select(fdmax + 1, &server->rfds, NULL, NULL, time) == -1)
             return -1;
-        if (accept_new_client(server) == -1)
-            puts("New client rejected.");
+        if (FD_ISSET(server->fd, &server->rfds))
+            if (accept_new_client(server) == -1)
+                puts("New client rejected.");
         read_clients_fd(server);
         exec_clients_command(server);
     }
