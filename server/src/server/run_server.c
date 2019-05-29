@@ -41,13 +41,10 @@ static int get_server_process_fd_max(struct server *server)
 static void server_reset_fds(struct server *server)
 {
     FD_ZERO(&server->rfds);
-    FD_ZERO(&server->wfds);
     FD_SET(server->fd, &server->rfds);
     if (server->clients)
-        for (size_t i = 0; server->clients[i] != NULL; i++) {
+        for (size_t i = 0; server->clients[i] != NULL; i++)
             FD_SET(server->clients[i]->fd, &server->rfds);
-            FD_SET(server->clients[i]->fd, &server->wfds);
-        }
 }
 
 /*
@@ -74,7 +71,7 @@ int run_server(struct server *server)
     while (1) {
         server_reset_fds(server);
         fdmax = get_server_process_fd_max(server);
-        if (select(fdmax + 1, &server->rfds, &server->wfds, NULL, time) == -1)
+        if (select(fdmax + 1, &server->rfds, NULL, NULL, time) == -1)
             return -1;
         if (accept_new_client(server) == -1)
             puts("New client rejected.");
