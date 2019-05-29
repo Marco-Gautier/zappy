@@ -30,8 +30,9 @@ int fd, int id)
         .client_type = CT_AI,
         .team_name = NULL,
         .direction = D_NORTH,
-//        .inventory = inventory_create(),
+        .inventory = {0}
     };
+    new->inventory.food = 10;
     return new;
 }
 
