@@ -20,3 +20,4 @@ zappy_server
 zappy_server_tests
 rapport
 rapport.info
+__pycache__

@@ -2,10 +2,12 @@
 
 from enum import Enum
 
+from commands import command_msz, command_tna
+from network_utils import connect_client, recv, send
+
 import pygame
 
 import argparse
-import select
 import socket
 import re
 
@@ -14,43 +16,6 @@ def parse_options():
     parser.add_argument("-p", "--port", type=int, action="store", dest="port", required=True, help="port is the port number")
     parser.add_argument("-h", "--machine", type=str, action="store", dest="machine", help="machine is the name of the machine; localhost by default", default="localhost")
     return parser.parse_args()
-
-def recv():
-    fds = select.select([sockfd], [], [], 0.1)
-    if len(fds[0]) != 0 and fds[0][0] == sockfd:
-        return sockfd.recv(1024).decode()
-    else:
-        return None
-
-def send(message):
-    message += '\n'
-    sockfd.send(message.encode())
-
-""" Connect client to GRAPHIC team """
-def connect_client():
-    sockfd.connect((args.machine, args.port))
-    if recv() != "Welcome!\n":
-        print("server should have responded 'Welcome\\n'")
-        exit(1)
-    send("GRAPHIC")
-
-""" Return (width, height) """
-def command_msz():
-    send("msz")
-    tmp = recv()
-    return tuple(map(int, re.search(r"^msz ([1-9]\d*) ([1-9]\d*)$", tmp).groups()))
-
-""" Return ["team_name", "team_name", ...] """
-def command_tna():
-    send("tna")
-    teams = []
-    for team in recv().split('\n'):
-        tmp = re.search(r"^tna (\S+)$", team)
-        if tmp == None:
-            break
-        token = tmp.groups()
-        teams.append(token[0])
-    return teams
 
 def draw_text(text, x, y):
     label = myfont.render(text, 1, (255,255,0))
@@ -82,15 +47,32 @@ def draw_client_interface():
         i += 50
 
 def draw_map():
-    TILE_SIZE = (1080 - 20 - 20) / height
+    TILE_SIZE = (1080 - 20 - 20 - 100) / height
     for i in range(width):
         for j in range(height):
             x = i * TILE_SIZE + 1920 / 2 - width / 2 * TILE_SIZE
             y = j * TILE_SIZE + 1080 / 2 - height / 2 * TILE_SIZE
             pygame.draw.rect(window, 0x808080, pygame.Rect(x, y, TILE_SIZE, TILE_SIZE), 4)
 
+def add_client(clients, input):
+    id = re.search(r"^#([1-9]+\d*)$", input[1]).groups()
+    clients.append({
+        "id": int(id[0]),
+        "x": int(input[2]),
+        "y": int(input[3]),
+        "direction": int(input[4]),
+        "level": int(input[5]),
+        "team_name": input[6]
+    })
+
+def remove_client(clients, input):
+    id = int(input[1])
+    for i in range(len(clients)):
+        if clients[i]["id"] == id:
+            del clients[i]
+
 def loop():
-    tmp = recv()
+    tmp = recv(sockfd)
     if tmp is None:
         return
     if tmp[-1] == '\n':
@@ -98,15 +80,9 @@ def loop():
     input = tmp.split(' ')
     print('mdr', input)
     if input[0] == 'pnw' and len(input) == 7:
-        id = re.search(r"^#([1-9]+\d*)$", input[1]).groups()
-        clients.append({
-            "id": id[0],
-            "x": int(input[2]),
-            "y": int(input[3]),
-            "direction": int(input[4]),
-            "level": int(input[5]),
-            "team_name": input[6]
-        })
+        add_client(clients, input)
+    if input[0] == 'pdi' and len(input) == 2:
+        remove_client(clients, input)
 
 def handle_event(event_list):
     for event in event_list:
@@ -115,9 +91,9 @@ def handle_event(event_list):
 
 args = parse_options()
 sockfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-connect_client()
-width, height = command_msz()
-teams_name = command_tna()
+connect_client(sockfd, args)
+width, height = command_msz(sockfd)
+teams_name = command_tna(sockfd)
 
 pygame.init()
 window = pygame.display.set_mode((1920, 1080), pygame.RESIZABLE)
