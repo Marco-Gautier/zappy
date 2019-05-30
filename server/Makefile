@@ -44,7 +44,8 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(GRAPH_DIR)command_ppo.c			\
 			$(GRAPH_DIR)command_bct.c			\
 			$(GRAPH_DIR)command_mct.c			\
-			$(GRAPH_DIR)command_pin.c
+			$(GRAPH_DIR)command_pin.c			\
+			$(AI_DIR)command_test.c
 
 OBJ		=	$(SRC:.c=.o)
 
