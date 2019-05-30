@@ -35,7 +35,7 @@ static int check_client_buffer(const char *buffer)
 ** 3) Check if the buffer is valid
 */
 
-static int read_client_fd_to_buffer(struct client *client)
+int read_client_fd_to_buffer(struct client *client)
 {
     size_t size;
     char buff[512];

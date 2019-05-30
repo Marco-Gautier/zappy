@@ -2,7 +2,9 @@
 
 from enum import Enum
 
+from client import Client
 from commands import command_msz, command_tna
+from draw import draw_text, draw_client_interface, draw_interface, draw_map
 from network_utils import connect_client, recv, send
 
 import pygame
@@ -17,59 +19,14 @@ def parse_options():
     parser.add_argument("-h", "--machine", type=str, action="store", dest="machine", help="machine is the name of the machine; localhost by default", default="localhost")
     return parser.parse_args()
 
-def draw_text(text, x, y):
-    label = myfont.render(text, 1, (255,255,0))
-    window.blit(label, (x, y))
-
-def draw_interface():
-    pygame.draw.line(window, 0xFFFFFF, (400, 0), (400, 1080))
-    draw_text(f"Width:  {width}", 100, 50)
-    draw_text(f"Height: {height}", 100, 150)
-    draw_text(f" Team Names:", 100, 250)
-    i = 250
-    for team in teams_name:
-        draw_text(team, 280, i)
-        i += 30
-    pygame.draw.line(window, 0xFFFFFF, (1520, 0), (1520, 1080))
-    draw_text("Clients:", 1600, 50)
-    draw_client_interface()
-
-def draw_client_interface():
-    i = 250
-    for client in clients:
-        id = client["id"]
-        x = client["x"]
-        y = client["y"]
-        direction = client["direction"]
-        level = client["level"]
-        team_name = client["team_name"]
-        draw_text(f"#{id} {x} {y} {direction} {level} {team_name}", 1700, i)
-        i += 50
-
-def draw_map():
-    TILE_SIZE = (1080 - 20 - 20 - 100) / height
-    for i in range(width):
-        for j in range(height):
-            x = i * TILE_SIZE + 1920 / 2 - width / 2 * TILE_SIZE
-            y = j * TILE_SIZE + 1080 / 2 - height / 2 * TILE_SIZE
-            pygame.draw.rect(window, 0x808080, pygame.Rect(x, y, TILE_SIZE, TILE_SIZE), 4)
-
 def add_client(clients, input):
-    id = re.search(r"^#([1-9]+\d*)$", input[1]).groups()
-    clients.append({
-        "id": int(id[0]),
-        "x": int(input[2]),
-        "y": int(input[3]),
-        "direction": int(input[4]),
-        "level": int(input[5]),
-        "team_name": input[6]
-    })
+    clients.append(Client(input))
 
 def remove_client(clients, input):
-    id = int(input[1])
     for i in range(len(clients)):
-        if clients[i]["id"] == id:
+        if clients[i].id == int(input[1]):
             del clients[i]
+            return
 
 def loop():
     tmp = recv(sockfd)
@@ -97,13 +54,14 @@ teams_name = command_tna(sockfd)
 
 pygame.init()
 window = pygame.display.set_mode((1920, 1080), pygame.RESIZABLE)
-myfont = pygame.font.SysFont("arial", 16)
+font = pygame.font.SysFont("arial", 16)
 clients = []
 
 while True:
-    pygame.Surface.fill(window, 0x000000)
+    pygame.Surface.fill(window, 0)
     handle_event(pygame.event.get())
-    draw_map()
+    draw_map(window, width, height)
     loop()
-    draw_interface()
+    draw_interface(window, font, teams_name, width, height)
+    draw_client_interface(window, font, clients)
     pygame.display.flip()

@@ -30,8 +30,9 @@ int fd, int id)
         .client_type = CT_AI,
         .team_name = NULL,
         .direction = D_NORTH,
-//        .inventory = inventory_create(),
+        .inventory = {0}
     };
+    new->inventory.food = 10;
     return new;
 }
 
@@ -63,8 +64,6 @@ int accept_new_client(struct server *server)
     struct sockaddr_in addr;
     socklen_t addrlen = sizeof(addr);
 
-    if (FD_ISSET(server->fd, &server->rfds) == 0)
-            return 0;
     puts("New client request.");
     fd = accept(server->fd, (struct sockaddr *)&addr, &addrlen);
     if (fd == -1)

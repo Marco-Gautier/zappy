@@ -17,6 +17,7 @@
 #define MAX_CLIENTS (1024)
 
 void    read_clients_fd(struct server *server);
+int     read_client_fd_to_buffer(struct client *client);
 int     exec_client_command(struct server *server, int i);
 void    kick_client_from_server(struct server *server, int i);
 void    send_graphical_broadcast(struct server *server, const char *message);
