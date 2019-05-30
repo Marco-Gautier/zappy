@@ -9,6 +9,7 @@
 
 #include <stdbool.h>
 #include "inventory.h"
+#include "event.h"
 
 enum direction {
     D_EAST,
@@ -32,6 +33,7 @@ struct client {
     int     egg_id;
     char    *buffer;
     bool    hatched;
+    struct event *event;
     enum client_type    client_type;
     const char          *team_name;
     enum direction      direction;
