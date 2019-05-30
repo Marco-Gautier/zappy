@@ -10,7 +10,10 @@ INC_DIR		=	../include/
 SRC		=	my_tablen.c		\
 			my_tabndup.c		\
 			my_tabdup.c		\
-			my_str_to_word_array.c
+			my_str_to_word_array.c	\
+			my_push_back.c	\
+			my_listlen.c	\
+			my_node_destroy.c
 
 OBJ		=	$(SRC:.c=.o)
 
