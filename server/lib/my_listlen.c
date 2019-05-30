@@ -7,12 +7,15 @@
 
 #include "my.h"
 
-size_t my_listlen(void *list)
+/*
+** Return the list length
+*/
+
+size_t my_listlen(void *l1)
 {
     size_t i = 0;
-    __list_t *__list = (__list_t *) list;
 
-    if (list != NULL)
-        for (; __list != NULL; __list = __list->next, i++);
-    return (i);
+    for (__list_t *list = l1; list != NULL; list = list->next)
+        i++;
+    return i;
 }

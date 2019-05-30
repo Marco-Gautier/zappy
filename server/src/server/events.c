@@ -36,7 +36,7 @@ static int handle_client_events(struct client *client)
                 event, event->trigger_time, time(NULL));
             event->callback(client, event->argc, event->argv);
             event_t *tmp = event->next;
-            client->event = my_node_destroy(client->event, event);
+            client->event = my_list_erase(client->event, event, free);
             event = tmp;
             break;
         }

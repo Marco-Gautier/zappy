@@ -7,17 +7,23 @@
 
 #include "my.h"
 
+/*
+** Push l2 node at the end of l1 list.
+** If l1 list doesn't exist, return l2 node as a list.
+*/
+
 void *my_push_back(void *l1, void *l2)
 {
-    __list_t *tmp = (__list_t *) l1;
-    __list_t *list = (__list_t *) l1;
-    __list_t *new = (__list_t *) l2;
+    __list_t *list = l1;
+    __list_t *new = l2;
 
     if (!list)
-        return (l2);
-    for (; list != NULL && list->next != NULL; list = list->next);
+        return l2;
+    if (!new)
+        return l1;
+    while (list != NULL && list->next != NULL)
+        list = list->next;
     list->next = new;
-    if (new != NULL)
-        new->prev = list;
-    return (tmp);
+    new->prev = list;
+    return l1;
 }
