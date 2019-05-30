@@ -9,10 +9,10 @@
 #include "my.h"
 
 /*
- * I didn't find a better name
- * Remove a node in doubly linked list
- * returns the head of the list
- */
+** I didn't find a better name
+** Remove a node in doubly linked list
+** returns the head of the list
+*/
 void *my_node_destroy(void *l1, void *l2)
 {
     __list_t *list = (__list_t *) l1;
@@ -26,7 +26,6 @@ void *my_node_destroy(void *l1, void *l2)
         old->next->prev = old->prev;
     if (old->prev)
         old->prev->next = old->next;
-    
     free(l2);
     return list;
 }
