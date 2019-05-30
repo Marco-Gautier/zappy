@@ -24,4 +24,4 @@ size_t  my_tablen(char **tab);
 void    *my_push_back(void *l1, void *l2);
 size_t  my_listlen(void *list);
 void    *my_list_erase(void *l1, void *l2, void (*destructor)(void *ptr));
-void    my_list_clear(void **l1, void (*destructor)(void *ptr));
+void    my_list_clear(void *l1, void (*destructor)(void *ptr));

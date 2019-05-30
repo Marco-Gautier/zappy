@@ -19,9 +19,9 @@ static void my_list_clear_builtin(__list_t *list, void (*destructor)(void *ptr))
 ** Erase all elements of l1 list, call destructor on each node during erasing.
 */
 
-void my_list_clear(void **l1, void (*destructor)(void *ptr))
+void my_list_clear(void *l1, void (*destructor)(void *ptr))
 {
-    __list_t **list = (__list_t **)l1;
+    __list_t **list = l1;
 
     my_list_clear_builtin(*list, destructor);
     *list = NULL;
