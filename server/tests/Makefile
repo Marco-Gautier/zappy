@@ -22,6 +22,7 @@ SRC		=	$(LIB_DIR)my_tabdup.c			\
 			$(LIB_DIR)my_push_back.c		\
 			$(LIB_DIR)my_listlen.c			\
 			$(LIB_DIR)my_list_erase.c		\
+			$(LIB_DIR)my_list_clear.c		\
 			$(SRC_DIR)parse_options.c		\
 			$(SERVER_DIR)init_server.c		\
 			$(SERVER_DIR)send_graphical_broadcast.c	\
@@ -35,6 +36,7 @@ TESTS		=	$(TESTS_LIB_DIR)my_tabdup.c			\
 			$(TESTS_LIB_DIR)my_push_back.c			\
 			$(TESTS_LIB_DIR)my_listlen.c			\
 			$(TESTS_LIB_DIR)my_list_erase.c			\
+			$(TESTS_LIB_DIR)my_list_clear.c			\
 			$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_SERVER_DIR)init_server.c		\
 			$(TESTS_SERVER_DIR)send_graphical_broadcast.c
