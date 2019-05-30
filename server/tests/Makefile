@@ -6,16 +6,22 @@
 #
 
 SRC_DIR			=	../src/
-SERVER_DIR		=	$(SRC_DIR)server/
 LIB_DIR			=	../lib/
 INC_DIR			=	../include
 TESTS_DIR		=	src/
+
+SERVER_DIR		=	$(SRC_DIR)server/
+GAME_DIR		=	$(SERVER_DIR)game/
+MIDDLEWARE_DIR		=	$(SERVER_DIR)middleware/
+COMMANDS_DIR		=	$(SERVER_DIR)commands/
+GRAPH_DIR		=	$(COMMANDS_DIR)graph/
+AI_DIR			=	$(COMMANDS_DIR)ai/
 
 TESTS_LIB_DIR		=	lib/tests_
 TESTS_SRC_DIR		=	src/tests_
 TESTS_SERVER_DIR	=	src/server/tests_
 
-SRC		=	$(LIB_DIR)my_tabdup.c			\
+LIB		=	$(LIB_DIR)my_tabdup.c			\
 			$(LIB_DIR)my_tabndup.c			\
 			$(LIB_DIR)my_tablen.c			\
 			$(LIB_DIR)my_str_to_word_array.c	\
@@ -23,13 +29,38 @@ SRC		=	$(LIB_DIR)my_tabdup.c			\
 			$(LIB_DIR)my_listlen.c			\
 			$(LIB_DIR)my_list_erase.c		\
 			$(LIB_DIR)my_list_clear.c		\
-			$(SRC_DIR)parse_options.c		\
-			$(SERVER_DIR)init_server.c		\
-			$(SERVER_DIR)send_graphical_broadcast.c	\
-			$(SERVER_DIR)read_clients_fd.c		\
-			$(SERVER_DIR)kick_client_from_server.c
 
-TESTS		=	$(TESTS_LIB_DIR)my_tabdup.c			\
+SRC		=	$(SRC_DIR)parse_options.c			\
+			$(SERVER_DIR)events.c				\
+			$(SERVER_DIR)init_server.c			\
+			$(SERVER_DIR)run_server.c			\
+			$(SERVER_DIR)accept_new_client.c		\
+			$(SERVER_DIR)read_clients_fd.c			\
+			$(SERVER_DIR)exec_client_command.c		\
+			$(SERVER_DIR)kick_client_from_server.c		\
+			$(SERVER_DIR)send_graphical_broadcast.c		\
+			$(SERVER_DIR)client_join_team.c			\
+			$(SERVER_DIR)get_nb_free_team_slot.c		\
+			$(GAME_DIR)init_world.c				\
+			$(GAME_DIR)cell_utils.c				\
+			$(MIDDLEWARE_DIR)log_command.c			\
+			$(MIDDLEWARE_DIR)filter_graphic_request.c	\
+			$(MIDDLEWARE_DIR)filter_ai_request.c		\
+			$(MIDDLEWARE_DIR)check_client_target.c		\
+			$(COMMANDS_DIR)command_unknown.c		\
+			$(GRAPH_DIR)command_msz.c			\
+			$(GRAPH_DIR)command_tna.c			\
+			$(GRAPH_DIR)command_sst.c			\
+			$(GRAPH_DIR)command_sgt.c			\
+			$(GRAPH_DIR)command_plv.c			\
+			$(GRAPH_DIR)command_ppo.c			\
+			$(GRAPH_DIR)command_bct.c			\
+			$(GRAPH_DIR)command_mct.c			\
+			$(GRAPH_DIR)command_pin.c			\
+			$(AI_DIR)command_test.c
+SRC		+=	$(LIB)
+
+TESTS_LIB	=	$(TESTS_LIB_DIR)my_tabdup.c			\
 			$(TESTS_LIB_DIR)my_tabndup.c			\
 			$(TESTS_LIB_DIR)my_tablen.c			\
 			$(TESTS_LIB_DIR)my_str_to_word_array.c		\
@@ -37,9 +68,12 @@ TESTS		=	$(TESTS_LIB_DIR)my_tabdup.c			\
 			$(TESTS_LIB_DIR)my_listlen.c			\
 			$(TESTS_LIB_DIR)my_list_erase.c			\
 			$(TESTS_LIB_DIR)my_list_clear.c			\
-			$(TESTS_SRC_DIR)parse_options.c			\
+
+TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_SERVER_DIR)init_server.c		\
-			$(TESTS_SERVER_DIR)send_graphical_broadcast.c
+			$(TESTS_SERVER_DIR)send_graphical_broadcast.c	\
+			$(TESTS_SERVER_DIR)read_clients_fd.c
+TESTS		+=	$(TESTS_LIB)
 TESTS		+=	$(SRC)
 
 CFLAGS		=	-Wall -Wextra	\
