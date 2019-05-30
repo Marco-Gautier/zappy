@@ -1,9 +1,9 @@
-#
-# EPITECH PROJECT 2018
-#
-# File description : singe
-#
-#
+##
+## EPITECH PROJECT, 2019
+## Makefile
+## File description:
+## Makefile
+##
 
 SRC_DIR			=	../src/
 LIB_DIR			=	../lib/

@@ -11,21 +11,21 @@
 
 Test(tablen, simple)
 {
-        static const char * const tab[] = {
-                "Lolmdr",
-                NULL
-        };
-        assert(my_tablen((char **)tab) == 1);
+    static const char * const tab[] = {
+        "Lolmdr",
+        NULL
+    };
+    assert(my_tablen((char **)tab) == 1);
 }
 
 Test(tablen, medium)
 {
-        static const char * const tab[] = {
-                "Lolmdr",
-                "Lolmdr",
-                "Lolmdr",
-                "Lolmdr",
-                NULL
-        };
-        assert(my_tablen((char **)tab) == 4);
+    static const char * const tab[] = {
+        "Lolmdr",
+        "Lolmdr",
+        "Lolmdr",
+        "Lolmdr",
+        NULL
+    };
+    assert(my_tablen((char **)tab) == 4);
 }

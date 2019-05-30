@@ -13,8 +13,8 @@
 
 typedef struct __list_s
 {
-        struct __list_s *next;
-        struct __list_s *prev;
+    struct __list_s *next;
+    struct __list_s *prev;
 } __list_t;
 
 char    **my_str_to_word_array(char *str, const char *delim);
