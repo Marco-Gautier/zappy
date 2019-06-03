@@ -11,8 +11,8 @@
 #include "cell.h"
 
 struct world {
-        int         x;
-        int         y;
+        int         width;
+        int         height;
         cell_t      **map;
 };
 

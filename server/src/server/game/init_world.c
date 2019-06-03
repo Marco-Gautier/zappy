@@ -10,8 +10,8 @@
 
 int init_world(struct world *world, struct server_opt *options)
 {
-    world->x = options->width;
-    world->y = options->height;
+    world->width = options->width;
+    world->height = options->height;
     world->map = malloc(sizeof(cell_t *) * options->height);
     if (!world->map)
         return -1;
