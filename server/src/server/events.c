@@ -14,6 +14,8 @@ event_t *create_event(time_t time, int argc, char **argv, callback_t callback)
 {
     event_t *new = calloc(1, sizeof(event_t));
 
+    if (!new)
+        return NULL;
     new->trigger_time = time;
     new->argc = argc;
     new->argv = argv;
@@ -37,9 +39,8 @@ static int handle_client_events(struct server *server, struct client *client)
             event_t *tmp = event->next;
             client->event = my_list_erase(client->event, event, free);
             event = tmp;
-            break;
-        }
-        event = event->next;
+        } else
+            event = event->next;
     }
     return 0;
 }
