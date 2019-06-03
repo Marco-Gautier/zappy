@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "event.h"
 #include "zappy.h"
 #include "my.h"
 
@@ -42,6 +43,7 @@ static void join_team(struct server *server, int i, int slot, char *team_name)
 
     dprintf(client->fd, "%d\n%d %d\n", slot - 1, width, height);
     client->team_name = team_name;
+    add_food_event(server, client);
     broadcast_new_player(server, client);
     printf("Client n°%d join team '%s'\n", server->clients[i]->id, team_name);
 }

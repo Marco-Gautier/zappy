@@ -31,6 +31,7 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(SERVER_DIR)get_nb_free_team_slot.c		\
 			$(GAME_DIR)init_world.c				\
 			$(GAME_DIR)cell_utils.c				\
+			$(GAME_DIR)food_events.c			\
 			$(MIDDLEWARE_DIR)log_command.c			\
 			$(MIDDLEWARE_DIR)filter_graphic_request.c	\
 			$(MIDDLEWARE_DIR)filter_ai_request.c		\
