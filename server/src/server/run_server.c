@@ -78,7 +78,7 @@ int run_server(struct server *server)
                 puts("New client rejected.");
         read_clients_fd(server);
         exec_clients_command(server);
-        update_events(server->clients);
+        update_events(server);
     }
     return 0;
 }
