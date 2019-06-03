@@ -14,6 +14,7 @@ struct server {
     struct server_opt   options;
     int                 fd;
     fd_set              rfds;
+    fd_set              wfds;
     struct world        world;
     struct client       **clients;
 };
