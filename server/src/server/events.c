@@ -11,12 +11,11 @@
 #include "zappy.h"
 #include "my.h"
 
-// https://bit.ly/2ww8aXI
 suseconds_t compute_trigger_time(int time, int freq)
 {
     struct timeval timeval;
 
-    if (gettimeofday(&timeval, NULL) < 0)
+    if (gettimeofday(&timeval, NULL) == -1)
         return -1;
     return GET_TIME_SEC(timeval) + (time / freq) * 1000000;
 }

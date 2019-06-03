@@ -11,6 +11,7 @@
 #include "server.h"
 #include "client.h"
 
+/* https://stackoverflow.com/q/5833094 */
 #define GET_TIME_SEC(tv) (1000000 * tv.tv_sec + tv.tv_usec)
 
 typedef int (*callback_t)(struct server *s, struct client *client, int ac, char
