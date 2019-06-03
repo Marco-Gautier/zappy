@@ -19,7 +19,7 @@ int test_callback(struct server *s, struct client *client, int ac, char **av)
 
 int command_test(struct server *server, int i, int argc, char **argv)
 {
-    time_t trigger_time = time(NULL) + 7 / server->options.freq;
+    suseconds_t trigger_time = compute_trigger_time(7, server->options.freq);
     event_t *event = create_event(trigger_time, argc, argv, test_callback);
 
     if (!event) {

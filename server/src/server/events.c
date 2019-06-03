@@ -7,8 +7,19 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/time.h>
 #include "zappy.h"
 #include "my.h"
+
+// https://bit.ly/2ww8aXI
+suseconds_t compute_trigger_time(int time, int freq)
+{
+    struct timeval timeval;
+
+    if (gettimeofday(&timeval, NULL) < 0)
+        return -1;
+    return GET_TIME_SEC(timeval) + (time / freq) * 1000000;
+}
 
 event_t *create_event(time_t time, int argc, char **argv, callback_t callback)
 {
@@ -31,10 +42,13 @@ int add_event(struct client *client, event_t *event)
 
 static int handle_client_events(struct server *server, struct client *client)
 {
+    struct timeval timeval;
+
+    gettimeofday(&timeval, NULL);
     for (event_t *event = client->event; event != NULL;) {
-        if (event->trigger_time <= time(NULL)) {
-            printf("triggered event %p with trigger time: %ld at time %ld\n",
-                event, event->trigger_time, time(NULL));
+        if (event->trigger_time <= GET_TIME_SEC(timeval)) {
+            fprintf(stderr, "triggered event %p with trigger time: %ld at time "
+"%ld\n", event, event->trigger_time, GET_TIME_SEC(timeval));
             event->callback(server, client, event->argc, event->argv);
             event_t *tmp = event->next;
             client->event = my_list_erase(client->event, event, free);
