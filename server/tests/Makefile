@@ -41,8 +41,10 @@ SRC		=	$(SRC_DIR)parse_options.c			\
 			$(SERVER_DIR)send_graphical_broadcast.c		\
 			$(SERVER_DIR)client_join_team.c			\
 			$(SERVER_DIR)get_nb_free_team_slot.c		\
+			$(SERVER_DIR)is_game_over.c                     \
 			$(GAME_DIR)init_world.c				\
 			$(GAME_DIR)cell_utils.c				\
+			$(GAME_DIR)food_events.c			\
 			$(MIDDLEWARE_DIR)log_command.c			\
 			$(MIDDLEWARE_DIR)filter_graphic_request.c	\
 			$(MIDDLEWARE_DIR)filter_ai_request.c		\
