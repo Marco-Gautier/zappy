@@ -71,7 +71,7 @@ int run_server(struct server *server)
     int fdmax;
     struct timeval *time = NULL;
 
-    while (1) {
+    while (!is_game_over(server)) {
         server_reset_fds(server);
         fdmax = get_server_process_fd_max(server);
         if (select(fdmax + 1, &server->rfds, &server->wfds, NULL, time) == -1)
