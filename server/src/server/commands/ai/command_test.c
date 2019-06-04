@@ -6,14 +6,13 @@
 */
 
 #include <stdio.h>
-#include "event.h"
 #include "zappy.h"
 
 int test_callback(struct server *s, struct client *client, int ac, char **av)
 {
-    (void) ac;
-    (void) av;
-    (void) s;
+    (void)ac;
+    (void)av;
+    (void)s;
     return dprintf(client->fd, "event_test mdr\n");
 }
 

@@ -45,7 +45,7 @@ Test(send_graphical_broadcast, one_client)
 
 Test(send_graphical_broadcast, one_client_2)
 {
-    const char *message = "jeune renoi \nsauvage\n";
+    const char *message = "jeune renoi\nsauvage\n";
     struct client client = {
         .client_type = CT_GRAPHIC,
         .team_name = "GRAPHIC",

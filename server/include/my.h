@@ -11,8 +11,7 @@
 
 #define IS_DIGIT(x) (x >= '0' && x <= '9')
 
-typedef struct __list_s
-{
+typedef struct __list_s {
     struct __list_s *next;
     struct __list_s *prev;
 } __list_t;

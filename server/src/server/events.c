@@ -42,14 +42,16 @@ int add_event(struct client *client, event_t *event)
 static int handle_client_events(struct server *server, struct client *client)
 {
     struct timeval timeval;
+    event_t *tmp;
 
-    gettimeofday(&timeval, NULL);
-    for (event_t *event = client->event; event != NULL;) {
+    if (gettimeofday(&timeval, NULL) == -1)
+        return -1;
+    for (event_t *event = client->event; event != NULL; ) {
         if (event->trigger_time <= GET_TIME_SEC(timeval)) {
-            fprintf(stderr, "triggered event %p with trigger time: %ld at time "
-"%ld\n", event, event->trigger_time, GET_TIME_SEC(timeval));
+            fprintf(stderr, "triggered event %p with trigger time: %ld at time\
+                    %ld\n", event, event->trigger_time, GET_TIME_SEC(timeval));
             event->callback(server, client, event->argc, event->argv);
-            event_t *tmp = event->next;
+            tmp = event->next;
             client->event = my_list_erase(client->event, event, free);
             event = tmp;
         } else
