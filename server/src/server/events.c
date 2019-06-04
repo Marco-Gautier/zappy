@@ -26,10 +26,12 @@ event_t *create_event(time_t time, int argc, char **argv, callback_t callback)
 
     if (!new)
         return NULL;
-    new->trigger_time = time;
-    new->argc = argc;
-    new->argv = argv;
-    new->callback = callback;
+    *new = (event_t) {
+        .trigger_time = time,
+        .argc = argc,
+        .argv = argv,
+        .callback = callback
+    };
     return new;
 }
 
@@ -49,7 +51,7 @@ static int handle_client_events(struct server *server, struct client *client)
     for (event_t *event = client->event; event != NULL; ) {
         if (event->trigger_time <= GET_TIME_SEC(timeval)) {
             fprintf(stderr, "triggered event %p with trigger time: %ld at time\
-                    %ld\n", event, event->trigger_time, GET_TIME_SEC(timeval));
+ %ld\n", event, event->trigger_time, GET_TIME_SEC(timeval));
             event->callback(server, client, event->argc, event->argv);
             tmp = event->next;
             client->event = my_list_erase(client->event, event, free);

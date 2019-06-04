@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "my.h"
 #include "zappy.h"
 
 void remove_client(struct server *server, int i)
@@ -17,6 +18,8 @@ void remove_client(struct server *server, int i)
 
     close(server->clients[i]->fd);
     free(server->clients[i]->buffer);
+    free(server->clients[i]->team_name);
+    my_list_clear(&server->clients[i]->event, free);
     while (server->clients[last] != NULL)
         last++;
     free(server->clients[i]);

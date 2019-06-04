@@ -24,13 +24,8 @@ int fd, int id)
         .y = rand() % server_opt->height,
         .x = rand() % server_opt->width,
         .level = 1,
-        .egg_id = 0,
-        .buffer = NULL,
-        .hatched = false,
         .client_type = CT_AI,
-        .team_name = NULL,
         .direction = D_NORTH,
-        .inventory = {0}
     };
     new->inventory.food = 10;
     return new;

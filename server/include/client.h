@@ -33,9 +33,9 @@ struct client {
     int     egg_id;
     char    *buffer;
     bool    hatched;
-    struct event *event;
+    char    *team_name;
+    struct event        *event;
     enum client_type    client_type;
-    const char          *team_name;
     enum direction      direction;
     inventory_t         inventory;
 };
