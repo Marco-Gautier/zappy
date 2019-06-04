@@ -26,11 +26,12 @@ int food_callback(struct server *s, struct client *client, int ac, char **av)
 int add_food_event(struct server *server, struct client *client)
 {
     suseconds_t time = compute_trigger_time(DIGEST_TIME, server->options.freq);
-    event_t *event = create_event(time, 0, NULL, food_callback);
+    event_t *event;
 
-    if (!event || time == -1) {
-        fprintf(stderr, "error during event creation\n");
-        return -1;
-    }
+    if (time == -1)
+        return fprintf(stderr, "error during event creation\n"), -1;
+    event = create_event(time, 0, NULL, &food_callback);
+    if (!event)
+        return fprintf(stderr, "error during event creation\n"), -1;
     return add_event(client, event);
 }

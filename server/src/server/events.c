@@ -22,7 +22,7 @@ suseconds_t compute_trigger_time(int time, int freq)
 
 event_t *create_event(time_t time, int argc, char **argv, callback_t callback)
 {
-    event_t *new = calloc(1, sizeof(event_t));
+    event_t *new = malloc(sizeof(event_t));
 
     if (!new)
         return NULL;
