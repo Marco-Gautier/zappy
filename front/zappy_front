@@ -4,7 +4,7 @@ from enum import Enum
 
 from client import Client
 from commands import command_msz, command_tna
-from draw import draw_text, draw_client_interface, draw_interface, draw_map
+from draw import *
 from network_utils import connect_client, recv, send
 
 import pygame
@@ -64,4 +64,5 @@ while True:
     loop()
     draw_interface(window, font, teams_name, width, height)
     draw_client_interface(window, font, clients)
+    draw_client(window, width, height, clients)
     pygame.display.flip()
