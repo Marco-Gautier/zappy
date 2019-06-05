@@ -23,3 +23,4 @@ int     get_nb_free_team_slot(struct server *server, const char *team_name);
 int     client_join_team(struct server *server, int i, char **command);
 void    update_events(struct server *server);
 bool    is_game_over(struct server *server);
+void    kick_dead_client(struct server *server);

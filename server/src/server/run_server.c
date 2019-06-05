@@ -82,6 +82,7 @@ int run_server(struct server *server)
         read_clients_fd(server);
         exec_clients_command(server);
         update_events(server);
+        kick_dead_client(server);
     }
     return 0;
 }
