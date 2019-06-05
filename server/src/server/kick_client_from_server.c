@@ -18,7 +18,8 @@ void remove_client(struct server *server, int i)
 
     close(server->clients[i]->fd);
     free(server->clients[i]->buffer);
-    free(server->clients[i]->team_name);
+    if (server->clients[i]->client_type == CT_AI)
+        free(server->clients[i]->team_name);
     my_list_clear(&server->clients[i]->event, free);
     while (server->clients[last] != NULL)
         last++;
