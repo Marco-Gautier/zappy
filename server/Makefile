@@ -50,7 +50,8 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(GRAPH_DIR)command_mct.c			\
 			$(GRAPH_DIR)command_pin.c			\
 			$(AI_DIR)command_test.c			\
-			$(AI_DIR)command_forward.c
+			$(AI_DIR)command_forward.c		\
+			$(AI_DIR)command_right.c
 
 OBJ		=	$(SRC:.c=.o)
 
