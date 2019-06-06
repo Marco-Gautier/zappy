@@ -16,12 +16,18 @@ int forward_callback(struct server *s, struct client *client, int ac, char **av)
     switch (client->direction) {
         case D_NORTH:
             client->y = (client->y - 1 >= 0) ? client->y - 1 : s->world.height;
+            break;
         case D_EAST:
             client->x = (client->x + 1) % s->world.width;
+            break;
         case D_SOUTH:
             client->y = (client->y + 1) % s->world.height;
+            break;
         case D_WEST:
             client->x = (client->x - 1 >= 0) ? client->x - 1 : s->world.width;
+            break;
+        default:
+            return -1;
     }
     return 0;
 }
