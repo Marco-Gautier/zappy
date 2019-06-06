@@ -17,6 +17,9 @@ struct command {
 
 int command_unknown(struct server *server, int client, int argc, char **argv);
 
+/* Utils */
+enum direction compute_direction(enum direction dir, int offset);
+
 /* API command reserved to graphical clients */
 int command_msz(struct server *server, int client, int argc, char **argv);
 int command_tna(struct server *server, int client, int argc, char **argv);

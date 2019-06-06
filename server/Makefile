@@ -38,6 +38,7 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(MIDDLEWARE_DIR)filter_graphic_request.c	\
 			$(MIDDLEWARE_DIR)filter_ai_request.c		\
 			$(MIDDLEWARE_DIR)check_client_target.c		\
+			$(COMMANDS_DIR)utils.c				\
 			$(COMMANDS_DIR)command_unknown.c		\
 			$(GRAPH_DIR)command_msz.c			\
 			$(GRAPH_DIR)command_tna.c			\
