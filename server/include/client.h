@@ -12,10 +12,10 @@
 #include "event.h"
 
 enum direction {
+    D_NORTH = 1,
     D_EAST,
-    D_WEST,
-    D_NORTH,
     D_SOUTH,
+    D_WEST,
     D_DIRECTION_SIZE
 };
 
