@@ -50,8 +50,6 @@ static int handle_client_events(struct server *server, struct client *client)
         return -1;
     for (event_t *event = client->event; event != NULL; ) {
         if (event->trigger_time <= GET_TIME_SEC(timeval)) {
-            fprintf(stderr, "triggered event %p with trigger time: %ld at time\
- %ld\n", event, event->trigger_time, GET_TIME_SEC(timeval));
             event->callback(server, client, event->argc, event->argv);
             tmp = event->next;
             client->event = my_list_erase(client->event, event, free);
