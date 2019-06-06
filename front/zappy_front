@@ -3,7 +3,7 @@
 from enum import Enum
 
 from client import Client
-from commands import command_msz, command_tna
+from commands import command_msz, command_tna, command_ppo
 from draw import *
 from network_utils import connect_client, recv, send
 
@@ -28,7 +28,14 @@ def remove_client(clients, input):
             del clients[i]
             return
 
+def update_client(clients):
+    for client in clients:
+        ppo = command_ppo(sockfd, client.id)
+        if ppo is not None and ppo[0] == client.id:
+            client.update(ppo[1], ppo[2], ppo[3])
+
 def loop():
+    update_client(clients)
     tmp = recv(sockfd)
     if tmp is None:
         return
