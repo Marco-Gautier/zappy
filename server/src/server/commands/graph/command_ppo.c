@@ -9,23 +9,25 @@
 #include <stdlib.h>
 #include "zappy.h"
 
+const char *format = "ppo %d %d %d %d\n";
+
+/*
+** ppo -> player position
+**
+** Command:  "ppo #n" from client, where #n is the player number
+** Response: "ppo n X Y O" to client, where :
+**          n -> player number
+**          X -> horizontal position
+**          Y -> vertical position
+**          O -> orientation: 1(N), 2(E), 3(S), 4(W)
+*/
+
 int command_ppo(struct server *server, int i, int argc, char **argv)
 {
-    enum direction dir;
     int target = atoi(argv[1]);
-    int x = server->clients[target]->x;
-    int y = server->clients[target]->y;
     int fd = server->clients[i]->fd;
-    uint direction[D_DIRECTION_SIZE] = {
-        D_NORTH,
-        D_EAST,
-        D_SOUTH,
-        D_WEST
-    };
-
+    struct client *client = server->clients[target];
     (void)argc;
-    for (int i = 0; i < D_DIRECTION_SIZE; i++)
-        if (server->clients[target]->direction == direction[i])
-            dir = i + 1;
-    return dprintf(fd, "ppo %d %d %d %d\n", target, x, y, dir);
+
+    return dprintf(fd, format, target, client->x, client->y, client->direction);
 }
