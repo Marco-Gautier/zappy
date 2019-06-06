@@ -6,7 +6,7 @@ from network_utils import send, recv
 def command_msz(sockfd):
     send(sockfd, "msz")
     tmp = recv(sockfd)
-    return tuple(map(int, re.search(r"^msz ([1-9]\d*) ([1-9]\d*)$", tmp).groups()))
+    return tuple(map(int, re.search(r"^msz (\d+) (\d+)$", tmp).groups()))
 
 """ Return ["team_name", "team_name", ...] """
 def command_tna(sockfd):
@@ -27,4 +27,4 @@ def command_ppo(sockfd, player_number):
     print("tmp ppo: ", tmp)
     if tmp is None or tmp == "ko\n":
         return
-    return tuple(map(int, re.search(r"^ppo ([1-9]\d*) ([1-9]\d*) ([1-9]\d*) (1|2|3|4)$", tmp).groups()))
+    return tuple(map(int, re.search(r"^ppo (\d+) (\d+) (\d+) (1|2|3|4)$", tmp).groups()))
