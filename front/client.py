@@ -33,3 +33,8 @@ class Client:
     def draw_interface(self, window, font, y):
         text = f"#{self.id} {self.x} {self.y} {self.direction} {self.level} {self.team_name}"
         draw_text(window, font, text, 1700, y, self.color)
+
+    def update(self, x, y, direction):
+        self.x = x
+        self.y = y
+        self.direction = direction

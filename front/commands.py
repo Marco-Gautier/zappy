@@ -19,3 +19,12 @@ def command_tna(sockfd):
         token = tmp.groups()
         teams.append(token[0])
     return teams
+
+""" Return (player_number, x, y, dir) """
+def command_ppo(sockfd, player_number):
+    send(sockfd, f"ppo {player_number}")
+    tmp = recv(sockfd)
+    print("tmp ppo: ", tmp)
+    if tmp is None or tmp == "ko\n":
+        return
+    return tuple(map(int, re.search(r"^ppo ([1-9]\d*) ([1-9]\d*) ([1-9]\d*) (1|2|3|4)$", tmp).groups()))
