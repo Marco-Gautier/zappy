@@ -14,9 +14,7 @@ int right_callback(struct server *s, struct client *client, int ac, char **av)
     (void)av;
     (void)s;
 
-    printf("old: %d\n", client->direction);
     client->direction = compute_direction(client->direction, 1);
-    printf("new: %d\n", client->direction);
     return 0;
 }
 
