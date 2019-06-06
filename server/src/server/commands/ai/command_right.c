@@ -13,7 +13,6 @@ int right_callback(struct server *s, struct client *client, int ac, char **av)
     (void)ac;
     (void)av;
     (void)s;
-
     client->direction = compute_direction(client->direction, 1);
     return 0;
 }
