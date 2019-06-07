@@ -20,8 +20,8 @@ enum caouilloux {
 };
 
 typedef struct cell {
-    int             food;
-    enum caouilloux stones[C_CAOUILLOUX_SIZE];
+    int food;
+    int stones[C_CAOUILLOUX_SIZE];
 } cell_t;
 
 void    init_cell(cell_t *cell);
