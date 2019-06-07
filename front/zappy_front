@@ -19,6 +19,11 @@ def parse_options():
     parser.add_argument("-h", "--machine", type=str, action="store", dest="machine", help="machine is the name of the machine; localhost by default", default="localhost")
     return parser.parse_args()
 
+def handle_event(event_list):
+    for event in event_list:
+        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            exit(0)
+
 def add_client(clients, input):
     clients.append(Client(input))
 
@@ -47,11 +52,6 @@ def loop():
         add_client(clients, input)
     if input[0] == 'pdi' and len(input) == 2:
         remove_client(clients, input)
-
-def handle_event(event_list):
-    for event in event_list:
-        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-            exit(0)
 
 args = parse_options()
 sockfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

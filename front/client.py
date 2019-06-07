@@ -7,15 +7,6 @@ import pygame
 def random_color():
     return pygame.Color(random.randint(0, 0xFF), random.randint(0, 0xFF), random.randint(0, 0xFF))
 
-def hex_to_rgb(hex):
-    hex = str(hex)
-    hex = hex.lstrip('#')
-    hlen = len(hex)
-    print(hex)
-    tmp = tuple(int(hex[i:i+int(hlen/3)], 16) for i in range(0, hlen, int(hlen/3)))
-    print(tmp)
-    return tmp
-
 """ Represent a AI client """
 class Client:
 
@@ -28,7 +19,6 @@ class Client:
         self.level = int(input[5])
         self.team_name = input[6]
         self.color = random_color()
-        # print(pygame.Color.normalize(self.color))
 
     def draw_interface(self, window, font, y):
         text = f"#{self.id} {self.x} {self.y} {self.direction} {self.level} {self.team_name}"
