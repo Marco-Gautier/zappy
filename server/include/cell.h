@@ -10,12 +10,12 @@
 #include <stdbool.h>
 
 enum caouilloux {
-    C_SIBUR,
-    C_PHIRAS,
     C_LINEMATE,
-    C_MENDIANE,
-    C_THYSTAME,
     C_DERAUMERE,
+    C_SIBUR,
+    C_MENDIANE,
+    C_PHIRAS,
+    C_THYSTAME,
     C_CAOUILLOUX_SIZE
 };
 
