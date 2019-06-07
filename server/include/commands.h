@@ -36,3 +36,4 @@ int command_test(struct server *server, int client, int argc, char **argv);
 int command_forward(struct server *server, int i, int argc, char **argv);
 int command_right(struct server *server, int i, int argc, char **argv);
 int command_left(struct server *server, int i, int argc, char **argv);
+int command_inventory(struct server *server, int i, int argc, char **argv);

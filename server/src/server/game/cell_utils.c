@@ -8,6 +8,15 @@
 #include <string.h>
 #include "cell.h"
 
+const char *cayou_names[] = {
+    "linemate",
+    "deraumere",
+    "sibur",
+    "mendiane",
+    "phiras",
+    "thystame"
+};
+
 void init_cell(cell_t *cell)
 {
     memset(cell, 0, sizeof(cell_t));

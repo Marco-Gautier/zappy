@@ -26,3 +26,5 @@ typedef struct cell {
 
 void    init_cell(cell_t *cell);
 bool    cell_is_empty(cell_t *cell);
+
+extern const char *cayou_names[];
