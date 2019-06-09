@@ -20,6 +20,7 @@ AI_DIR			=	$(COMMANDS_DIR)ai/
 TESTS_LIB_DIR		=	lib/tests_
 TESTS_SRC_DIR		=	src/tests_
 TESTS_SERVER_DIR	=	src/server/tests_
+TESTS_COMMANDS_DIR	=	src/server/commands/tests_
 TESTS_GRAPH_DIR		=	src/server/commands/graph/tests_
 TESTS_AI_DIR		=	src/server/commands/ai/tests_
 
@@ -83,6 +84,7 @@ TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_SERVER_DIR)init_server.c		\
 			$(TESTS_SERVER_DIR)send_graphical_broadcast.c	\
 			$(TESTS_SERVER_DIR)read_clients_fd.c		\
+			$(TESTS_COMMANDS_DIR)command_unknown.c		\
 			$(TESTS_GRAPH_DIR)command_msz.c
 TESTS		+=	$(TESTS_LIB)
 TESTS		+=	$(SRC)
