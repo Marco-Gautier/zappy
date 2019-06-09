@@ -20,6 +20,8 @@ AI_DIR			=	$(COMMANDS_DIR)ai/
 TESTS_LIB_DIR		=	lib/tests_
 TESTS_SRC_DIR		=	src/tests_
 TESTS_SERVER_DIR	=	src/server/tests_
+TESTS_GRAPH_DIR		=	src/server/commands/graph/tests_
+TESTS_AI_DIR		=	src/server/commands/ai/tests_
 
 LIB		=	$(LIB_DIR)my_tabdup.c			\
 			$(LIB_DIR)my_tabndup.c			\
@@ -50,6 +52,7 @@ SRC		=	$(SRC_DIR)parse_options.c			\
 			$(MIDDLEWARE_DIR)filter_graphic_request.c	\
 			$(MIDDLEWARE_DIR)filter_ai_request.c		\
 			$(MIDDLEWARE_DIR)check_client_target.c		\
+			$(COMMANDS_DIR)utils.c                          \
 			$(COMMANDS_DIR)command_unknown.c		\
 			$(GRAPH_DIR)command_msz.c			\
 			$(GRAPH_DIR)command_tna.c			\
@@ -60,7 +63,11 @@ SRC		=	$(SRC_DIR)parse_options.c			\
 			$(GRAPH_DIR)command_bct.c			\
 			$(GRAPH_DIR)command_mct.c			\
 			$(GRAPH_DIR)command_pin.c			\
-			$(AI_DIR)command_test.c
+			$(AI_DIR)command_test.c				\
+			$(AI_DIR)command_forward.c			\
+			$(AI_DIR)command_right.c			\
+			$(AI_DIR)command_left.c				\
+			$(AI_DIR)command_inventory.c
 SRC		+=	$(LIB)
 
 TESTS_LIB	=	$(TESTS_LIB_DIR)my_tabdup.c			\
@@ -75,7 +82,8 @@ TESTS_LIB	=	$(TESTS_LIB_DIR)my_tabdup.c			\
 TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_SERVER_DIR)init_server.c		\
 			$(TESTS_SERVER_DIR)send_graphical_broadcast.c	\
-			$(TESTS_SERVER_DIR)read_clients_fd.c
+			$(TESTS_SERVER_DIR)read_clients_fd.c		\
+			$(TESTS_GRAPH_DIR)command_msz.c
 TESTS		+=	$(TESTS_LIB)
 TESTS		+=	$(SRC)
 
