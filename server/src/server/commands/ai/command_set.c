@@ -28,39 +28,39 @@ static int get_cayou_id(char **argv)
     return JE_SUIS_PAS_FIER;
 }
 
-static int take_builtin(struct server *server, struct client *client, int cayou)
+static int set_builtin(struct server *server, struct client *client, int cayou)
 {
     int x = client->x;
     int y = client->y;
     char buff[512];
 
     if (cayou == FOOD) {
-        if (!server->world.map[y][x].food)
+        if (!client->inventory.food)
             return -1;
-        server->world.map[y][x].food -= 1;
-        client->inventory.food += 1;
+        server->world.map[y][x].food += 1;
+        client->inventory.food -= 1;
     } else if (cayou != JE_SUIS_PAS_FIER) {
-        if (server->world.map[y][x].stones[cayou] == 0)
+        if (!client->inventory.stones[cayou])
             return -1;
-        server->world.map[y][x].stones[cayou] -= 1;
-        client->inventory.stones[cayou] += 1;
+        server->world.map[y][x].stones[cayou] += 1;
+        client->inventory.stones[cayou] -= 1;
     } else
         return -1;
-    snprintf(buff, sizeof(buff), "pgt %d %d\n", client->id, cayou);
+    snprintf(buff, sizeof(buff), "pdr %d %d\n", client->id, cayou);
     send_graphical_broadcast(server, buff);
     return 0;
 }
 
-static int take_callback(struct server *server, struct client *client,
+static int set_callback(struct server *server, struct client *client,
 int cayou_id, char **argv __attribute__((unused)))
 {
-    if (take_builtin(server, client, cayou_id) != -1)
+    if (set_builtin(server, client, cayou_id) != -1)
         return dprintf(client->fd, "ok\n");
     else
         return dprintf(client->fd, "ko\n");
 }
 
-int command_take(struct server *server, int client, int argc, char **argv)
+int command_set(struct server *server, int client, int argc, char **argv)
 {
     suseconds_t time;
     event_t *event;
@@ -74,7 +74,7 @@ int command_take(struct server *server, int client, int argc, char **argv)
     time = compute_trigger_time(7, server->options.freq);
     if (time == -1)
         return -1;
-    event = create_event(time, cayou_id, NULL, &take_callback);
+    event = create_event(time, cayou_id, NULL, &set_callback);
     if (!event)
         return -1;
     return add_event(server->clients[client], event);

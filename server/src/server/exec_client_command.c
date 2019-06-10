@@ -28,6 +28,7 @@ const struct command command_helper[] = {
     {"Inventory",   API_AI,         command_inventory},
     {"Connect_nbr", API_AI,         command_connect_nbr},
     {"Take",        API_AI,         command_take},
+    {"Set",         API_AI,         command_take},
     {NULL,          NO_MIDDLEWARE,  command_unknown}
 };
 
