@@ -11,9 +11,7 @@
 #include "zappy.h"
 
 /*
-** Reject client if the buffer contains :
-** > 10 commands
-** > 5120 caracters
+** Reject client if the buffer contains more than 10 commands
 */
 
 static int check_client_buffer(const char *buffer)
@@ -23,7 +21,7 @@ static int check_client_buffer(const char *buffer)
     for (size_t i = 0, line = 0; buffer[i] != '\0'; i++) {
         if (buffer[i] == '\n')
             line++;
-        if (line >= 10 || i >= 5120)
+        if (line >= 10)
             return -1;
     }
     return 0;
