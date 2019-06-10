@@ -34,6 +34,7 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(GAME_DIR)init_world.c				\
 			$(GAME_DIR)cell_utils.c				\
 			$(GAME_DIR)food_events.c			\
+			$(GAME_DIR)stones_events.c			\
 			$(MIDDLEWARE_DIR)log_command.c			\
 			$(MIDDLEWARE_DIR)filter_graphic_request.c	\
 			$(MIDDLEWARE_DIR)filter_ai_request.c		\

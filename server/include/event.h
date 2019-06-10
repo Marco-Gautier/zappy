@@ -11,14 +11,15 @@
 #include "server.h"
 #include "client.h"
 
+#define DIGEST_TIME 126
+
 /* https://stackoverflow.com/q/5833094 */
 #define GET_TIME_SEC(tv) (1000000 * tv.tv_sec + tv.tv_usec)
-#define DIGEST_TIME 126
+
+struct server;
 
 typedef int (*callback_t)(struct server *s, struct client *client, int ac, char
 **av);
-
-struct client;
 
 typedef struct event {
     struct event *next;
@@ -32,4 +33,6 @@ typedef struct event {
 event_t *create_event(time_t time, int argc, char **argv, callback_t callback);
 int add_event(struct client *client, event_t *event);
 suseconds_t compute_trigger_time(int time, int freq);
+
 int add_food_event(struct server *server, struct client *client);
+int add_stones_event(struct server *server);

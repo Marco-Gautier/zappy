@@ -43,5 +43,6 @@ int init_server(struct server *server)
     if (server_bind_socket(server->fd, server->options.port) == -1)
         return -1;
     server->clients = NULL;
+    server->events = NULL;
     return 0;
 }

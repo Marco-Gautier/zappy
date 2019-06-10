@@ -71,6 +71,7 @@ int run_server(struct server *server)
     int fdmax;
     struct timeval *time = NULL;
 
+    add_stones_event(server);
     while (!is_game_over(server)) {
         server_reset_fds(server);
         fdmax = get_server_process_fd_max(server);

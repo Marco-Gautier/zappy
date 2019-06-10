@@ -8,6 +8,7 @@
 #pragma once
 
 #include <sys/select.h>
+#include "event.h"
 #include "world.h"
 
 struct server {
@@ -15,6 +16,7 @@ struct server {
     int                 fd;
     fd_set              rfds;
     fd_set              wfds;
+    struct event        *events;
     struct world        world;
     struct client       **clients;
 };

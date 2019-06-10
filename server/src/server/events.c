@@ -17,7 +17,7 @@ suseconds_t compute_trigger_time(int time, int freq)
 
     if (gettimeofday(&timeval, NULL) == -1)
         return -1;
-    return GET_TIME_SEC(timeval) + (time / freq) * 1000000;
+    return GET_TIME_SEC(timeval) + (1000000 / freq) * time;
 }
 
 event_t *create_event(time_t time, int argc, char **argv, callback_t callback)
@@ -41,18 +41,19 @@ int add_event(struct client *client, event_t *event)
     return 0;
 }
 
-static int handle_client_events(struct server *server, struct client *client)
+static int update_event_list(struct server *server, struct client *client,
+event_t **event_list)
 {
     struct timeval timeval;
     event_t *tmp;
 
     if (gettimeofday(&timeval, NULL) == -1)
         return -1;
-    for (event_t *event = client->event; event != NULL; ) {
+    for (event_t *event = *event_list; event != NULL; ) {
         if (event->trigger_time <= GET_TIME_SEC(timeval)) {
             event->callback(server, client, event->argc, event->argv);
             tmp = event->next;
-            client->event = my_list_erase(client->event, event, free);
+            *event_list = my_list_erase(*event_list, event, free);
             event = tmp;
         } else
             event = event->next;
@@ -60,8 +61,9 @@ static int handle_client_events(struct server *server, struct client *client)
     return 0;
 }
 
-void update_events(struct server *server)
+void update_events(struct server *serv)
 {
-    for (int i = 0; server->clients[i] != NULL; i++)
-        handle_client_events(server, server->clients[i]);
+    for (size_t i = 0; serv->clients[i] != NULL; i++)
+        update_event_list(serv, serv->clients[i], &serv->clients[i]->event);
+    update_event_list(serv, NULL, &serv->events);
 }
