@@ -11,7 +11,8 @@ static void my_list_clear_builtin(__list_t *list, void (*destructor)(void *ptr))
 {
     if (list != NULL) {
         my_list_clear_builtin(list->next, destructor);
-        destructor(list);
+        if (destructor)
+            destructor(list);
     }
 }
 
