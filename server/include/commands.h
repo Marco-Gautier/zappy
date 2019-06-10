@@ -38,3 +38,4 @@ int command_right(struct server *server, int i, int argc, char **argv);
 int command_left(struct server *server, int i, int argc, char **argv);
 int command_inventory(struct server *server, int i, int argc, char **argv);
 int command_connect_nbr(struct server *server, int i, int argc, char **argv);
+int command_take(struct server *server, int client, int argc, char **argv);

@@ -55,7 +55,8 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(AI_DIR)command_right.c			\
 			$(AI_DIR)command_left.c				\
 			$(AI_DIR)command_inventory.c			\
-			$(AI_DIR)command_connect_nbr.c
+			$(AI_DIR)command_connect_nbr.c			\
+			$(AI_DIR)command_take.c
 
 OBJ		=	$(SRC:.c=.o)
 
