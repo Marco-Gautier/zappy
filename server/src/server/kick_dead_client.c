@@ -7,6 +7,10 @@
 
 #include "zappy.h"
 
+/*
+** Kick all AI client who are too hungry from the server
+*/
+
 void kick_dead_client(struct server *server)
 {
     for (size_t i = 0; server->clients[i] != NULL; i++) {
