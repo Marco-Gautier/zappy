@@ -12,22 +12,22 @@
 #include "my.h"
 
 const struct command command_helper[] = {
-    {"bct", API_GRAPH,      command_bct},
-    {"msz", API_GRAPH,      command_msz},
-    {"mct", API_GRAPH,      command_mct},
-    {"pin", API_TARGET,     command_pin},
-    {"plv", API_TARGET,     command_plv},
-    {"ppo", API_TARGET,     command_ppo},
-    {"sgt", API_GRAPH,      command_sgt},
-    {"sst", API_GRAPH,      command_sst},
-    {"tna", API_GRAPH,      command_tna},
-    {"test", API_AI,        command_test},
-    {"Forward", API_AI,     command_forward},
-    {"Right", API_AI,       command_right},
-    {"Left", API_AI,        command_left},
-    {"Inventory", API_AI,   command_inventory},
-    {"Connect_nbr", API_AI,   command_connect_nbr},
-    {NULL,  NO_MIDDLEWARE,  command_unknown}
+    {"bct",         API_GRAPH,      command_bct},
+    {"msz",         API_GRAPH,      command_msz},
+    {"mct",         API_GRAPH,      command_mct},
+    {"pin",         API_TARGET,     command_pin},
+    {"plv",         API_TARGET,     command_plv},
+    {"ppo",         API_TARGET,     command_ppo},
+    {"sgt",         API_GRAPH,      command_sgt},
+    {"sst",         API_GRAPH,      command_sst},
+    {"tna",         API_GRAPH,      command_tna},
+    {"test",        API_AI,         command_test},
+    {"Forward",     API_AI,         command_forward},
+    {"Right",       API_AI,         command_right},
+    {"Left",        API_AI,         command_left},
+    {"Inventory",   API_AI,         command_inventory},
+    {"Connect_nbr", API_AI,         command_connect_nbr},
+    {NULL,          NO_MIDDLEWARE,  command_unknown}
 };
 
 /*
