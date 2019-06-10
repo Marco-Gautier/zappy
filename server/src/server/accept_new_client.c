@@ -50,6 +50,8 @@ static struct client *add_new_client(struct server *server, int fd)
     return server->clients[i];
 }
 
+const char *mdr = "Can't accept a new client : resources are currently limited";
+
 int accept_new_client(struct server *server)
 {
     int fd;
@@ -63,7 +65,8 @@ int accept_new_client(struct server *server)
         return puts("Can't accept a new client."), -1;
     new = add_new_client(server, fd);
     if (!new) {
-        puts("Can't accept a new client : resources are currently limited");
+        dprintf(fd, "%s", mdr);
+        puts(mdr);
         close(fd);
         return -1;
     }
