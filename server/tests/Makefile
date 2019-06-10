@@ -85,7 +85,11 @@ TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_SERVER_DIR)send_graphical_broadcast.c	\
 			$(TESTS_SERVER_DIR)read_clients_fd.c		\
 			$(TESTS_COMMANDS_DIR)command_unknown.c		\
-			$(TESTS_GRAPH_DIR)command_msz.c
+			$(TESTS_GRAPH_DIR)command_msz.c			\
+			$(TESTS_GRAPH_DIR)command_tna.c			\
+			$(TESTS_GRAPH_DIR)command_sst.c			\
+			$(TESTS_GRAPH_DIR)command_sgt.c			\
+			$(TESTS_GRAPH_DIR)command_plv.c
 TESTS		+=	$(TESTS_LIB)
 TESTS		+=	$(SRC)
 

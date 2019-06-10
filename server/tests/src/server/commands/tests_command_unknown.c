@@ -33,12 +33,12 @@ Test(command_unknown, success)
     int argc = 1;
     int pipefd[2];
     struct server server;
-    char *argv[] = { "mdr" };
+    static const char * const argv[] = { "mdr" };
     char buffer[512] = { 0 };
 
     cr_assert(pipe(pipefd) == 0);
     setup_success_test(&server, pipefd[1]);
-    cr_assert(command_unknown(&server, 0, argc, argv) != -1);
+    cr_assert(command_unknown(&server, 0, argc, (char **)argv) != -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "ko\n") == 0);
     close(pipefd[0]);
