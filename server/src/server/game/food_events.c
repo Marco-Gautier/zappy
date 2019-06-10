@@ -10,17 +10,17 @@
 #include "event.h"
 #include "server.h"
 
-int food_callback(struct server *s, struct client *client, int ac, char **av)
+int food_callback(struct server *serv, struct client *client, int ac, char **av)
 {
-    int x = rand() % s->world.width;
-    int y = rand() % s->world.height;
+    int x = rand() % serv->world.width;
+    int y = rand() % serv->world.height;
 
     (void)ac;
     (void)av;
     client->inventory.food--;
-    s->world.map[x][y].food++;
+    serv->world.map[x][y].food++;
     fprintf(stderr, "%s\n", __func__);
-    return add_food_event(s, client);
+    return add_food_event(serv, client);
 }
 
 int add_food_event(struct server *server, struct client *client)
