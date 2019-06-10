@@ -39,8 +39,6 @@ static struct client *add_new_client(struct server *server, int fd)
     if (server->clients)
         while (server->clients[i] != NULL)
             i++;
-    if (i >= MAX_CLIENTS)
-        return NULL;
     tmp = realloc(server->clients, sizeof(struct client *) * (i + 2));
     if (!tmp)
         return NULL;
@@ -62,10 +60,10 @@ int accept_new_client(struct server *server)
     puts("New client request.");
     fd = accept(server->fd, (struct sockaddr *)&addr, &addrlen);
     if (fd == -1)
-        return puts("Can't accept new client."), -1;
+        return puts("Can't accept a new client."), -1;
     new = add_new_client(server, fd);
     if (!new) {
-        puts("Maximum number of client reached.");
+        puts("Can't accept a new client : resources are currently limited");
         close(fd);
         return -1;
     }
