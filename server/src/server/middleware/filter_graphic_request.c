@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2018
+** EPITECH PROJECT, 2019
 ** filter_graphic_request
 ** File description:
 ** filter_graphic_request

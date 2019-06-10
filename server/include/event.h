@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2019
-** PSU_zappy_2018
+** PSU_zappy_2019
 ** File description:
 ** event.h
 */

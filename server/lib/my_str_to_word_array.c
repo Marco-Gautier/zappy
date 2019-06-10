@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2018
+** EPITECH PROJECT, 2019
 ** my_str_to_word_array
 ** File description:
 ** my_str_to_word_array

@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2018
+** EPITECH PROJECT, 2019
 ** get_nb_free_team_slot
 ** File description:
 ** get_nb_free_team_slot
