@@ -20,7 +20,7 @@ int inv_callback(struct server *s, struct client *client, int ac, char **av)
     (void)s;
     snprintf(buffer, sizeof(buffer), "[ food %d", client->inventory.food);
     for (int i = 0; i < C_CAOUILLOUX_SIZE; i++) {
-        snprintf(tmp, sizeof(tmp), ", %s %d", cayou_names[i],stones[i]);
+        snprintf(tmp, sizeof(tmp), ", %s %d", cayou_names[i], stones[i]);
         strcat(buffer, tmp);
     }
     snprintf(tmp, sizeof(tmp), " ]");
