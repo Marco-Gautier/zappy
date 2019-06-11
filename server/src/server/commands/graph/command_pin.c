@@ -19,12 +19,16 @@ int command_pin(struct server *server, int i, int argc, char **argv)
 {
     int fd = server->clients[i]->fd;
     int target = atoi(argv[1]);
-    cell_t *inv = &server->clients[target]->inventory;
-    enum caouilloux g[C_CAOUILLOUX_SIZE];
-    int f = inv->food;
+    inventory_t *inventory;
+    int g[C_CAOUILLOUX_SIZE];
+    int mdr;
 
     (void)argc;
-    for (size_t i = 0; i < ARRAY_SIZE(g); i++)
-        g[i] = inv->stones[i];
-    return dprintf(fd, format, target, f, g[0], g[1], g[2], g[3], g[4], g[5]);
+    for (size_t j = 0; server->clients[j] != NULL; j++)
+        if (server->clients[j]->id == target)
+            inventory = &server->clients[j]->inventory;
+    for (size_t i = 0; i < C_CAOUILLOUX_SIZE; i++)
+        g[i] = inventory->stones[i];
+    mdr = inventory->food;
+    return dprintf(fd, format, target, mdr, g[0], g[1], g[2], g[3], g[4], g[5]);
 }
