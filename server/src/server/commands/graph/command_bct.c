@@ -34,10 +34,10 @@ int command_bct(struct server *server, int i, int argc, char **argv)
     int y;
 
     if (argc != 3)
-        return dprintf(server->clients[i]->fd, "ko\n");
+        return dprintf(server->clients[i]->fd, "ko\n"), -1;
     x = atoi(argv[1]);
     y = atoi(argv[2]);
     if (x < 0 || x >= options->width || y < 0 || y >= options->height)
-        return dprintf(server->clients[i]->fd, "ko\n");
-    return bct_builtin(&server->world.map[x][y], server->clients[i]->fd, x, y);
+        return dprintf(server->clients[i]->fd, "ko\n"), -1;
+    return bct_builtin(&server->world.map[y][x], server->clients[i]->fd, x, y);
 }
