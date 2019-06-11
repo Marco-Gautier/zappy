@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include "zappy.h"
 
-const char *format = "ppo %d %d %d %d\n";
+static const char *format = "ppo %d %d %d %d\n";
 
 /*
 ** ppo -> player position
@@ -26,8 +26,11 @@ int command_ppo(struct server *server, int i, int argc, char **argv)
 {
     int target = atoi(argv[1]);
     int fd = server->clients[i]->fd;
-    struct client *client = server->clients[target];
-    (void)argc;
+    struct client *client;
 
+    (void)argc;
+    for (size_t j = 0; server->clients[j] != NULL; j++)
+        if (server->clients[j]->id == target)
+            client = server->clients[j];
     return dprintf(fd, format, target, client->x, client->y, client->direction);
 }
