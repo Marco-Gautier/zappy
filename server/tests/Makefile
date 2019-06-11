@@ -95,7 +95,8 @@ TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_GRAPH_DIR)command_sgt.c			\
 			$(TESTS_GRAPH_DIR)command_plv.c			\
 			$(TESTS_GRAPH_DIR)command_ppo.c			\
-			$(TESTS_GRAPH_DIR)command_bct.c
+			$(TESTS_GRAPH_DIR)command_bct.c			\
+			$(TESTS_GRAPH_DIR)command_mct.c
 TESTS		+=	$(TESTS_LIB)
 TESTS		+=	$(SRC)
 
