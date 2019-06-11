@@ -31,11 +31,13 @@ Test(command_ppo, success)
         int pipefd[2];
         struct server server = { .clients = clients };
         char *player_id = calloc(1, 16);
-        snprintf(player_id, 16, "%d", id);
-        const char *argv[] = { "ppo", player_id };
+        static const char *argv[2];
         char buffer[512] = {0};
         char expected[BUFSIZ] = {0};
 
+        snprintf(player_id, 16, "%d", id);
+        argv[0] = "ppo";
+        argv[1] = player_id;
         cr_assert(pipe(pipefd) == 0);
         client.fd = pipefd[1];
         cr_assert(command_ppo(&server, 0, argc, (char **)argv) != -1);
