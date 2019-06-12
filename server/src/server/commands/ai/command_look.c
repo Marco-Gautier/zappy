@@ -21,7 +21,7 @@ static int get_x_offset(struct client *client, int i, int j, int width)
     if (client->direction == D_WEST)
         tmp = (client->x - (i + 1)) % width;
     if (client->direction == D_EAST)
-        tmp = (client->x + (i + 1)) % width;
+        tmp = (client->y + (i + 1)) % width;
     return tmp >= 0 ? tmp : tmp + width;
 }
 
