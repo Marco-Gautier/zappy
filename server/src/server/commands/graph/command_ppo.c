@@ -26,11 +26,13 @@ int command_ppo(struct server *server, int i, int argc, char **argv)
 {
     int target = atoi(argv[1]);
     int fd = server->clients[i]->fd;
-    struct client *client;
+    struct client *client = NULL;
 
     (void)argc;
     for (size_t j = 0; server->clients[j] != NULL; j++)
         if (server->clients[j]->id == target)
             client = server->clients[j];
+    if (!client)
+        return -1;
     return dprintf(fd, format, target, client->x, client->y, client->direction);
 }
