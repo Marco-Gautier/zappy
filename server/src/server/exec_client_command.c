@@ -86,16 +86,19 @@ char **prepare_command(struct client *client, char **tmp)
 
 int exec_client_command(struct server *server, int i)
 {
+    int ret = 0;
     char *tmp;
     char **command = prepare_command(server->clients[i], &tmp);
 
     if (!command)
         return -1;
-    if (!server->clients[i]->team_name)
-        client_join_team(server, i, command);
-    else
-        exec_client_cmd(server, i, command);
+    if (!server->clients[i]->team_name) {
+        ret = client_join_team(server, server->clients[i], command);
+        if (ret == -1)
+            dprintf(server->clients[i]->fd, "ko\n");
+    } else
+        ret = exec_client_cmd(server, i, command);
     free(tmp);
     free(command);
-    return 0;
+    return ret;
 }

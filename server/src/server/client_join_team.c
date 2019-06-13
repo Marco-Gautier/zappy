@@ -35,9 +35,9 @@ static void broadcast_new_player(struct server *server, struct client *client)
 **  --> X Y\n
 */
 
-static void join_team(struct server *server, int i, int slot, char *team_name)
+static void join_team(struct server *server, struct client *client,
+int slot, char *team_name)
 {
-    struct client *client = server->clients[i];
     int width = server->options.width;
     int height = server->options.height;
 
@@ -45,27 +45,23 @@ static void join_team(struct server *server, int i, int slot, char *team_name)
     client->team_name = team_name;
     add_food_event(server, client);
     broadcast_new_player(server, client);
-    printf("Client n°%d join team '%s'\n", server->clients[i]->id, team_name);
+    printf("Client n°%d join team '%s'\n", client->id, team_name);
 }
 
-int client_join_team(struct server *server, int i, char **command)
+int client_join_team(struct server *server, struct client *client, char **cmd)
 {
     int slot;
 
-    if (my_tablen(command) != 1) {
-        dprintf(server->clients[i]->fd, "ko\n");
+    if (my_tablen(cmd) != 1)
         return -1;
-    }
-    if (!strcmp(command[0], "GRAPHIC")) {
-        server->clients[i]->team_name = "GRAPHIC";
-        server->clients[i]->client_type = CT_GRAPHIC;
+    if (!strcmp(cmd[0], "GRAPHIC")) {
+        client->team_name = "GRAPHIC";
+        client->client_type = CT_GRAPHIC;
         return 0;
     }
-    slot = get_nb_free_team_slot(server, command[0]);
-    if (slot == -1) {
-        dprintf(server->clients[i]->fd, "ko\n");
+    slot = get_nb_free_team_slot(server, cmd[0]);
+    if (slot == -1)
         return -1;
-    } else
-        join_team(server, i, slot, strdup(command[0]));
+    join_team(server, client, slot, strdup(cmd[0]));
     return 0;
 }
