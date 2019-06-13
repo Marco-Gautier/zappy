@@ -42,3 +42,4 @@ int command_connect_nbr(struct server *server, int i, int argc, char **argv);
 int command_take(struct server *server, int client, int argc, char **argv);
 int command_set(struct server *server, int client, int argc, char **argv);
 int command_look(struct server *server, int i, int argc, char **argv);
+int command_incantation(struct server *server, int i, int argc, char **argv);

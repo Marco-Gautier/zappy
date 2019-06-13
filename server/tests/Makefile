@@ -48,6 +48,7 @@ SRC		=	$(SRC_DIR)parse_options.c			\
 			$(SERVER_DIR)kick_dead_client.c			\
 			$(GAME_DIR)init_world.c				\
 			$(GAME_DIR)cell_utils.c				\
+			$(GAME_DIR)inventory_utils.c			\
 			$(GAME_DIR)food_events.c			\
 			$(GAME_DIR)stones_events.c			\
 			$(MIDDLEWARE_DIR)log_command.c			\
@@ -73,7 +74,8 @@ SRC		=	$(SRC_DIR)parse_options.c			\
 			$(AI_DIR)command_connect_nbr.c			\
 			$(AI_DIR)command_take.c				\
 			$(AI_DIR)command_set.c				\
-			$(AI_DIR)command_look.c
+			$(AI_DIR)command_look.c				\
+			$(AI_DIR)command_incantation.c
 SRC		+=	$(LIB)
 
 TESTS_LIB	=	$(TESTS_LIB_DIR)my_tabdup.c			\
