@@ -32,7 +32,6 @@ static int take_builtin(struct server *server, struct client *client, int cayou)
 {
     int x = client->x;
     int y = client->y;
-    char buff[512];
 
     if (cayou == FOOD) {
         if (!server->world.map[y][x].food)
@@ -46,8 +45,7 @@ static int take_builtin(struct server *server, struct client *client, int cayou)
         client->inventory.stones[cayou] += 1;
     } else
         return -1;
-    snprintf(buff, sizeof(buff), "pgt %d %d\n", client->id, cayou);
-    send_graphical_broadcast(server, buff);
+    send_graphical_broadcast(server, "pgt %d %d\n", client->id, cayou);
     return 0;
 }
 

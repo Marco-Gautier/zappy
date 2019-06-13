@@ -5,12 +5,18 @@
 ** send_graphical_broadcast
 */
 
+#include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 #include "zappy.h"
 
-void send_graphical_broadcast(struct server *server, const char *message)
+void send_graphical_broadcast(struct server *server, const char *format, ...)
 {
+    va_list ap;
+
+    if (!format)
+        return;
+    va_start(ap, format);
     for (size_t i = 0; server->clients[i] != NULL; i++) {
         if (!server->clients[i]->team_name)
             continue;
@@ -18,6 +24,7 @@ void send_graphical_broadcast(struct server *server, const char *message)
             continue;
         if (strcmp(server->clients[i]->team_name, "GRAPHIC") != 0)
             continue;
-        dprintf(server->clients[i]->fd, "%s",  message);
+        vdprintf(server->clients[i]->fd, format, ap);
     }
+    va_end(ap);
 }

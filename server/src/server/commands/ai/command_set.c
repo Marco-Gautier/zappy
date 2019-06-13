@@ -32,7 +32,6 @@ static int set_builtin(struct server *server, struct client *client, int cayou)
 {
     int x = client->x;
     int y = client->y;
-    char buff[512];
 
     if (cayou == FOOD) {
         if (!client->inventory.food)
@@ -46,8 +45,7 @@ static int set_builtin(struct server *server, struct client *client, int cayou)
         client->inventory.stones[cayou] -= 1;
     } else
         return -1;
-    snprintf(buff, sizeof(buff), "pdr %d %d\n", client->id, cayou);
-    send_graphical_broadcast(server, buff);
+    send_graphical_broadcast(server, "pdr %d %d\n", client->id, cayou);
     return 0;
 }
 

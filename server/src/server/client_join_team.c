@@ -17,16 +17,15 @@
 
 static void broadcast_new_player(struct server *server, struct client *client)
 {
-    char buf[128];
-    char *format = "pnw #%d %d %d %d %d %s\n";
+    const char *format = "pnw #%d %d %d %d %d %s\n";
     int id = client->id;
     int x = client->x;
     int y = client->y;
+    enum direction dir = client->direction;
     int level = client->level;
     const char *team_name = client->team_name;
 
-    snprintf(buf, sizeof(buf), format, id, x, y, 1, level, team_name);
-    send_graphical_broadcast(server, buf);
+    send_graphical_broadcast(server, format, id, x, y, dir, level, team_name);
 }
 
 /*

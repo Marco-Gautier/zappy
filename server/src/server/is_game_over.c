@@ -33,15 +33,14 @@ static int get_team_elevation(struct server *server, const char *team)
 
 bool is_game_over(struct server *server)
 {
-    char buff[512];
+    const char *format = "seg %s\n";
 
     if (!server->clients)
         return false;
     for (int i = 0; server->options.team_names[i] != NULL; i++) {
         if (get_team_elevation(server, server->options.team_names[i]) < 6)
             continue;
-        snprintf(buff, sizeof(buff), "seg %s\n", server->options.team_names[i]);
-        send_graphical_broadcast(server, buff);
+        send_graphical_broadcast(server, format, server->options.team_names[i]);
         printf("%s has won.\n", server->options.team_names[i]);
         return true;
     }

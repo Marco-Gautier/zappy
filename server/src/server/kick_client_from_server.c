@@ -35,14 +35,13 @@ void remove_client(struct server *server, int i)
 
 void kick_client_from_server(struct server *server, int i)
 {
-    char buff[64];
+    struct client *client = server->clients[i];
 
     if (server->clients[i]->hatched == true)
-        snprintf(buff, sizeof(buff), "edi %d\n", server->clients[i]->egg_id);
+        send_graphical_broadcast(server, "edi %d\n", client->egg_id);
     else
-        snprintf(buff, sizeof(buff), "pdi %d\n", server->clients[i]->id);
-    send_graphical_broadcast(server, buff);
-    dprintf(server->clients[i]->fd, "dead\n");
-    printf("Client n°%d left.\n", server->clients[i]->id);
+        send_graphical_broadcast(server, "pdi %d\n", client->id);
+    dprintf(client->fd, "dead\n");
+    printf("Client n°%d left.\n", client->id);
     remove_client(server, i);
 }
