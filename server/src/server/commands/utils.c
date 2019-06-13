@@ -9,7 +9,7 @@
 #include <string.h>
 #include "zappy.h"
 
-static void add_elem_to_str(char *buffer, char *elem)
+static void add_elem_to_str(char *buffer, const char *elem)
 {
     char tmp[128];
 
@@ -24,9 +24,8 @@ static void add_elem_to_str(char *buffer, char *elem)
 char *list_case_content(struct server *s, struct world *world, int x, int y)
 {
     char buffer[BUFSIZ] = {0};
-    char tmp[128];
 
-    for (int i = 0; i < s->clients[i]; i++)
+    for (int i = 0; s->clients[i] != NULL; i++)
         if (s->clients[i]->x == x && s->clients[i]->y == y)
             add_elem_to_str(buffer, "player");
     if (world->map[x][y].food > 0)
