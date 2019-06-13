@@ -61,9 +61,10 @@ static bool is_participant_valid(const struct client *a, const struct client *b)
 }
 
 /*
-** Requirement for elevation is :
+** Depending on the elevation requested :
 **
-**      -
+** - You need a minimum number of players of the same level on the same square
+** - These players inventories sum is at least equal to the required stones
 */
 
 static bool check_requirement(struct server *server, struct client *client)
@@ -81,13 +82,13 @@ static bool check_requirement(struct server *server, struct client *client)
         inventory_ge_cmp(&total_inv, &elevation_req[client->level - 1]);
 }
 
-static int incan_callback(struct server *server, struct client *client,
+static int incantation_callback(struct server *server, struct client *client,
 int argc, char **argv)
 {
     (void)argc;
     (void)argv;
     if (!check_requirement(server, client))
-        return -1;
+        return dprintf(server->clients[i]->fd, "ko\n"), -1;
     for (size_t i = 0; server->clients[i] != NULL; i++) {
         if (!is_participant_valid(client, server->clients[i]))
             continue;
@@ -112,7 +113,7 @@ int command_incantation(struct server *server, int i, int argc, char **argv)
     time = compute_trigger_time(300, server->options.freq);
     if (time == -1)
         return -1;
-    event = create_event(time, 0, NULL, &incan_callback);
+    event = create_event(time, 0, NULL, &incantation_callback);
     if (!event)
         return -1;
     return add_event(server->clients[i], event);
