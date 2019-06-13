@@ -88,7 +88,7 @@ int argc, char **argv)
     (void)argc;
     (void)argv;
     if (!check_requirement(server, client))
-        return dprintf(server->clients[i]->fd, "ko\n"), -1;
+        return dprintf(client->fd, "ko\n"), -1;
     for (size_t i = 0; server->clients[i] != NULL; i++) {
         if (!is_participant_valid(client, server->clients[i]))
             continue;
