@@ -89,9 +89,11 @@ TESTS_LIB	=	$(TESTS_LIB_DIR)my_tabdup.c			\
 			$(TESTS_LIB_DIR)my_list_clear.c			\
 
 TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
+			$(TESTS_SERVER_DIR)events.c			\
 			$(TESTS_SERVER_DIR)init_server.c		\
 			$(TESTS_SERVER_DIR)send_graphical_broadcast.c	\
 			$(TESTS_SERVER_DIR)read_clients_fd.c		\
+			$(TESTS_SERVER_DIR)get_nb_free_team_slot.c	\
 			$(TESTS_GAME_DIR)init_world.c			\
 			$(TESTS_GAME_DIR)cell_utils.c			\
 			$(TESTS_GAME_DIR)inventory_utils.c		\
