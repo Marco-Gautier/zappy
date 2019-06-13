@@ -9,21 +9,31 @@
 #include <string.h>
 #include "zappy.h"
 
-char *list_case_content(struct world world, int x, int y)
+static void add_elem_to_str(char *buffer, char *elem)
+{
+    char tmp[128];
+
+    if (buffer && strlen(buffer) > 0) {
+        snprintf(tmp, sizeof(tmp), " ");
+        strcat(buffer, tmp);
+    }
+    snprintf(tmp, sizeof(tmp), "%s", elem);
+    strcat(buffer, tmp);
+}
+
+char *list_case_content(struct server *s, struct world *world, int x, int y)
 {
     char buffer[BUFSIZ] = {0};
     char tmp[128];
 
-    if (world.map[x][y].food > 0)
-        snprintf(buffer, sizeof(buffer), "food");
+    for (int i = 0; i < s->clients[i]; i++)
+        if (s->clients[i]->x == x && s->clients[i]->y == y)
+            add_elem_to_str(buffer, "player");
+    if (world->map[x][y].food > 0)
+        add_elem_to_str(buffer, "food");
     for (int i = 0; i < C_CAOUILLOUX_SIZE; i++) {
-        if (world.map[x][y].stones[i] > 0) {
-            if (strlen(buffer) > 0) {
-                snprintf(tmp, sizeof(tmp), " ");
-                strcat(buffer, tmp);
-            }
-            snprintf(tmp, sizeof(tmp), "%s", cayou_names[i]);
-            strcat(buffer, tmp);
+        if (world->map[x][y].stones[i] > 0) {
+            add_elem_to_str(buffer, cayou_names[i]);
         }
     }
     return strdup(buffer);

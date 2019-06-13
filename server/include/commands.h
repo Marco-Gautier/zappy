@@ -19,7 +19,7 @@ int command_unknown(struct server *server, int client, int argc, char **argv);
 
 /* Utils */
 enum direction compute_direction(enum direction dir, int offset);
-char *list_case_content(struct world world, int x, int y);
+char *list_case_content(struct server *s, struct world *world, int x, int y);
 
 /* API command reserved to graphical clients */
 int command_msz(struct server *server, int client, int argc, char **argv);

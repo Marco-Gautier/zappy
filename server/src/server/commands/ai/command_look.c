@@ -48,13 +48,13 @@ int look_callback(struct server *s, struct client *client, int ac, char **av)
     (void)ac;
     (void)av;
     snprintf(buffer, sizeof(buffer),  "[");
-    tmp = list_case_content(s->world, client->x, client->y);
+    tmp = list_case_content(s, &s->world, client->x, client->y);
     if (tmp)
         strcat(buffer, tmp);
     for (int i = 0; i < client->level; i++) {
         for (int j = 0; j < (i + 1) * 2 + 1; j++) {
             strcat(buffer, ",");
-            tmp = list_case_content(s->world, get_x_offset(client, i, j,\
+            tmp = list_case_content(s, &s->world, get_x_offset(client, i, j,
 s->world.width), get_y_offset(client, i, j, s->world.height));
             if (tmp)
                 strcat(buffer, tmp);
@@ -74,7 +74,5 @@ int command_look(struct server *server, int i, int argc, char **argv)
     event = create_event(trigger_time, argc, argv, &look_callback);
     if (!event)
         return fprintf(stderr, "error during event creation\n"), -1;
-    if (dprintf(server->clients[i]->fd, "ok\n") < 0)
-        return -1;
     return add_event(server->clients[i], event);
 }
