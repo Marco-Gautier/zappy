@@ -44,15 +44,13 @@ const inventory_t elevation_req[] = {
 static void send_graphical_elevation_info(struct server *server,
 struct client *client, int mode)
 {
-    char buf[512];
     char *format = NULL;
 
     if (mode == START_ELEVATION)
         format = "pic %d %d %d\n";
     if (mode == END_ELEVATION)
         format = "pie %d %d %d\n";
-    snprintf(buf, sizeof(buf), format, client->x, client->y, client->level);
-    send_graphical_broadcast(server, buf);
+    send_graphical_broadcast(server, format, client->x, client->y, client->level);
 }
 
 static bool is_participant_valid(const struct client *a, const struct client *b)

@@ -12,6 +12,13 @@
 #include <unistd.h>
 #include "zappy.h"
 
+static const char * const argv[] = {
+    "mdr",
+    "lol",
+    "singe",
+    NULL
+};
+
 int foo(struct server *server, struct client *client, int argc, char **argv)
 {
     (void)server;
@@ -25,12 +32,6 @@ Test(create_event, mdr)
 {
     int time = rand();
     int argc = 3;
-    static const char * const argv[] = {
-        "mdr",
-        "lol"
-        "singe",
-        NULL
-    };
     callback_t callback = foo;
     event_t *mdr;
 
@@ -46,12 +47,6 @@ Test(add_event, add_1)
 {
     int time = rand();
     int argc = 3;
-    static const char * const argv[] = {
-        "mdr",
-        "lol"
-        "singe",
-        NULL
-    };
     callback_t callback = foo;
     struct client client = {
         .event = NULL
