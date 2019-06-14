@@ -20,15 +20,28 @@ class Client:
         self.level = int(input[5])
         self.team_name = input[6]
         self.color = random_color()
+        self.food = 0
+        self.stones = (0, 0, 0, 0, 0, 0)
 
     def draw_interface(self, window, font, y):
         text = f"#{self.id} {self.x} {self.y} {self.direction} {self.level} {self.team_name}"
-        draw_text(window, font, text, 1700, y, self.color)
+        draw_text(window, font, text, 1600, y, self.color)
+        text = f"#food: {self.food}, stones: "
+        for stone in self.stones:
+            text += f"{stone} "
+        draw_text(window, font, text, 1600, y + 20, self.color)
 
-    def update(self, x, y, direction):
+    def update_position(self, x, y, direction):
         self.x = x
         self.y = y
         self.direction = direction
 
+    def update_inventory(self, food, stones):
+        self.food = food
+        self.stones = stones
+
     def request_position(self, sockfd):
         send(sockfd, f"ppo {self.id}")
+
+    def request_inventory(self, sockfd):
+        send(sockfd, f"pin {self.id}")
