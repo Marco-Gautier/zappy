@@ -144,7 +144,7 @@ gcov:		tests_run
 lcov:		gcov
 		@lcov -q --directory $(LCOV_DIR) -c -o $(RAPPORT_NAME)
 		@genhtml -q -o $(RAPPORT_DIR) -t $(RAPPORT_TITLE) $(RAPPORT_NAME)
-		@$(BROWSER) $(RAPPORT_IDX)
+		@xdg-open $(RAPPORT_IDX)
 
 clean:
 		@$(RM) $(OBJ)
