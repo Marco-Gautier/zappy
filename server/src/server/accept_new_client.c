@@ -50,6 +50,23 @@ static struct client *add_new_client(struct server *server, int fd)
     return server->clients[i];
 }
 
+struct client *add_available_client(struct server *server, int fd)
+{
+    struct client *client;
+
+    if (!server->clients)
+        return NULL;
+    for (int i = 0; server->clients[i] != NULL; i++) {
+        client = server->clients[i];
+        if (client->hatched == true && client->fd == -1) {
+            fprintf(stderr, "found available client from hatched egg\n");
+            client->fd = fd;
+            return client;
+        }
+    }
+    return NULL;
+}
+
 const char *mdr = "Can't accept a new client : resources are currently limited";
 
 int accept_new_client(struct server *server)
@@ -63,7 +80,9 @@ int accept_new_client(struct server *server)
     fd = accept(server->fd, (struct sockaddr *)&addr, &addrlen);
     if (fd == -1)
         return puts("Can't accept a new client."), -1;
-    new = add_new_client(server, fd);
+    new = add_available_client(server, fd);
+    if (!new)
+        new = add_new_client(server, fd);
     if (!new) {
         dprintf(fd, "%s", mdr);
         puts(mdr);
