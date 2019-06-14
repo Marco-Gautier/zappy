@@ -30,11 +30,9 @@ char *list_case_content(struct server *s, struct world *world, int x, int y)
             add_elem_to_str(buffer, "player");
     if (world->map[x][y].food > 0)
         add_elem_to_str(buffer, "food");
-    for (int i = 0; i < C_CAOUILLOUX_SIZE; i++) {
-        if (world->map[x][y].stones[i] > 0) {
+    for (int i = 0; i < C_CAOUILLOUX_SIZE; i++)
+        if (world->map[x][y].stones[i] > 0)
             add_elem_to_str(buffer, cayou_names[i]);
-        }
-    }
     return strdup(buffer);
 }
 

@@ -32,11 +32,12 @@ static struct client *create_client(int id, int egg_id, struct client *client)
 struct client *create_new_player(struct server *s, struct client *c, int egg_id)
 {
     size_t i = 0;
+    void *tmp;
 
     if (s->clients)
         while (s->clients[i] != NULL)
             i++;
-    void *tmp = realloc(s->clients, sizeof(struct client *) * (i + 2));
+    tmp = realloc(s->clients, sizeof(struct client *) * (i + 2));
     if (!tmp)
         return NULL;
     s->clients = tmp;
