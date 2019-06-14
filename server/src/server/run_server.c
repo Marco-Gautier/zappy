@@ -45,8 +45,10 @@ static void server_reset_fds(struct server *server)
     FD_SET(server->fd, &server->rfds);
     if (server->clients)
         for (size_t i = 0; server->clients[i] != NULL; i++) {
-            FD_SET(server->clients[i]->fd, &server->rfds);
-            FD_SET(server->clients[i]->fd, &server->wfds);
+            if (server->clients[i]->fd != -1) {
+                FD_SET(server->clients[i]->fd, &server->rfds);
+                FD_SET(server->clients[i]->fd, &server->wfds);
+            }
         }
 }
 

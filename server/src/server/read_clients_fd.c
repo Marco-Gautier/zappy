@@ -68,9 +68,11 @@ void read_clients_fd(struct server *server)
     if (!server->clients)
         return;
     for (size_t i = 0; server->clients[i] != NULL; i++) {
-        if (FD_ISSET(server->clients[i]->fd, &server->rfds) != true)
-            continue;
-        if (read_client_fd_to_buffer(server->clients[i]) == -1)
-            kick_client_from_server(server, i);
+        if (server->clients[i]->fd != -1) {
+            if (FD_ISSET(server->clients[i]->fd, &server->rfds) != true)
+                continue;
+            if (read_client_fd_to_buffer(server->clients[i]) == -1)
+                kick_client_from_server(server, i);
+        }
     }
 }
