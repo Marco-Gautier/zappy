@@ -88,6 +88,11 @@ fclean:		clean
 		@$(MAKE) $@ -C $(LIB_DIR) --no-print-directory
 		@$(RM) $(NAME)
 
+add_debug_flag:
+		$(eval CFLAGS := $(CFLAGS) -g)
+
+debug: add_debug_flag re
+
 tests_run:
 		@$(MAKE) $@ -C $(TESTS_DIR) --no-print-directory
 
@@ -99,4 +104,4 @@ gcov:
 
 re:		fclean all
 
-.PHONY:		all clean fclean tests_run lcov gcov re
+.PHONY:		all clean fclean debug tests_run lcov gcov re
