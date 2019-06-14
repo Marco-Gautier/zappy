@@ -13,7 +13,13 @@
 
 #define ARRAY_SIZE(arr)     (sizeof(arr) / sizeof((arr)[0]))
 
-#define MAX_CLIENTS (1024)
+#define MAX_CLIENTS         (1024)
+
+#define START_ELEVATION     (0)
+#define END_ELEVATION       (1)
+
+#define FOOD                (-1)
+#define JE_SUIS_PAS_FIER    (-42)
 
 void    read_clients_fd(struct server *server);
 int     exec_client_command(struct server *server, int i);

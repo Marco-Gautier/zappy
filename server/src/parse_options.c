@@ -46,11 +46,11 @@ static int option_get_value(struct server_opt *options, int option_index,
 const char *arg_key, const char *arg_value)
 {
     int *flag_ptr = (void *)options + server_opt_helper[option_index].offset;
+    const char *format = "Warning: %s at \"%s\" for \"%s\".\n";
 
     for (size_t i = 0; arg_value[i] != '\0'; i++)
         if (!IS_DIGIT(arg_value[i])) {
-            printf("Warning: %s at \"%s\" for \"%s\".\n",
-                   "non numerical argument", arg_value, arg_key);
+            printf(format, "non numerical argument", arg_value, arg_key);
             break;
         }
     *flag_ptr = server_opt_helper[option_index].callback(arg_value);

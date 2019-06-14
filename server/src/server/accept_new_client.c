@@ -11,6 +11,8 @@
 #include <unistd.h>
 #include "zappy.h"
 
+const char *mdr = "Can't accept a new client : resources are currently limited";
+
 static struct client *create_new_client(struct server_opt *server_opt,
 int fd, int id)
 {
@@ -66,8 +68,6 @@ struct client *add_available_client(struct server *server, int fd)
     }
     return NULL;
 }
-
-const char *mdr = "Can't accept a new client : resources are currently limited";
 
 int accept_new_client(struct server *server)
 {

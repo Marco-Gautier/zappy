@@ -9,9 +9,6 @@
 #include <string.h>
 #include "zappy.h"
 
-#define FOOD                (-1)
-#define JE_SUIS_PAS_FIER    (-42)
-
 /*
 ** Return index of cayou, FOOD means food, JE_SUIS_PAS_FIER means error
 */

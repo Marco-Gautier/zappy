@@ -65,7 +65,7 @@ int fork_callback(struct server *s, struct client *client, int ac, char **av)
     if (!event)
         return fprintf(stderr, "error during event creation\n"), -1;
     send_graphical_broadcast(s, "enw %d %d %d %d\n",
-                             client->egg_id, client->id, client->x, client->y);
+client->egg_id, client->id, client->x, client->y);
     return add_event(client, event);
 }
 
