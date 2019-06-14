@@ -31,6 +31,7 @@ struct client {
     int     x;
     int     level;
     int     egg_id;
+    int     egg_nb;
     char    *buffer;
     bool    hatched;
     char    *team_name;
