@@ -2,6 +2,7 @@ import re
 import random
 
 from draw import draw_text
+from network_utils import send
 import pygame
 
 def random_color():
@@ -12,7 +13,7 @@ class Client:
 
     """ Constructor """
     def __init__(self, input):
-        self.id = int(re.search(r"^#([1-9]+\d*)$", input[1]).groups()[0])
+        self.id = int(re.search(r"^#(\d+)$", input[1]).groups()[0])
         self.x = int(input[2])
         self.y = int(input[3])
         self.direction = int(input[4])
@@ -28,3 +29,6 @@ class Client:
         self.x = x
         self.y = y
         self.direction = direction
+
+    def request_position(self, sockfd):
+        send(sockfd, f"ppo {self.id}")
