@@ -21,6 +21,7 @@ TESTS_LIB_DIR		=	lib/tests_
 TESTS_SRC_DIR		=	src/tests_
 TESTS_SERVER_DIR	=	src/server/tests_
 TESTS_GAME_DIR		=	src/server/game/tests_
+TESTS_MIDDLEWARE_DIR	=	src/server/middleware/tests_
 TESTS_COMMANDS_DIR	=	src/server/commands/tests_
 TESTS_GRAPH_DIR		=	src/server/commands/graph/tests_
 TESTS_AI_DIR		=	src/server/commands/ai/tests_
@@ -76,7 +77,7 @@ SRC		=	$(SRC_DIR)parse_options.c			\
 			$(AI_DIR)command_take.c				\
 			$(AI_DIR)command_set.c				\
 			$(AI_DIR)command_look.c				\
-			$(AI_DIR)command_incantation.c		\
+			$(AI_DIR)command_incantation.c			\
 			$(AI_DIR)command_fork.c
 SRC		+=	$(LIB)
 
@@ -99,6 +100,10 @@ TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_GAME_DIR)init_world.c			\
 			$(TESTS_GAME_DIR)cell_utils.c			\
 			$(TESTS_GAME_DIR)inventory_utils.c		\
+			$(TESTS_MIDDLEWARE_DIR)log_command.c		\
+			$(TESTS_MIDDLEWARE_DIR)filter_graphic_request.c	\
+			$(TESTS_MIDDLEWARE_DIR)filter_ai_request.c	\
+			$(TESTS_MIDDLEWARE_DIR)check_client_target.c	\
 			$(TESTS_COMMANDS_DIR)command_unknown.c		\
 			$(TESTS_GRAPH_DIR)command_msz.c			\
 			$(TESTS_GRAPH_DIR)command_tna.c			\
