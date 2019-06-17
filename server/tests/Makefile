@@ -101,6 +101,8 @@ TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_GAME_DIR)init_world.c			\
 			$(TESTS_GAME_DIR)cell_utils.c			\
 			$(TESTS_GAME_DIR)inventory_utils.c		\
+			$(TESTS_GAME_DIR)food_events.c			\
+			$(TESTS_GAME_DIR)stones_events.c		\
 			$(TESTS_MIDDLEWARE_DIR)log_command.c		\
 			$(TESTS_MIDDLEWARE_DIR)filter_graphic_request.c	\
 			$(TESTS_MIDDLEWARE_DIR)filter_ai_request.c	\

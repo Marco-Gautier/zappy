@@ -10,17 +10,16 @@
 #include "zappy.h"
 #include "my.h"
 
-static int stones_callback(struct server *server, struct client *client,
-int argc, char **argv)
+int stones_callback(struct server *server, struct client *c, int ac, char **av)
 {
     int pos_x = rand() % server->options.width;
     int pos_y = rand() % server->options.height;
     int stone = rand() % C_CAOUILLOUX_SIZE;
     int caouillioux_nb = abs(rand() % 42 - rand() % 42);
 
-    (void)argc;
-    (void)argv;
-    (void)client;
+    (void)ac;
+    (void)av;
+    (void)c;
     server->world.map[pos_x][pos_y].stones[stone] += caouillioux_nb;
     return add_stones_event(server);
 }

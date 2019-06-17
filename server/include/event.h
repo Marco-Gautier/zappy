@@ -18,21 +18,26 @@
 
 struct server;
 
-typedef int (*callback_t)(struct server *s, struct client *client, int ac, char
-**av);
+typedef int (*callback_t)(struct server *server, struct client *client,
+int ac, char **av);
 
 typedef struct event {
-    struct event *next;
-    struct event *prev;
-    suseconds_t trigger_time;
-    int argc;
-    char **argv;
-    callback_t callback;
+    struct event    *next;
+    struct event    *prev;
+    suseconds_t     trigger_time;
+    int             argc;
+    char            **argv;
+    callback_t      callback;
 } event_t;
 
-event_t *create_event(time_t time, int argc, char **argv, callback_t callback);
-int add_event(struct client *client, event_t *event);
+event_t     *create_event(time_t time, int ac, char **av, callback_t callback);
+int         add_event(struct client *client, event_t *event);
 suseconds_t compute_trigger_time(int time, int freq);
 
-int add_food_event(struct server *server, struct client *client);
-int add_stones_event(struct server *server);
+int     add_food_event(struct server *s, struct client *client);
+/* For unit tests */
+int     food_callback(struct server *s, struct client *c, int ac, char **av);
+
+int     add_stones_event(struct server *s);
+/*  For unit tests */
+int     stones_callback(struct server *s, struct client *c, int ac, char **av);
