@@ -1,4 +1,4 @@
-FROM epitechcontent/epitest-docker
+FROM marcogautier/epitest
 
 RUN mkdir -p /app
 WORKDIR /app
