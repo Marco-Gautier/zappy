@@ -22,3 +22,5 @@ zappy_server_tests
 rapport
 rapport.info
 __pycache__
+deploy_rsa.pub
+deploy_rsa
