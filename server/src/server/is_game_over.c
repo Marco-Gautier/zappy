@@ -28,7 +28,7 @@ static int get_team_elevation(struct server *server, const char *team)
 }
 
 /*
-** If a team has a member who has a level higher than 6, they win
+** If a team has 6 members who has a level higher than 6, they win
 */
 
 bool is_game_over(struct server *server)

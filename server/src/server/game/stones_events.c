@@ -22,7 +22,6 @@ int argc, char **argv)
     (void)argv;
     (void)client;
     server->world.map[pos_x][pos_y].stones[stone] += caouillioux_nb;
-    fprintf(stderr, "%s\n", __func__);
     return add_stones_event(server);
 }
 

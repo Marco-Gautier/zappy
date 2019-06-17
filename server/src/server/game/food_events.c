@@ -12,14 +12,17 @@
 
 int food_callback(struct server *serv, struct client *client, int ac, char **av)
 {
-    int x = rand() % serv->world.width;
-    int y = rand() % serv->world.height;
+    int x;
+    int y;
 
     (void)ac;
     (void)av;
+    for (int i = 0; i < rand() % 42; i++) {
+        x = rand() % serv->world.width;
+        y = rand() % serv->world.width;
+        serv->world.map[x][y].food++;
+    }
     client->inventory.food--;
-    serv->world.map[x][y].food++;
-    fprintf(stderr, "%s\n", __func__);
     return add_food_event(serv, client);
 }
 

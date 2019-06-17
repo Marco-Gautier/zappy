@@ -3,7 +3,7 @@
 from enum import Enum
 
 from client import Client
-from commands import command_msz, command_tna, command_ppo
+from commands import command_msz, command_tna, command_ppo, command_pin
 from draw import *
 from network_utils import connect_client, recv, send
 
@@ -24,42 +24,62 @@ def handle_event(event_list):
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             exit(0)
 
-def add_client(clients, input):
-    clients.append(Client(input))
+def add_client(clients, argc, argv):
+    if argc == 7:
+        clients.append(Client(argv))
 
-def remove_client(clients, input):
-    for i in range(len(clients)):
-        if clients[i].id == int(input[1]):
-            del clients[i]
-            return
+def remove_client(clients, argc, argv):
+    if argc == 2:
+        for i in range(len(clients)):
+            if clients[i].id == int(argv[1]):
+                del clients[i]
+                return
 
 def update_client(clients, sockfd):
     for client in clients:
         client.request_position(sockfd)
+        client.request_inventory(sockfd)
 
-def update_clients_position(clients, input):
-    ppo = command_ppo(input)
+def update_clients_position(clients, argc, argv):
+    if argc != 5:
+        return
+    ppo = command_ppo(argv)
     if ppo is None:
         return
     for client in clients:
         if ppo[0] == client.id:
-            client.update(ppo[1], ppo[2], ppo[3])
+            client.update_position(ppo[1], ppo[2], ppo[3])
+
+def update_clients_inventory(clients, argc, argv):
+    if argc != 9:
+        return
+    pin = command_pin(argv)
+    if pin is None:
+        return
+    for client in clients:
+        if pin[0] == client.id:
+            client.update_inventory(pin[1], (pin[2], pin[3], pin[4], pin[5], pin[6], pin[7]))
 
 def loop():
     update_client(clients, sockfd)
-    tmp = recv(sockfd)
-    if tmp is None:
+    buf = recv(sockfd)
+    if buf is None:
         return
-    if tmp[-1] == '\n':
-        tmp = tmp[:-1]
-    input = tmp.split(' ')
-    print('mdr', input, len(input))
-    if input[0] == 'pnw' and len(input) == 7:
-        add_client(clients, input)
-    if input[0] == 'pdi' and len(input) == 2:
-        remove_client(clients, input)
-    if input[0] == 'ppo' and len(input) == 5:
-        update_clients_position(clients, input)
+    argvs = buf.split('\n')
+    for argv in argvs:
+        if argv == '':
+            continue
+        argv = argv.split(' ')
+        argc = len(argv)
+        print('mdr', argc, argv)
+        if argv[0] == 'pnw':
+            add_client(clients, argc, argv)
+        if argv[0] == 'pdi':
+            remove_client(clients, argc, argv)
+        if argv[0] == 'ppo':
+            update_clients_position(clients, argc, argv)
+        if argv[0] == 'pin':
+            update_clients_inventory(clients, argc, argv)
 
 args = parse_options()
 sockfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

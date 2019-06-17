@@ -10,9 +10,6 @@
 #include <string.h>
 #include "zappy.h"
 
-#define START_ELEVATION   0
-#define END_ELEVATION     1
-
 const char *format = "Current level: %d\n";
 
 const int client_req[] = {1, 2, 2, 4, 4, 6, 6, 6};
@@ -44,13 +41,13 @@ const inventory_t elevation_req[] = {
 static void send_graphical_elevation_info(struct server *server,
 struct client *client, int mode)
 {
-    char *format = NULL;
+    char *form = NULL;
 
     if (mode == START_ELEVATION)
-        format = "pic %d %d %d\n";
+        form = "pic %d %d %d\n";
     if (mode == END_ELEVATION)
-        format = "pie %d %d %d\n";
-    send_graphical_broadcast(server, format, client->x, client->y, client->level);
+        form = "pie %d %d %d\n";
+    send_graphical_broadcast(server, form, client->x, client->y, client->level);
 }
 
 static bool is_participant_valid(const struct client *a, const struct client *b)

@@ -9,14 +9,13 @@
 #include <stdlib.h>
 #include "zappy.h"
 
-static size_t get_clients_nb(struct client **client)
+static struct client *get_client(struct client **clients, int id)
 {
-    size_t i = 0;
-
-    if (client)
-        while (client[i] != NULL)
-            i++;
-    return i;
+    if (clients)
+        for (size_t i = 0; clients[i] != NULL; i++)
+            if (clients[i]->id == id)
+                return clients[i];
+    return NULL;
 }
 
 /*
@@ -25,19 +24,21 @@ static size_t get_clients_nb(struct client **client)
 
 int check_client_target(struct server *server, int clien, int argc, char **argv)
 {
-    int tmp;
+    struct client *client;
+    int id;
 
     (void)clien;
     if (argc != 2)
         return -1;
-    tmp = atoi(argv[1]);
-    if (tmp < 1)
+    id = atoi(argv[1]);
+    if (id < 1)
         return -1;
-    if (tmp >= (int)get_clients_nb(server->clients))
+    client = get_client(server->clients, id);
+    if (!client)
         return -1;
-    if (server->clients[tmp]->client_type != CT_AI)
+    if (client->client_type != CT_AI)
         return -1;
-    if (!server->clients[tmp]->team_name)
+    if (!client->team_name)
         return -1;
     return 0;
 }
