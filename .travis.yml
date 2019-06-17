@@ -3,7 +3,7 @@ compiler: gcc
 dist: trusty
 sudo: false
 env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
+  - DOCKER_COMPOSE_VERSION=1.24.0
 services:
   - docker
 addons:
