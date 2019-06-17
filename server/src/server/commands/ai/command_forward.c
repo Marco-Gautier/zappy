@@ -8,11 +8,6 @@
 #include <stdio.h>
 #include "zappy.h"
 
-static int compute_new_position(int pos, int offset, int max)
-{
-    return (pos + offset + max) % max;
-}
-
 int forward_callback(struct server *s, struct client *client, int ac, char **av)
 {
     (void)ac;

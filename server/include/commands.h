@@ -18,6 +18,7 @@ struct command {
 int command_unknown(struct server *server, int client, int argc, char **argv);
 
 /* Utils */
+int compute_new_position(int pos, int offset, int max);
 enum direction compute_direction(enum direction dir, int offset);
 char *list_case_content(struct server *s, struct world *world, int x, int y);
 
