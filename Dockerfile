@@ -4,6 +4,6 @@ RUN mkdir -p /app
 WORKDIR /app
 COPY . /app/
 
-RUN make
+RUN make re
 
-CMD [ "./zappy_server" ]
+CMD [ "/bin/sh", "-c", "./zappy_server -p 2142" ]
