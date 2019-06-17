@@ -1,7 +1,12 @@
 version: '3'
 services:
   zappy_server:
-    build: .
+    build: '.'
     ports:
       - "2142:2142"
+    restart: always
+  zappy_lcov:
+    build: './server'
+    ports:
+      - "1339:80"
     restart: always
