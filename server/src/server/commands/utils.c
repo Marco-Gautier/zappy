@@ -36,6 +36,11 @@ char *list_case_content(struct server *s, struct world *world, int x, int y)
     return strdup(buffer);
 }
 
+int compute_new_position(int pos, int offset, int max)
+{
+    return (pos + offset + max) % max;
+}
+
 enum direction compute_direction(enum direction dir, int offset)
 {
     dir -= 1;
