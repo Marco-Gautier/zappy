@@ -1,10 +1,8 @@
-FROM epitechcontent/epitest-docker as build
+FROM marcogautier/epitest as build
 
 RUN mkdir -p /app
 WORKDIR /app
 COPY . /app/
-
-RUN dnf -y install lcov
 
 RUN make lcov
 
