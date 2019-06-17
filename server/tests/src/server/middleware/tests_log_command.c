@@ -26,5 +26,6 @@ Test(log_command, mdr)
 
     cr_redirect_stdout();
     assert(log_command(NULL, client_id, argc, (char **)argv) == 0);
-//    cr_assert_stdout_eq_str("Received command [msz, 1, 2] from client n°42\n");
+    fflush(stdout);
+    cr_assert_stdout_eq_str("Received command [msz, 1, 2] from client n°42\n");
 }
