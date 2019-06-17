@@ -1,5 +1,7 @@
 language: c
 compiler: gcc
+git:
+  depth: 9999999
 dist: trusty
 sudo: false
 services:
@@ -17,8 +19,6 @@ before_install:
   - ssh-add ~/.ssh/deploy_rsa
   - docker build -t zappy_server_tests .
 script: docker run zappy_server_tests /bin/sh -c "cd /app/server; make tests_run"
-before_deploy:
-  - git fetch --unshallow
 deploy:
   - provider: script
     skip_cleanup: true
