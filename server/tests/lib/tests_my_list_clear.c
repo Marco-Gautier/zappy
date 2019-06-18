@@ -22,8 +22,6 @@ static list_t *create_node(int nb)
 {
     list_t *new = malloc(sizeof(list_t));
 
-    if (!new)
-        return NULL;
     new->next = NULL;
     new->prev = NULL;
     new->nb = nb;
