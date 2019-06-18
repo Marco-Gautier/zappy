@@ -38,7 +38,5 @@ int check_client_target(struct server *server, int clien, int argc, char **argv)
         return -1;
     if (client->client_type != CT_AI)
         return -1;
-    if (!client->team_name)
-        return -1;
     return 0;
 }
