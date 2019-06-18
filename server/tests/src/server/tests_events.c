@@ -19,15 +19,6 @@ static const char * const argv[] = {
     NULL
 };
 
-int foo(struct server *server, struct client *client, int argc, char **argv)
-{
-    (void)server;
-    (void)client;
-    (void)argc;
-    (void)argv;
-    return 0;
-}
-
 Test(create_event, mdr)
 {
     int time = rand();
