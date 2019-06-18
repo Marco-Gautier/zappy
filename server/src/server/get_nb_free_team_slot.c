@@ -47,7 +47,7 @@ int get_nb_free_team_slot(struct server *server, const char *team_name)
 {
     int ret = server->options.max_team_nbr;
 
-    if (!team_name || !is_team_name_valid(server, team_name))
+    if (!team_name || ret < 1 || !is_team_name_valid(server, team_name))
         return -1;
     ret -= get_current_team_size(server, team_name);
     ret += get_team_hatched_eggs_nb(server, team_name) * 2;

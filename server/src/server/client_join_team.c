@@ -59,7 +59,7 @@ int client_join_team(struct server *server, struct client *client, char **cmd)
         return 0;
     }
     slot = get_nb_free_team_slot(server, cmd[0]);
-    if (slot == -1)
+    if (slot < 1)
         return -1;
     join_team(server, client, slot, strdup(cmd[0]));
     return 0;
