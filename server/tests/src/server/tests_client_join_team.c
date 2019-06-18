@@ -12,6 +12,21 @@
 #include <unistd.h>
 #include "zappy.h"
 
+Test(client_join_team, bad_argc)
+{
+    struct client client;
+    struct client *clients[] = {
+        &client,
+        NULL
+    };
+    struct server server = {
+        .clients = clients,
+    };
+    static const char * const argv[] = {"ppo", "42", NULL};
+
+    assert(client_join_team(&server, &client, (char **)argv) == -1);
+}
+
 Test(client_join_team, join_graphic)
 {
     struct client client;
@@ -52,4 +67,41 @@ Test(client_join_team, join_team1)
     cr_assert(client_join_team(&server, &client, (char **)argv) == 0);
     cr_assert(strcmp("team1", client.team_name) == 0);
     cr_assert(client.client_type == CT_AI);
+}
+
+Test(client_join_team, full_team)
+{
+    struct client client1 = {
+        .x = 24,
+        .y = 42,
+        .id = 84,
+        .level = 168,
+        .event = NULL,
+        .team_name = NULL
+    };
+    struct client client2 = {
+        .x = 42,
+        .y = 24,
+        .id = 48,
+        .level = 861,
+        .event = NULL,
+        .team_name = NULL
+    };
+    struct client *clients[] = {
+        &client1,
+        &client2,
+        NULL
+    };
+    struct server server = {
+        .clients = clients,
+    };
+    static const char * const argv[] = {"team1", NULL};
+
+    close(STDOUT_FILENO);
+    cr_assert(parse_options(&server.options, 0, NULL) == 0);
+    server.options.max_team_nbr = 1;
+    cr_assert(client_join_team(&server, &client1, (char **)argv) == 0);
+    cr_assert(strcmp("team1", client1.team_name) == 0);
+    cr_assert(client1.client_type == CT_AI);
+    cr_assert(client_join_team(&server, &client2, (char **)argv) == -1);
 }
