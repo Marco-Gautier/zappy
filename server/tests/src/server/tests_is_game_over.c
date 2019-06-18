@@ -88,3 +88,44 @@ Test(is_game_over, lose)
     close(STDOUT_FILENO);
     assert(is_game_over(&server) == false);
 }
+
+Test(is_game_over, mdr)
+{
+    struct client client_team_name_null = {
+        .team_name = NULL,
+        .level = 1
+    };
+    struct client client_graphic = {
+        .team_name = "GRAPHIC",
+        .client_type = CT_GRAPHIC,
+        .level = 6
+    };
+    struct client client = {
+        .team_name = "team1",
+        .client_type = CT_AI,
+        .level = 6
+    };
+    struct client client_no = {
+        .team_name = "team1",
+        .client_type = CT_AI,
+        .level = 1
+    };
+    struct client *clients[] = {
+        &client,
+        &client_team_name_null,
+        &client_no,
+        &client,
+        &client_graphic,
+        &client,
+        NULL
+    };
+    struct server server = {
+        .options = {
+            .team_names = (char **)team_names
+        },
+        .clients = clients
+    };
+
+    close(STDOUT_FILENO);
+    assert(is_game_over(&server) == false);
+}

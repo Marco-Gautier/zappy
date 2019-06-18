@@ -74,3 +74,66 @@ Test(check_client_target, false_id)
 
     assert(check_client_target(&server, 0, argc, (char **)argv) == -1);
 }
+
+Test(check_client_target, bad_argc)
+{
+    struct client client = {
+        .id = 123,
+        .client_type = CT_AI,
+        .team_name = "team1"
+    };
+    struct client *clients[] = {
+        &client,
+        &client,
+        NULL
+    };
+    struct server server = {
+        .clients = clients,
+    };
+    int argc = 1;
+    static const char * const argv[] = { "pin" };
+
+    assert(check_client_target(&server, 0, argc, (char **)argv) == -1);
+}
+
+Test(check_client_target, argv_neg)
+{
+    struct client client = {
+        .id = 123,
+        .client_type = CT_AI,
+        .team_name = "team1"
+    };
+    struct client *clients[] = {
+        &client,
+        &client,
+        NULL
+    };
+    struct server server = {
+        .clients = clients,
+    };
+    int argc = 2;
+    static const char * const argv[] = { "pin", "-42" };
+
+    assert(check_client_target(&server, 0, argc, (char **)argv) == -1);
+}
+
+Test(check_client_target, team_NULL)
+{
+    struct client client = {
+        .id = 123,
+        .client_type = CT_AI,
+        .team_name = NULL
+    };
+    struct client *clients[] = {
+        &client,
+        &client,
+        NULL
+    };
+    struct server server = {
+        .clients = clients,
+    };
+    int argc = 2;
+    static const char * const argv[] = { "pin", "42" };
+
+    assert(check_client_target(&server, 0, argc, (char **)argv) == -1);
+}

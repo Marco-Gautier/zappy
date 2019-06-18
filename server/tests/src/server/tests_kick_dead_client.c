@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include "zappy.h"
 
-static struct client *create_client(void)
+static struct client *create_client(bool hatched)
 {
     struct client *client = malloc(sizeof(struct client));
 
@@ -19,24 +19,29 @@ static struct client *create_client(void)
         .buffer = NULL,
         .client_type = CT_AI,
         .event = NULL,
-        .team_name = strdup("team1"),
+        .hatched = hatched,
+        .id = hatched + 1,
         .inventory = {
             .food = -1
-        }
+        },
+        .team_name = strdup("team1"),
     };
     return client;
 }
 
-Test(kick_dead_client, no_client)
+Test(kick_dead_client, mdr)
 {
-    struct client *client = create_client();
+    struct client *client_hatched = create_client(true);
+    struct client *client = create_client(false);
     struct client client_graphic = {
         .client_type = CT_GRAPHIC,
+        .id = 0,
         .team_name = "GRAPHIC"
     };
     struct client *clients[] = {
         &client_graphic,
         client,
+        client_hatched,
         NULL
     };
     struct server server = {
@@ -50,7 +55,8 @@ Test(kick_dead_client, no_client)
     client->fd = pipefd[1];
     assert(server.clients[0] == &client_graphic);
     assert(server.clients[1] == client);
-    assert(server.clients[2] == NULL);
+    assert(server.clients[2] == client_hatched);
+    assert(server.clients[3] == NULL);
     kick_dead_client(&server);
     assert(server.clients[0] == &client_graphic);
     assert(server.clients[1] == NULL);

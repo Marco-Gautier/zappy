@@ -46,3 +46,17 @@ Test(inventory, inventory_ge_cmp)
     assert(inventory_ge_cmp(&inv2, &inv1) == true);
     assert(inventory_ge_cmp(&inv1, &inv2) == false);
 }
+
+Test(inventory, inventory_ge_cmp2)
+{
+    inventory_t inv1 = {
+        .food = 8,
+        .stones = {1, 2, 3, 4, 5, 6}
+    };
+    inventory_t inv2 = {
+        .food = 1,
+        .stones = {2, 3, 4, 5, 6, 7}
+    };
+
+    assert(inventory_ge_cmp(&inv1, &inv2) == false);
+}
