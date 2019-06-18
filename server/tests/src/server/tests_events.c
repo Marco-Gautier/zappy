@@ -19,6 +19,15 @@ static const char * const argv[] = {
     NULL
 };
 
+int foo(struct server *server, struct client *client, int argc, char **argv)
+{
+    (void)server;
+    (void)client;
+    (void)argc;
+    (void)argv;
+    return 0;
+}
+
 Test(create_event, mdr)
 {
     int time = rand();
@@ -53,4 +62,5 @@ Test(add_event, add_1)
     assert(client.event->argc == argc);
     assert(client.event->argv == (char **)argv);
     assert(client.event->callback == callback);
+    assert(client.event->callback(NULL, NULL, 0, NULL) == 0);
 }
