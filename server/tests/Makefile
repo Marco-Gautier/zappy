@@ -96,6 +96,7 @@ TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_SERVER_DIR)init_server.c		\
 			$(TESTS_SERVER_DIR)send_graphical_broadcast.c	\
 			$(TESTS_SERVER_DIR)read_clients_fd.c		\
+			$(TESTS_SERVER_DIR)client_join_team.c		\
 			$(TESTS_SERVER_DIR)get_nb_free_team_slot.c	\
 			$(TESTS_SERVER_DIR)is_game_over.c		\
 			$(TESTS_SERVER_DIR)kick_dead_client.c		\

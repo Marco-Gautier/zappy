@@ -37,8 +37,6 @@ const char *team_name)
 
 static bool is_team_name_valid(struct server *server, const char *team_name)
 {
-    if (!team_name)
-        return false;
     for (int i = 0; server->options.team_names[i] != NULL; i++)
         if (!strcmp(server->options.team_names[i], team_name))
             return true;
