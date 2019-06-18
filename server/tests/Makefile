@@ -57,7 +57,7 @@ SRC		=	$(SRC_DIR)parse_options.c			\
 			$(MIDDLEWARE_DIR)filter_graphic_request.c	\
 			$(MIDDLEWARE_DIR)filter_ai_request.c		\
 			$(MIDDLEWARE_DIR)check_client_target.c		\
-			$(COMMANDS_DIR)utils.c                          \
+			$(COMMANDS_DIR)utils.c				\
 			$(COMMANDS_DIR)command_unknown.c		\
 			$(GRAPH_DIR)command_msz.c			\
 			$(GRAPH_DIR)command_tna.c			\
@@ -107,6 +107,7 @@ TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_MIDDLEWARE_DIR)filter_graphic_request.c	\
 			$(TESTS_MIDDLEWARE_DIR)filter_ai_request.c	\
 			$(TESTS_MIDDLEWARE_DIR)check_client_target.c	\
+			$(TESTS_COMMANDS_DIR)utils.c			\
 			$(TESTS_COMMANDS_DIR)command_unknown.c		\
 			$(TESTS_GRAPH_DIR)command_msz.c			\
 			$(TESTS_GRAPH_DIR)command_tna.c			\
