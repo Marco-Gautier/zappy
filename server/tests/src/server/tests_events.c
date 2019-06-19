@@ -7,6 +7,7 @@
 
 #include <assert.h>
 #include <criterion/criterion.h>
+#include <criterion/redirect.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -19,12 +20,12 @@ static const char * const argv[] = {
     NULL
 };
 
-int foo(struct server *server, struct client *client, int argc, char **argv)
+static int foo(struct server *server, struct client *client, int ac, char **av)
 {
     (void)server;
     (void)client;
-    (void)argc;
-    (void)argv;
+    (void)ac;
+    (void)av;
     return 0;
 }
 
@@ -63,4 +64,48 @@ Test(add_event, add_1)
     assert(client.event->argv == (char **)argv);
     assert(client.event->callback == callback);
     assert(client.event->callback(NULL, NULL, 0, NULL) == 0);
+}
+
+static int func(struct server *server, struct client *client, int ac, char **av)
+{
+    (void)server;
+    (void)client;
+    for (int i = 0; i < ac; i++)
+        puts(av[i]);
+    return 0;
+}
+
+Test(update_events, mdr)
+{
+    struct client client = {
+        .id = 42,
+        .client_type = CT_AI,
+        .team_name = "team1"
+    };
+    struct client *clients[] = {
+        &client,
+        NULL
+    };
+    struct server server = {
+        .clients = clients,
+        .events = NULL
+    };
+    int time = 5;
+    int argc = 3;
+    event_t *event[2];
+    callback_t callback = func;
+
+    cr_redirect_stdout();
+    event[0] = create_event(time, argc, (char **)argv, callback);
+    event[1] = create_event(compute_trigger_time(100, 100), argc, (char **)argv, callback);
+    add_event(&client, event[0]);
+    add_event(&client, event[1]);
+    cr_assert(client.event == event[0]);
+    cr_assert(client.event->next == event[1]);
+    cr_assert(client.event->next->next == NULL);
+    update_events(&server);
+    fflush(stdout);
+    cr_assert(client.event == event[1]);
+    cr_assert(client.event->next == NULL);
+    cr_assert_stdout_eq_str("mdr\nlol\nsinge\n");
 }
