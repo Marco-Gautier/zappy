@@ -16,8 +16,6 @@
 
 static int check_client_buffer(const char *buffer)
 {
-    if (!buffer)
-        return -1;
     for (size_t i = 0, line = 0; buffer[i] != '\0'; i++) {
         if (buffer[i] == '\n')
             line++;
