@@ -94,8 +94,9 @@ TESTS_LIB	=	$(TESTS_LIB_DIR)my_tabdup.c			\
 TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_SERVER_DIR)events.c			\
 			$(TESTS_SERVER_DIR)init_server.c		\
-			$(TESTS_SERVER_DIR)send_graphical_broadcast.c	\
 			$(TESTS_SERVER_DIR)read_clients_fd.c		\
+			$(TESTS_SERVER_DIR)exec_client_command.c	\
+			$(TESTS_SERVER_DIR)send_graphical_broadcast.c	\
 			$(TESTS_SERVER_DIR)client_join_team.c		\
 			$(TESTS_SERVER_DIR)get_nb_free_team_slot.c	\
 			$(TESTS_SERVER_DIR)is_game_over.c		\
