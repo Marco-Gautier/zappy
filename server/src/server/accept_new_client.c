@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "zappy.h"
+#include "my.h"
 
 const char *mdr = "Can't accept a new client : resources are currently limited";
 
@@ -35,12 +36,9 @@ int fd, int id)
 
 static struct client *add_new_client(struct server *server, int fd)
 {
-    size_t i = 0;
     void *tmp;
+    size_t i = server->clients ? my_tablen(server->clients) : 0;
 
-    if (server->clients)
-        while (server->clients[i] != NULL)
-            i++;
     tmp = realloc(server->clients, sizeof(struct client *) * (i + 2));
     if (!tmp)
         return NULL;
@@ -54,16 +52,13 @@ static struct client *add_new_client(struct server *server, int fd)
 
 struct client *add_available_client(struct server *server, int fd)
 {
-    struct client *client;
-
     if (!server->clients)
         return NULL;
     for (int i = 0; server->clients[i] != NULL; i++) {
-        client = server->clients[i];
-        if (client->hatched == true && client->fd == -1) {
+        if (server->clients[i]->hatched && server->clients[i]->fd == -1) {
             fprintf(stderr, "found available client from hatched egg\n");
-            client->fd = fd;
-            return client;
+            server->clients[i]->fd = fd;
+            return server->clients[i];
         }
     }
     return NULL;
@@ -73,11 +68,9 @@ int accept_new_client(struct server *server)
 {
     int fd;
     struct client *new;
-    struct sockaddr_in addr;
-    socklen_t addrlen = sizeof(addr);
 
     puts("New client request.");
-    fd = accept(server->fd, (struct sockaddr *)&addr, &addrlen);
+    fd = accept(server->fd, NULL, 0);
     if (fd == -1)
         return puts("Can't accept a new client."), -1;
     new = add_available_client(server, fd);

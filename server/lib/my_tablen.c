@@ -7,11 +7,12 @@
 
 #include <stddef.h>
 
-size_t my_tablen(char **tab)
+size_t my_tablen(void *tab)
 {
+    char **tmp = tab;
     size_t i = 0;
 
-    while (tab[i] != NULL)
+    while (tmp[i] != NULL)
         i++;
     return i;
 }
