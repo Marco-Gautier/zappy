@@ -95,6 +95,7 @@ TESTS_LIB	=	$(TESTS_LIB_DIR)my_tabdup.c			\
 TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_SERVER_DIR)events.c			\
 			$(TESTS_SERVER_DIR)init_server.c		\
+			$(TESTS_SERVER_DIR)run_server.c			\
 			$(TESTS_SERVER_DIR)read_clients_fd.c		\
 			$(TESTS_SERVER_DIR)exec_client_command.c	\
 			$(TESTS_SERVER_DIR)send_graphical_broadcast.c	\
