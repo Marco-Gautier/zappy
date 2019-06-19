@@ -15,13 +15,13 @@ make
 ## Usage
 
 ```sh
-./zappy -h
+./zappy
 ```
 
 ## Run tests
 
 ```sh
-cd server &amp;&amp; make tests_run
+make -C server tests_run
 ```
 
 ## Author
