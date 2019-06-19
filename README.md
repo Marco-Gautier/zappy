@@ -30,8 +30,8 @@ The coverage is available [here](https://zappy.marc0.fr)
 
 ## Author
 
-👤 **[Marco Gautier](https://github.com/Marco-Gautier)** - \<marco.gautier@epitech.eu\><br>
 👤 **[Pacôme Françon](https://github.com/pacome35220)** - \<pacome.francon@epitech.eu\><br>
+👤 **[Marco Gautier](https://github.com/Marco-Gautier)** - \<marco.gautier@epitech.eu\><br>
 👤 **Alban Piron** - \<alban.piron@epitech.eu\><br>
 👤 **[Camille Police](https://github.com/CamillePolice)** - \<camille.police@epitech.eu\><br>
 👤 **[Corentin Gautier](https://github.com/Adorr29)** - \<corentin.gautier@epitech.eu\><br>
