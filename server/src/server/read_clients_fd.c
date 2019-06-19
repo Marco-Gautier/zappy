@@ -55,9 +55,11 @@ static int read_client_fd_to_buffer(struct client *client)
     return 0;
 }
 
-/*
+/**
 ** 1) Walk through all used clients on which data is available for reading,
+**
 ** 2) Read data from socket
+**
 ** 3) If data exist, bufferize it or kick the client from server.
 */
 

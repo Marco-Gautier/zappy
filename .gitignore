@@ -24,3 +24,4 @@ rapport.info
 __pycache__
 deploy_rsa.pub
 deploy_rsa
+doc

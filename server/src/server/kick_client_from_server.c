@@ -28,8 +28,9 @@ void remove_client(struct server *server, int i)
     server->clients[last - 1] = NULL;
 }
 
-/*
+/**
 ** 1) Kick client from server, send "dead\n" to this client.
+**
 ** 2) Broadcast the dead to other.
 */
 

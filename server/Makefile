@@ -9,6 +9,7 @@ SRC_DIR		=	src/
 LIB_DIR		=	lib/
 INC_DIR		=	include/
 TESTS_DIR	=	tests/
+DOC_DIR		=	doc/
 
 SERVER_DIR	=	$(SRC_DIR)server/
 GAME_DIR	=	$(SERVER_DIR)game/
@@ -75,6 +76,8 @@ LDFLAGS		=	-L $(LIB_DIR) -lmy
 
 NAME		=	../zappy_server
 
+DOXYFILE	=	Doxyfile
+
 all:		$(NAME)
 
 $(NAME):	$(OBJ)
@@ -90,11 +93,12 @@ fclean:		clean
 		@$(MAKE) $@ -C $(TESTS_DIR) --no-print-directory
 		@$(MAKE) $@ -C $(LIB_DIR) --no-print-directory
 		@$(RM) $(NAME)
+		@$(RM) -r $(DOC_DIR)
 
 add_debug_flag:
 		$(eval CFLAGS := $(CFLAGS) -g)
 
-debug: add_debug_flag re
+debug:		add_debug_flag re
 
 tests_run:
 		@$(MAKE) $@ -C $(TESTS_DIR) --no-print-directory
@@ -105,6 +109,10 @@ lcov:
 gcov:
 		@$(MAKE) $@ -C $(TESTS_DIR) --no-print-directory
 
+doc:
+		@doxygen $(DOXYFILE)
+
+
 re:		fclean all
 
-.PHONY:		all clean fclean debug tests_run lcov gcov re
+.PHONY:		all clean fclean debug tests_run lcov gcov doc re

@@ -27,7 +27,7 @@ static int get_team_elevation(struct server *server, const char *team)
     return elevation;
 }
 
-/*
+/**
 ** If a team has 6 members who has a level higher than 6, they win
 */
 

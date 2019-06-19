@@ -7,7 +7,7 @@
 
 #include "zappy.h"
 
-/*
+/**
 ** Kick all AI client who are too hungry from the server
 */
 

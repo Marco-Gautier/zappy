@@ -81,7 +81,7 @@ static char **prepare_command(struct client *client, char **tmp)
     return command;
 }
 
-/*
+/**
 ** Execute command in the buffer of the client n°i
 */
 
