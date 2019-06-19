@@ -15,7 +15,7 @@ make
 ## Usage
 
 ```sh
-./zappy
+./zappy_server
 ```
 
 ## Run tests
