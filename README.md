@@ -2,6 +2,8 @@
 <p>
 </p>
 
+[![Build Status](https://travis-ci.com/Marco-Gautier/zappy.svg?token=YYhdHckDpmJqeWPs41ad&branch=master)](https://travis-ci.com/Marco-Gautier/zappy)
+
 > It's a game you don't play. And there are IAs eating rocks :robot:
 
 ### 🏠 [Homepage](https://github.com/Marco-Gautier/zappy)
