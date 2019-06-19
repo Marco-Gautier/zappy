@@ -15,7 +15,20 @@
 
 Test(log_command, mdr)
 {
-    int client_id = 42;
+    struct client client = {
+        .id = 42,
+    };
+    struct client *clients[] = {
+        &client,
+        NULL
+    };
+    struct server server = {
+        .clients = clients,
+        .options = {
+            .width = 42,
+            .height = 24
+        }
+    };
     int argc = 3;
     static const char * const argv[] = {
         "msz",
@@ -25,7 +38,7 @@ Test(log_command, mdr)
     };
 
     cr_redirect_stdout();
-    assert(log_command(NULL, client_id, argc, (char **)argv) == 0);
+    assert(log_command(&server, 0, argc, (char **)argv) == 0);
     fflush(stdout);
     cr_assert_stdout_eq_str("Received command [msz, 1, 2] from client n°42\n");
 }

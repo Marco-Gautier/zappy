@@ -63,7 +63,7 @@ static int exec_client_cmd(struct server *server, int client, char **argv)
 ** 2) Erase it from the buffer
 */
 
-char **prepare_command(struct client *client, char **tmp)
+static char **prepare_command(struct client *client, char **tmp)
 {
     char *idx = strchr(client->buffer, '\n');
     char **command;

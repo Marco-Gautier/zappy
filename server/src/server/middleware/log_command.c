@@ -21,6 +21,6 @@ int log_command(struct server *server, int i, int argc, char **argv)
         if (i + 1 < argc)
             printf(", ");
     }
-    printf("] from client n°%d\n", i);
+    printf("] from client n°%d\n", server->clients[i]->id);
     return 0;
 }
