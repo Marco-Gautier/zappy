@@ -61,7 +61,7 @@ s->world.width), get_y_offset(client, i, j, s->world.height));
         }
     }
     strcat(buffer, "]");
-    return dprintf(client->fd, "%s\n", buffer);
+    return send_client_msg(client, "%s\n", buffer);
 }
 
 int command_look(struct server *server, int i, int argc, char **argv)

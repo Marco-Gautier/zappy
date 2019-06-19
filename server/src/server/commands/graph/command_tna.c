@@ -24,6 +24,6 @@ int command_tna(struct server *server, int i, int argc, char **argv)
         strcat(buffer, tmp);
     }
     if (buffer[0] != '\0')
-        return dprintf(server->clients[i]->fd, "%s", buffer);
+        return send_client_msg(server->clients[i], "%s", buffer);
     return -1;
 }

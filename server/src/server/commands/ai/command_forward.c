@@ -28,7 +28,7 @@ int forward_callback(struct server *s, struct client *client, int ac, char **av)
     default:
         return -1;
     }
-    return dprintf(client->fd, "ok\n");
+    return send_client_msg(client, "ok\n");
 }
 
 int command_forward(struct server *server, int i, int argc, char **argv)

@@ -83,13 +83,13 @@ int argc, char **argv)
     (void)argc;
     (void)argv;
     if (!check_requirement(server, client))
-        return dprintf(client->fd, "ko\n"), -1;
+        return send_client_msg(client, "ko\n"), -1;
     for (size_t i = 0; server->clients[i] != NULL; i++) {
         if (!is_participant_valid(client, server->clients[i]))
             continue;
         if (server->clients[i]->level < 8)
             server->clients[i]->level += 1;
-        dprintf(server->clients[i]->fd, format, server->clients[i]->level);
+        send_client_msg(server->clients[i], format, server->clients[i]->level);
     }
     send_graphical_elevation_info(server, client, END_ELEVATION);
     return 0;
@@ -103,7 +103,7 @@ int command_incantation(struct server *server, int i, int argc, char **argv)
     (void)argc;
     (void)argv;
     if (!check_requirement(server, server->clients[i]))
-        return dprintf(server->clients[i]->fd, "ko\n"), -1;
+        return send_client_msg(server->clients[i], "ko\n"), -1;
     send_graphical_elevation_info(server, server->clients[i], START_ELEVATION);
     time = compute_trigger_time(300, server->options.freq);
     if (time == -1)

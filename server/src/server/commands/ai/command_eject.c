@@ -42,11 +42,11 @@ int eject_callback(struct server *s, struct client *client, int ac, char **av)
         if (s->clients[i]->x == client->x &&
             s->clients[i]->y == client->y) {
             forward_client(s->clients[i], s->options.width, s->options.height);
-            dprintf(s->clients[i]->fd, "eject: %d\n", new_dir);
+            send_client_msg(s->clients[i], "eject: %d\n", new_dir);
         }
     }
     send_graphical_broadcast(s, "pex %d\n", client->id);
-    return dprintf(client->fd, "ok\n");
+    return send_client_msg(client, "ok\n");
 }
 
 int command_eject(struct server *server, int i, int argc, char **argv)

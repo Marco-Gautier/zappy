@@ -27,7 +27,7 @@ int inv_callback(struct server *s, struct client *client, int ac, char **av)
     strcat(buffer, tmp);
     if (buffer[0] == '\0')
         return -1;
-    return dprintf(client->fd, "%s\n", buffer);
+    return send_client_msg(client, "%s\n", buffer);
 }
 
 int command_inventory(struct server *server, int i, int argc, char **argv)

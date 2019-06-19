@@ -14,7 +14,7 @@ int left_callback(struct server *s, struct client *client, int ac, char **av)
     (void)av;
     (void)s;
     client->direction = compute_direction(client->direction, -1);
-    return dprintf(client->fd, "ok\n");
+    return send_client_msg(client, "ok\n");
 }
 
 int command_left(struct server *server, int i, int argc, char **argv)

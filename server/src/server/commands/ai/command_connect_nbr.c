@@ -14,5 +14,5 @@ int command_connect_nbr(struct server *server, int i, int argc, char **argv)
 
     (void)argc;
     (void)argv;
-    return dprintf(server->clients[i]->fd, "%d\n", n);
+    return send_client_msg(server->clients[i], "%d\n", n);
 }

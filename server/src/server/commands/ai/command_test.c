@@ -13,7 +13,7 @@ int test_callback(struct server *s, struct client *client, int ac, char **av)
     (void)ac;
     (void)av;
     (void)s;
-    return dprintf(client->fd, "event_test mdr\n");
+    return send_client_msg(client, "event_test mdr\n");
 }
 
 int command_test(struct server *server, int i, int argc, char **argv)

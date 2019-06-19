@@ -13,5 +13,5 @@ int command_sgt(struct server *server, int i, int argc, char **argv)
 {
     (void)argc;
     (void)argv;
-    return dprintf(server->clients[i]->fd, "sgt %d\n", server->options.freq);
+    return send_client_msg(server->clients[i], "sgt %d\n", server->options.freq);
 }

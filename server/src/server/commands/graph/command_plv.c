@@ -15,5 +15,5 @@ int command_plv(struct server *server, int i, int argc, char **argv)
     int level = server->clients[target]->level;
 
     (void)argc;
-    return dprintf(server->clients[i]->fd, "plv %d %d\n", target, level);
+    return send_client_msg(server->clients[i], "plv %d %d\n", target, level);
 }

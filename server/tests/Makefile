@@ -43,6 +43,7 @@ SRC		=	$(SRC_DIR)parse_options.c			\
 			$(SERVER_DIR)read_clients_fd.c			\
 			$(SERVER_DIR)exec_client_command.c		\
 			$(SERVER_DIR)kick_client_from_server.c		\
+			$(SERVER_DIR)send_client_msg.c				\
 			$(SERVER_DIR)send_graphical_broadcast.c		\
 			$(SERVER_DIR)client_join_team.c			\
 			$(SERVER_DIR)get_nb_free_team_slot.c		\

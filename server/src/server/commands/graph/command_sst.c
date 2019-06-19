@@ -18,5 +18,5 @@ int command_sst(struct server *server, int i, int argc, char **argv)
         if (tmp > 0)
             server->options.freq = tmp;
     }
-    return dprintf(server->clients[i]->fd, "sst %d\n", server->options.freq);
+    return send_client_msg(server->clients[i], "sst %d\n", server->options.freq);
 }

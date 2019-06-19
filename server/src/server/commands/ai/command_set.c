@@ -50,9 +50,9 @@ static int set_callback(struct server *server, struct client *client,
 int cayou_id, char **argv __attribute__((unused)))
 {
     if (set_builtin(server, client, cayou_id) != -1)
-        return dprintf(client->fd, "ok\n");
+        return send_client_msg(client, "ok\n");
     else
-        return dprintf(client->fd, "ko\n");
+        return send_client_msg(client, "ko\n");
 }
 
 int command_set(struct server *server, int client, int argc, char **argv)
@@ -62,10 +62,10 @@ int command_set(struct server *server, int client, int argc, char **argv)
     int cayou_id;
 
     if (argc < 2)
-        return dprintf(server->clients[client]->fd, "ko\n"), -1;
+        return send_client_msg(server->clients[client], "ko\n"), -1;
     cayou_id = get_cayou_id(argv);
     if (cayou_id == JE_SUIS_PAS_FIER)
-        return dprintf(server->clients[client]->fd, "ko\n"), -1;
+        return send_client_msg(server->clients[client], "ko\n"), -1;
     time = compute_trigger_time(7, server->options.freq);
     if (time == -1)
         return -1;
