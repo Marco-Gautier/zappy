@@ -2,7 +2,7 @@
 <p>
 </p>
 
-> Basically it&#39;s a game which you don&#39;t play but stuff happens
+> It's a game you don't play. And there are IAs eating rocks :robot:
 
 ### 🏠 [Homepage](https://github.com/Marco-Gautier/zappy)
 
@@ -18,15 +18,24 @@ make
 ./zappy_server
 ```
 
+You can access the server on `zappy.marc0.fr`. The port used is `2142`
+
 ## Run tests
 
 ```sh
 make -C server tests_run
 ```
 
+The coverage is available [here](https://zappy.marc0.fr)
+
 ## Author
 
-👤 **Alban Piron, Camille Police, Corentin Gautier, Hadi-Ilies Bereksi-Reguig, Marco Gautier, Pacôme Françon**
+👤 **[Pacôme Françon](https://github.com/pacome35220)**<br>
+👤 **[Marco Gautier](https://github.com/Marco-Gautier)**<br>
+👤 **Alban Piron**<br>
+👤 **[Camille Police](https://github.com/CamillePolice)**<br>
+👤 **[Corentin Gautier](https://github.com/Adorr29)**<br>
+👤 **[Hadi-Ilies Bereksi-Reguig](https://github.com/hadi-ilies)**<br>
 
 
 ## 🤝 Contributing
