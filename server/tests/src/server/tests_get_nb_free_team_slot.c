@@ -115,3 +115,28 @@ Test(get_nb_free_team_slot, full_team)
 
     assert(get_nb_free_team_slot(&server, "team1") == 0);
 }
+
+Test(get_nb_free_team_slot, hatched_eggs)
+{
+    struct client hatched_client = {
+        .hatched = true,
+        .team_name = "team1",
+    };
+    struct client client = {
+        .hatched = false,
+    };
+    struct client *clients[] = {
+        &hatched_client,
+        &client,
+        NULL
+    };
+    struct server server = {
+        .options = {
+            .max_team_nbr = 10,
+            .team_names = (char **)team_names
+        },
+        .clients = clients,
+    };
+
+    assert(get_nb_free_team_slot(&server, "team1") == 11);
+}
