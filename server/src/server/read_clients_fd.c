@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include "zappy.h"
 
-/*
+/**
 ** Reject client if the buffer contains more than 10 commands
 */
 
@@ -25,9 +25,11 @@ static int check_client_buffer(const char *buffer)
     return 0;
 }
 
-/*
+/**
 ** 1) Read string from the client socket
+**
 ** 2) Append string in client->buffer
+**
 ** 3) Check if the buffer is valid
 */
 

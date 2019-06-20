@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "zappy.h"
 
-/*
+/**
 ** Middleware use to restrict request to graphical clients
 */
 

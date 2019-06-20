@@ -11,7 +11,7 @@
 #include "zappy.h"
 #include "my.h"
 
-/*
+/**
 ** Send broadcast message to all graphics clients that a new client is connected
 */
 
@@ -28,8 +28,9 @@ static void broadcast_new_player(struct server *server, struct client *client)
     send_graphical_broadcast(server, format, id, x, y, dir, level, team_name);
 }
 
-/*
+/**
 ** To validate client connection, the server send to the client :
+**
 **  --> CLIENT_NUM\n
 **  --> X Y\n
 */

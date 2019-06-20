@@ -18,7 +18,7 @@ static struct client *get_client(struct client **clients, int id)
     return NULL;
 }
 
-/*
+/**
 ** Middleware use to check if the client target is valid
 */
 

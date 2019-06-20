@@ -15,7 +15,7 @@ int stones_callback(struct server *server, struct client *c, int ac, char **av)
     int pos_x = rand() % server->options.width;
     int pos_y = rand() % server->options.height;
     int stone = rand() % C_CAOUILLOUX_SIZE;
-    int caouillioux_nb = abs(rand() % 42 - rand() % 42);
+    int caouillioux_nb = abs(rand() % 42 - rand() % 42) + 1;
 
     (void)ac;
     (void)av;
