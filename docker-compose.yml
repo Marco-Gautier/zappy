@@ -1,12 +1,23 @@
 version: '3'
 services:
   zappy_server:
-    build: '.'
+    build:
+      context: .
+      dockerfile: .docker/server/Dockerfile
     ports:
       - "2142:2142"
     restart: always
   zappy_lcov:
-    build: './server'
+    build:
+      context: .
+      dockerfile: .docker/lcov/Dockerfile
     ports:
       - "1339:80"
+    restart: always
+  zappy_doc:
+    build:
+      context: .
+      dockerfile: .docker/doc/Dockerfile
+    ports:
+      - "1340:80"
     restart: always
