@@ -28,7 +28,16 @@ You can access the server on `zappy.marc0.fr`. The port used is `2142`
 make -C server tests_run
 ```
 
-The coverage is available [here](https://zappy.marc0.fr)
+The coverage is available [here](https://zappy.marc0.fr/coverage/)
+
+## Documentation
+
+```sh
+make -C server doc
+```
+The result of this command is stored in `server/doc`
+
+The documentation is available online [here](https://zappy.marc0.fr)
 
 ## Author
 
