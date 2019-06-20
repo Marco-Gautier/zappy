@@ -9,8 +9,9 @@
 #include <string.h>
 #include "zappy.h"
 
-/*
+/**
 ** man 2 select
+**
 ** man 2 select_tut
 **
 ** Compute and return the highest-numbered file descriptor in any of the
@@ -30,7 +31,7 @@ static int get_server_process_fd_max(struct server *server)
     return fd;
 }
 
-/*
+/**
 ** man 2 select_tut
 **
 ** 𝙻̲𝚊̲𝚠̲ ̲𝟷̲𝟷̲ :
@@ -52,9 +53,11 @@ static void server_reset_fds(struct server *server)
         }
 }
 
-/*
+/**
 ** 1) Walk through all used clients with an existing buffer
+**
 ** 2) Check if the buffer contains an entire command
+**
 ** 3) Execute this command
 */
 

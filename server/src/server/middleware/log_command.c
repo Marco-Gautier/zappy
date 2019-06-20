@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "server.h"
 
-/*
+/**
 ** Middleware use to log each received command on standard output
 */
 

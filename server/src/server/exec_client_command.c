@@ -35,9 +35,11 @@ const struct command command_helper[] = {
     {NULL,          NO_MIDDLEWARE,  command_unknown}
 };
 
-/*
+/**
 ** 1) Walk through the commands list
+**
 ** 2) Call all middleware
+**
 ** 3) Then, call the callback
 */
 
@@ -58,8 +60,9 @@ static int exec_client_cmd(struct server *server, int client, char **argv)
     return command_helper[i].callback(server, client, argc, argv);
 }
 
-/*
+/**
 ** 1) Extract one command from client buffer
+**
 ** 2) Erase it from the buffer
 */
 
