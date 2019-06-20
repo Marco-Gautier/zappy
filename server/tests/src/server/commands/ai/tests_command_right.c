@@ -102,3 +102,22 @@ Test(command_left, right_from_east)
     close(pipefd[0]);
     close(pipefd[1]);
 }
+
+Test(command_right, test_right_event_creation)
+{
+    struct client client = {
+        .event = NULL
+    };
+    struct client *clients[] = {
+        &client,
+        NULL
+    };
+    struct server server = {
+        .clients = clients,
+        .options.freq = 100
+    };
+
+    cr_assert(command_right(&server, 0, 1, NULL) == 0);
+    cr_assert(server.clients[0]->event != NULL);
+    cr_assert(server.clients[0]->event->callback == right_callback);
+}
