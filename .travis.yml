@@ -17,7 +17,7 @@ before_install:
   - cp .travis/deploy_rsa ~/.ssh/deploy_rsa
   - chmod 600 ~/.ssh/deploy_rsa
   - ssh-add ~/.ssh/deploy_rsa
-  - docker build -t zappy_server_tests .
+  - docker build -t zappy_server_tests .docker/server/
 script: docker run zappy_server_tests /bin/sh -c "cd /app/server; make tests_run"
 deploy:
   - provider: script
