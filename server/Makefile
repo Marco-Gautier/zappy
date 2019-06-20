@@ -64,7 +64,8 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(AI_DIR)command_look.c				\
 			$(AI_DIR)command_incantation.c			\
 			$(AI_DIR)command_fork.c				\
-			$(AI_DIR)command_eject.c
+			$(AI_DIR)command_eject.c			\
+			$(AI_DIR)command_broadcast.c
 
 OBJ		=	$(SRC:.c=.o)
 

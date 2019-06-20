@@ -80,7 +80,8 @@ SRC		=	$(SRC_DIR)parse_options.c			\
 			$(AI_DIR)command_look.c				\
 			$(AI_DIR)command_incantation.c			\
 			$(AI_DIR)command_fork.c				\
-			$(AI_DIR)command_eject.c
+			$(AI_DIR)command_eject.c			\
+			$(AI_DIR)command_broadcast.c
 SRC		+=	$(LIB)
 
 TESTS_LIB	=	$(TESTS_LIB_DIR)my_tabdup.c			\
