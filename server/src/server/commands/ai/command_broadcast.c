@@ -15,13 +15,16 @@ static const char *format = "message %d, %s";
 static void send_broadcast(struct server *server, struct client *client,
 const char *message)
 {
-    char direction = 'N';
+    struct client *target;
+    int direction;
 
-    for (int i = 0; i < MAX_CLIENTS; i++) {
+    for (size_t i = 0; server->clients[i] != NULL; i++) {
         if (server->clients[i] == client)
             continue;
         if (server->clients[i]->client_type != CT_AI)
             continue;
+        target = server->clients[i];
+        direction = broadcast_direction(&server->options, client, target);
         send_client_msg(server->clients[i], format, direction, message);
     }
 }

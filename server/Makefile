@@ -44,6 +44,7 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(MIDDLEWARE_DIR)check_client_target.c		\
 			$(COMMANDS_DIR)utils.c				\
 			$(COMMANDS_DIR)command_unknown.c		\
+			$(COMMANDS_DIR)broadcast_utils.c		\
 			$(GRAPH_DIR)command_msz.c			\
 			$(GRAPH_DIR)command_tna.c			\
 			$(GRAPH_DIR)command_sst.c			\
@@ -73,7 +74,7 @@ CFLAGS		+=	-Wall -Wextra	\
 			-I $(INC_DIR)	\
 			-O3
 
-LDFLAGS		=	-L $(LIB_DIR) -lmy
+LDFLAGS		=	-L $(LIB_DIR) -lmy -lm
 
 NAME		=	../zappy_server
 
