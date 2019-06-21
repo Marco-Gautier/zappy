@@ -1,8 +1,20 @@
-#!/usr/bin/env python3
+#!/usr/local/bin/python3.7
 
 import argparse
 import socket
+import select
 import re
+
+def recv(sockfd):
+    fds = select.select([sockfd], [], [], 0.1)
+    if len(fds[0]) != 0 and fds[0][0] == sockfd:
+        return sockfd.recv(1024).decode()
+    else:
+        return None
+
+def send(sockfd, message):
+    message += '\n'
+    sockfd.send(message.encode())
 
 def parse_options():
     parser = argparse.ArgumentParser(add_help=False)
@@ -17,14 +29,14 @@ def join_team(team_name):
 
 def connect_client():
     sockfd.connect((args.machine, args.port))
-    print("I'm connect to {} on port {}".format(args.machine, args.port))
+    print("I'm connected to {} on port {}".format(args.machine, args.port))
     if sockfd.recv(1024).decode() != "Welcome!\n":
         print("server should have responded 'Welcome\\n'")
         exit(1)
     join_team(args.name)
     handshake = sockfd.recv(1024).decode()
     if handshake == "ko\n":
-        print("team name '{}' isn't valid").format(args.name)
+        print(f"team name '{args.name}' isn't valid")
         exit(1)
     return tuple(map(int, re.search(r"^([1-9]\d*)\n([1-9]\d*) ([1-9]\d*)$", handshake).groups()))
 
@@ -36,4 +48,25 @@ print(f"client_id: {client_id}")
 print(f"width: {width}")
 print(f"height: {height}")
 
+while True:
+    send(sockfd, "Look")
+    infos = recv(sockfd)
+    print (infos)
+    if infos == "Current Level":
+        print("Level UP")
+    if infos == "dead\n":
+        print("player killed")
+        exit(0)
+    else:
+        infos = infos.replace('[', '').replace(']', '').replace('\n', '')
+        infos = infos.split(",")
+        info = infos[0].split(" ")
+        for command in info:
+            ##print("infos 3 : ", command)
+            if command == "food":
+                send(sockfd, "Take Food")
+            elif not command == "Linemate":
+                send(sockfd, "Take " + command)
+                send(sockfd, "Incantation")
+        send(sockfd, "Forward")   
 sockfd.close()
