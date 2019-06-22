@@ -27,7 +27,7 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(SERVER_DIR)read_clients_fd.c			\
 			$(SERVER_DIR)exec_client_command.c		\
 			$(SERVER_DIR)kick_client_from_server.c		\
-			$(SERVER_DIR)send_client_msg.c				\
+			$(SERVER_DIR)send_client_msg.c			\
 			$(SERVER_DIR)send_graphical_broadcast.c		\
 			$(SERVER_DIR)client_join_team.c			\
 			$(SERVER_DIR)get_nb_free_team_slot.c		\
@@ -44,6 +44,7 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(MIDDLEWARE_DIR)check_client_target.c		\
 			$(COMMANDS_DIR)utils.c				\
 			$(COMMANDS_DIR)command_unknown.c		\
+			$(COMMANDS_DIR)broadcast_utils.c		\
 			$(GRAPH_DIR)command_msz.c			\
 			$(GRAPH_DIR)command_tna.c			\
 			$(GRAPH_DIR)command_sst.c			\
@@ -64,7 +65,8 @@ SRC		=	$(SRC_DIR)main.c				\
 			$(AI_DIR)command_look.c				\
 			$(AI_DIR)command_incantation.c			\
 			$(AI_DIR)command_fork.c				\
-			$(AI_DIR)command_eject.c
+			$(AI_DIR)command_eject.c			\
+			$(AI_DIR)command_broadcast.c
 
 OBJ		=	$(SRC:.c=.o)
 
@@ -72,7 +74,7 @@ CFLAGS		+=	-Wall -Wextra	\
 			-I $(INC_DIR)	\
 			-O3
 
-LDFLAGS		=	-L $(LIB_DIR) -lmy
+LDFLAGS		=	-L $(LIB_DIR) -lmy -lm
 
 NAME		=	../zappy_server
 

@@ -43,7 +43,7 @@ SRC		=	$(SRC_DIR)parse_options.c			\
 			$(SERVER_DIR)read_clients_fd.c			\
 			$(SERVER_DIR)exec_client_command.c		\
 			$(SERVER_DIR)kick_client_from_server.c		\
-			$(SERVER_DIR)send_client_msg.c				\
+			$(SERVER_DIR)send_client_msg.c			\
 			$(SERVER_DIR)send_graphical_broadcast.c		\
 			$(SERVER_DIR)client_join_team.c			\
 			$(SERVER_DIR)get_nb_free_team_slot.c		\
@@ -60,6 +60,7 @@ SRC		=	$(SRC_DIR)parse_options.c			\
 			$(MIDDLEWARE_DIR)check_client_target.c		\
 			$(COMMANDS_DIR)utils.c				\
 			$(COMMANDS_DIR)command_unknown.c		\
+			$(COMMANDS_DIR)broadcast_utils.c		\
 			$(GRAPH_DIR)command_msz.c			\
 			$(GRAPH_DIR)command_tna.c			\
 			$(GRAPH_DIR)command_sst.c			\
@@ -80,7 +81,8 @@ SRC		=	$(SRC_DIR)parse_options.c			\
 			$(AI_DIR)command_look.c				\
 			$(AI_DIR)command_incantation.c			\
 			$(AI_DIR)command_fork.c				\
-			$(AI_DIR)command_eject.c
+			$(AI_DIR)command_eject.c			\
+			$(AI_DIR)command_broadcast.c
 SRC		+=	$(LIB)
 
 TESTS_LIB	=	$(TESTS_LIB_DIR)my_tabdup.c			\
@@ -134,7 +136,7 @@ CFLAGS		=	-Wall -Wextra	\
 			-fprofile-arcs	\
 			-ftest-coverage
 
-LDFLAGS		=	-lcriterion --coverage
+LDFLAGS		=	-lcriterion --coverage -lm
 
 OBJ		=	$(TESTS:.c=.o)
 GCDA		=	$(TESTS:.c=.gcda)

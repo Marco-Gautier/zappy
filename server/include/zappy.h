@@ -31,3 +31,5 @@ int     client_join_team(struct server *serv, struct client *clien, char **cmd);
 void    update_events(struct server *server);
 bool    is_game_over(struct server *server);
 void    kick_dead_client(struct server *server);
+int     broadcast_direction(struct server_opt *options, struct client *sender,
+struct client *target);
