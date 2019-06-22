@@ -45,3 +45,4 @@ int command_set(struct server *server, int client, int argc, char **argv);
 int command_look(struct server *server, int i, int argc, char **argv);
 int command_incantation(struct server *server, int i, int argc, char **argv);
 int command_fork(struct server *server, int i, int argc, char **argv);
+int command_broadcast(struct server *server, int i, int argc, char **argv);
