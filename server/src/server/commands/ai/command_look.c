@@ -34,9 +34,9 @@ static int get_y_offset(struct client *client, int i, int j, int height)
     if (client->direction == D_SOUTH)
         tmp = (client->y + (i + 1)) % height;
     if (client->direction == D_WEST)
-        tmp = (client->y + (i + 1) + j) % height;
+        tmp = (client->y + (i + 1) - j) % height;
     if (client->direction == D_EAST)
-        tmp = (client->y - (i + 1) - j) % height;
+        tmp = (client->y - (i + 1) + j) % height;
     return tmp >= 0 ? tmp : height + tmp;
 }
 
