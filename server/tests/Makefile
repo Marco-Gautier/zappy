@@ -131,7 +131,8 @@ TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_AI_DIR)command_forward.c		\
 			$(TESTS_AI_DIR)command_look.c			\
 			$(TESTS_AI_DIR)command_broadcast.c		\
-			$(TESTS_AI_DIR)command_eject.c
+			$(TESTS_AI_DIR)command_eject.c			\
+			$(TESTS_AI_DIR)command_fork.c
 TESTS		+=	$(TESTS_LIB)
 TESTS		+=	$(SRC)
 
