@@ -124,7 +124,8 @@ TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_GRAPH_DIR)command_mct.c			\
 			$(TESTS_GRAPH_DIR)command_pin.c			\
 			$(TESTS_AI_DIR)command_left.c			\
-			$(TESTS_AI_DIR)command_right.c
+			$(TESTS_AI_DIR)command_right.c			\
+			$(TESTS_AI_DIR)command_connect_nbr.c
 TESTS		+=	$(TESTS_LIB)
 TESTS		+=	$(SRC)
 
