@@ -48,8 +48,10 @@ struct client *create_new_player(struct server *s, struct client *c, int egg_id)
 
 int new_player_callback(struct server *s, struct client *c, int ac, char **av)
 {
-    create_new_player(s, c, (ac == 3 && av && av[1]) ? atoi(av[1]) : 0);
-    printf("new client created\n");
+    struct client *tmp;
+
+    tmp = create_new_player(s, c, (ac == 3 && av && av[1]) ? atoi(av[1]) : 0);
+    printf("new client created with id %d\n", tmp->egg_id);
     return 0;
 }
 
@@ -77,13 +79,14 @@ int command_fork(struct server *server, int i, int argc, char **argv)
     char tmp[128];
 
     (void)argc;
+    (void)argv;
     if (trigger_time == -1)
         return fprintf(stderr, "error during event time computing\n"), -1;
-    if (!argv)
+    if (!av)
         return -1;
     snprintf(tmp, sizeof(tmp), "%d", server->clients[i]->egg_nb);
-    argv[0] = "Fork";
-    argv[1] = tmp;
+    av[0] = "Fork";
+    av[1] = tmp;
     event = create_event(trigger_time, 2, av, &fork_callback);
     if (!event)
         return fprintf(stderr, "error during event creation\n"), -1;
