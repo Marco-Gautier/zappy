@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3.7
+#!/usr/bin/env python3
 
 import argparse
 import socket
@@ -6,11 +6,11 @@ import select
 import re
 
 def recv(sockfd):
-    fds = select.select([sockfd], [], [], 0.1)
-    if len(fds[0]) != 0 and fds[0][0] == sockfd:
-        return sockfd.recv(1024).decode()
-    else:
-        return None
+    res = sockfd.recv(1024).decode()
+    if res == "dead\n":
+        print("player dead")
+        exit(0)
+    return res
 
 def send(sockfd, message):
     message += '\n'
@@ -40,6 +40,10 @@ def connect_client():
         exit(1)
     return tuple(map(int, re.search(r"^([1-9]\d*)\n([1-9]\d*) ([1-9]\d*)$", handshake).groups()))
 
+def parse_level(res):
+    tmp = re.search(r"^Current level: (\d+)\n$", res).groups()
+    return int(tmp[0])
+
 args = parse_options()
 sockfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client_id, width, height = connect_client()
@@ -49,24 +53,18 @@ print(f"width: {width}")
 print(f"height: {height}")
 
 while True:
-    send(sockfd, "Look")
-    infos = recv(sockfd)
-    print (infos)
-    if infos == "Current Level":
-        print("Level UP")
-    if infos == "dead\n":
-        print("player killed")
-        exit(0)
-    else:
-        infos = infos.replace('[', '').replace(']', '').replace('\n', '')
-        infos = infos.split(",")
-        info = infos[0].split(" ")
-        for command in info:
-            ##print("infos 3 : ", command)
-            if command == "food":
-                send(sockfd, "Take Food")
-            elif not command == "Linemate":
-                send(sockfd, "Take " + command)
-                send(sockfd, "Incantation")
-        send(sockfd, "Forward")   
+    send(sockfd, "Take food")
+    res = recv(sockfd)
+    if res == "ok\n":
+        print("Food taked")
+    send(sockfd, "Take linemate")
+    res = recv(sockfd)
+    if res == "ok\n":
+        print("Linemate taked")
+        send(sockfd, "Incantation")
+        res = recv(sockfd)
+        if res.startswith("Current level: "):
+            print(parse_level(res))
+    send(sockfd, "Forward")
+    recv(sockfd)
 sockfd.close()
