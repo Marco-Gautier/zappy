@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include "zappy.h"
 
+static const char *format = "msz %d %d\n";
+
 int command_msz(struct server *server, int client, int argc, char **argv)
 {
     int width = server->options.width;
@@ -15,5 +17,5 @@ int command_msz(struct server *server, int client, int argc, char **argv)
 
     (void)argc;
     (void)argv;
-    return send_client_msg(server->clients[client], "msz %d %d\n", width, height);
+    return send_client_msg(server->clients[client], format, width, height);
 }
