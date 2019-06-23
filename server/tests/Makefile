@@ -70,7 +70,6 @@ SRC		=	$(SRC_DIR)parse_options.c			\
 			$(GRAPH_DIR)command_bct.c			\
 			$(GRAPH_DIR)command_mct.c			\
 			$(GRAPH_DIR)command_pin.c			\
-			$(AI_DIR)command_test.c				\
 			$(AI_DIR)command_forward.c			\
 			$(AI_DIR)command_right.c			\
 			$(AI_DIR)command_left.c				\
@@ -127,7 +126,7 @@ TESTS		=	$(TESTS_SRC_DIR)parse_options.c			\
 			$(TESTS_GRAPH_DIR)command_pin.c			\
 			$(TESTS_AI_DIR)command_left.c			\
 			$(TESTS_AI_DIR)command_right.c			\
-			$(TESTS_AI_DIR)command_connect_nbr.c	\
+			$(TESTS_AI_DIR)command_connect_nbr.c		\
 			$(TESTS_AI_DIR)command_forward.c		\
 			$(TESTS_AI_DIR)command_look.c			\
 			$(TESTS_AI_DIR)command_broadcast.c		\
