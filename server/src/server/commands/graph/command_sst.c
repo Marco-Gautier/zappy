@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include "zappy.h"
 
-static const char *format = "sst %s\n";
+static const char *format = "sst %d\n";
 
 int command_sst(struct server *server, int i, int argc, char **argv)
 {
