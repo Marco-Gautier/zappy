@@ -20,16 +20,23 @@ def command_tna(sockfd):
         teams.append(token[0])
     return teams
 
-""" Return (player_number, x, y, dir) """
+""" Return (id, x, y, dir) """
 def command_ppo(input):
     input = ' '.join(input)
     if input is None or input == ["ko\n"]:
         return
     return tuple(map(int, re.search(r"^ppo (\d+) (\d+) (\d+) (1|2|3|4)$", input).groups()))
 
-""" Return (food, stones1, stones2, ..., stones6) """
+""" Return (id, food, stones1, stones2, ..., stones6) """
 def command_pin(input):
     input = ' '.join(input)
     if input is None or input == ["ko\n"]:
         return
     return tuple(map(int, re.search(r"^pin (\d+) (\d+) (\d+) (\d+) (\d+) (\d+) (\d+) (\d+)$", input).groups()))
+
+""" Return (id, level) """
+def command_plv(input):
+    input = ' '.join(input)
+    if input is None or input == ["ko\n"]:
+        return
+    return tuple(map(int, re.search(r"^plv (\d+) (\d+)$", input).groups()))

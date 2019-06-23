@@ -3,7 +3,7 @@
 from enum import Enum
 
 from client import Client
-from commands import command_msz, command_tna, command_ppo, command_pin
+from commands import *
 from draw import *
 from network_utils import connect_client, recv, send
 
@@ -39,6 +39,7 @@ def update_client(clients, sockfd):
     for client in clients:
         client.request_position(sockfd)
         client.request_inventory(sockfd)
+        client.request_level(sockfd)
 
 def update_clients_position(clients, argc, argv):
     if argc != 5:
@@ -60,6 +61,17 @@ def update_clients_inventory(clients, argc, argv):
         if pin[0] == client.id:
             client.update_inventory(pin[1], (pin[2], pin[3], pin[4], pin[5], pin[6], pin[7]))
 
+def update_clients_level(clients, argc, argv):
+    if argc != 3:
+        return
+    print(argv)
+    plv = command_plv(argv)
+    if plv is None:
+        return
+    for client in clients:
+        if plv[0] == client.id:
+            client.update_level(plv[1])
+
 def loop():
     update_client(clients, sockfd)
     buf = recv(sockfd)
@@ -80,6 +92,8 @@ def loop():
             update_clients_position(clients, argc, argv)
         if argv[0] == 'pin':
             update_clients_inventory(clients, argc, argv)
+        if argv[0] == 'plv':
+            update_clients_level(clients, argc, argv)
 
 args = parse_options()
 sockfd = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

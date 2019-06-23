@@ -40,8 +40,15 @@ class Client:
         self.food = food
         self.stones = stones
 
+    def update_level(self, level):
+        # print('update level: ', self.level, level)
+        self.level = level
+
     def request_position(self, sockfd):
         send(sockfd, f"ppo {self.id}")
 
     def request_inventory(self, sockfd):
         send(sockfd, f"pin {self.id}")
+
+    def request_level(self, sockfd):
+        send(sockfd, f"plv {self.id}")
