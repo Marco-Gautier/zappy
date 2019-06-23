@@ -31,6 +31,8 @@ const struct command command_helper[] = {
     {"Look",        API_AI,         command_look},
     {"Incantation", API_AI,         command_incantation},
     {"Fork",        API_AI,         command_fork},
+    {"Eject",       API_AI,         command_eject},
+    {"Broadcast",   API_AI,         command_broadcast},
     {NULL,          NO_MIDDLEWARE,  command_unknown}
 };
 
