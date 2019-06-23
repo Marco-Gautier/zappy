@@ -23,7 +23,8 @@ static int server_bind_socket(int fd, int port)
     struct sockaddr_in sockaddr = {
         .sin_family = AF_INET,
         .sin_addr.s_addr = INADDR_ANY,
-        .sin_port = htons(port)
+        .sin_port = htons(port),
+        .sin_zero = {0}
     };
 
     if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, (int[]){1}, sizeof(int)) == -1)
