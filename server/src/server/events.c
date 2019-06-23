@@ -52,6 +52,7 @@ event_t **event_list)
     for (event_t *event = *event_list; event != NULL; ) {
         if (event->trigger_time <= GET_TIME_SEC(timeval)) {
             event->callback(server, client, event->argc, event->argv);
+            free(event->argv);
             tmp = event->next;
             *event_list = my_list_erase(*event_list, event, free);
             event = tmp;

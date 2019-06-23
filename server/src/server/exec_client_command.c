@@ -103,7 +103,5 @@ int exec_client_command(struct server *server, int i)
             dprintf(server->clients[i]->fd, "ko\n");
     } else
         ret = exec_client_cmd(server, i, command);
-    free(tmp);
-    free(command);
     return ret;
 }

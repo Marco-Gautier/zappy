@@ -21,6 +21,8 @@ const char *message)
     for (size_t i = 0; server->clients[i] != NULL; i++) {
         if (server->clients[i] == client)
             continue;
+        if (!server->clients[i]->team_name)
+            continue;
         if (server->clients[i]->client_type != CT_AI)
             continue;
         target = server->clients[i];
@@ -59,6 +61,8 @@ int command_broadcast(struct server *server, int i, int argc, char **argv)
 
     if (trigger_time == -1)
         return -1;
+    if (argc == 1)
+        return send_client_msg(server->clients[i], "ko\n");
     event = create_event(trigger_time, argc, argv, &broadcast_callback);
     if (!event)
         return -1;

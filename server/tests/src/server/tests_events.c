@@ -94,10 +94,14 @@ Test(update_events, mdr)
     int argc = 3;
     event_t *event[2];
     callback_t callback = func;
+    char **argvv = malloc(sizeof(char *) * 3);
 
+    argvv[0] = "mdr";
+    argvv[1] = "lol";
+    argvv[2] = "singe";
     cr_redirect_stdout();
-    event[0] = create_event(time, argc, (char **)argv, callback);
-    event[1] = create_event(compute_trigger_time(100, 100), argc, (char **)argv, callback);
+    event[0] = create_event(time, argc, argvv, callback);
+    event[1] = create_event(compute_trigger_time(100, 100), argc, argvv, callback);
     add_event(&client, event[0]);
     add_event(&client, event[1]);
     cr_assert(client.event == event[0]);

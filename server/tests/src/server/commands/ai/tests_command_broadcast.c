@@ -21,8 +21,13 @@ Test(command_broadcast, test_forward_event_creation)
         .clients = clients,
         .options.freq = 100
     };
+    char *argv[3] = {
+        "Broadcast",
+        "mdr",
+        NULL
+    };
 
-    cr_assert(command_broadcast(&server, 0, 1, NULL) == 0);
+    cr_assert(command_broadcast(&server, 0, 3, argv) == 0);
     cr_assert(server.clients[0]->event != NULL);
     cr_assert(server.clients[0]->event->callback == broadcast_callback);
 }
