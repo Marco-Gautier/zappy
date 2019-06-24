@@ -17,7 +17,8 @@ int left_callback(struct server *s, struct client *client, int ac, char **av)
     return send_client_msg(client, "ok\n");
 }
 
-int command_left(struct server *server, int i, int argc, char **argv)
+int command_left(struct server *server, struct client *client,
+                 int argc, char **argv)
 {
     suseconds_t trigger_time = compute_trigger_time(7, server->options.freq);
     event_t *event;
@@ -27,5 +28,5 @@ int command_left(struct server *server, int i, int argc, char **argv)
     event = create_event(trigger_time, argc, argv, &left_callback);
     if (!event)
         return fprintf(stderr, "error during event creation\n"), -1;
-    return add_event(server->clients[i], event);
+    return add_event(client, event);
 }

@@ -10,12 +10,13 @@
 
 static const char *format = "msz %d %d\n";
 
-int command_msz(struct server *server, int client, int argc, char **argv)
+int command_msz(struct server *server, struct client *client,
+                int argc, char **argv)
 {
     int width = server->options.width;
     int height = server->options.height;
 
     (void)argc;
     (void)argv;
-    return send_client_msg(server->clients[client], format, width, height);
+    return send_client_msg(client, format, width, height);
 }

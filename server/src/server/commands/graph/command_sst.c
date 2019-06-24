@@ -11,7 +11,8 @@
 
 static const char *format = "sst %d\n";
 
-int command_sst(struct server *server, int i, int argc, char **argv)
+int command_sst(struct server *server, struct client *client,
+                int argc, char **argv)
 {
     int tmp;
 
@@ -20,5 +21,5 @@ int command_sst(struct server *server, int i, int argc, char **argv)
         if (tmp > 0)
             server->options.freq = tmp;
     }
-    return send_client_msg(server->clients[i], format, server->options.freq);
+    return send_client_msg(client, format, server->options.freq);
 }

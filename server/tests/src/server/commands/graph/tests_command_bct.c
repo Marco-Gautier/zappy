@@ -29,8 +29,8 @@ Test(command_bct, error_parameter_nbr)
         };
 
         close(STDOUT_FILENO);
-        cr_assert(command_bct(&server, 0, 2, NULL) == -1);
-        cr_assert(command_bct(&server, 0, 4, NULL) == -1);
+        cr_assert(command_bct(&server, &client, 2, NULL) == -1);
+        cr_assert(command_bct(&server, &client, 4, NULL) == -1);
 }
 
 Test(command_bct, error_bad_parameter)
@@ -42,7 +42,6 @@ Test(command_bct, error_bad_parameter)
             &client,
             NULL
         };
-        int argc = 3;
         struct server server = {
             .clients = clients,
             .options = {
@@ -50,16 +49,17 @@ Test(command_bct, error_bad_parameter)
                 .height = 10
             }
         };
-        static const char * const argv1[] = { "bct", "1", "-1" };
-        static const char * const argv2[] = { "bct", "-1", "1" };
-        static const char * const argv3[] = { "bct", "1", "10" };
-        static const char * const argv4[] = { "bct", "10", "1" };
+        int argc = 3;
+        char *argv1[4] = { "bct", "1", "-1", NULL };
+        char *argv2[4] = { "bct", "-1", "1", NULL };
+        char *argv3[4] = { "bct", "1", "10", NULL };
+        char *argv4[4] = { "bct", "10", "1", NULL };
 
         close(STDOUT_FILENO);
-        cr_assert(command_bct(&server, 0, argc, (char **)argv1) == -1);
-        cr_assert(command_bct(&server, 0, argc, (char **)argv2) == -1);
-        cr_assert(command_bct(&server, 0, argc, (char **)argv3) == -1);
-        cr_assert(command_bct(&server, 0, argc, (char **)argv4) == -1);
+        cr_assert(command_bct(&server, &client, argc, (char **)argv1) == -1);
+        cr_assert(command_bct(&server, &client, argc, (char **)argv2) == -1);
+        cr_assert(command_bct(&server, &client, argc, (char **)argv3) == -1);
+        cr_assert(command_bct(&server, &client, argc, (char **)argv4) == -1);
 }
 
 Test(command_bct, success)
@@ -69,8 +69,6 @@ Test(command_bct, success)
         &client,
         NULL
     };
-    int argc = 3;
-    int pipefd[2];
     struct server server = {
         .clients = clients,
         .options = {
@@ -78,7 +76,9 @@ Test(command_bct, success)
             .height = 10
         }
     };
-    static const char * const argv[] = { "bct", "2", "3" };
+    int pipefd[2];
+    int argc = 3;
+    char *argv[4] = { "bct", "2", "3", NULL };
     char buffer[512] = { 0 };
     cell_t cell = {
         .food = 1,
@@ -89,7 +89,7 @@ Test(command_bct, success)
     client.fd = pipefd[1];
     init_world(&server.world, &server.options);
     server.world.map[3][2] = cell;
-    assert(command_bct(&server, 0, argc, (char **)argv) != -1);
+    assert(command_bct(&server, &client, argc, (char **)argv) != -1);
     read(pipefd[0], buffer, 512);
     assert(strcmp(buffer, "bct 2 3 1 2 3 4 5 6 7\n") == 0);
     close(pipefd[0]);

@@ -30,8 +30,6 @@ Test(command_mct, success)
         &client,
         NULL
     };
-    int argc = 1;
-    int pipefd[2];
     struct server server = {
         .clients = clients,
         .options = {
@@ -39,7 +37,9 @@ Test(command_mct, success)
             .height = 3
         }
     };
-    static const char * const argv[] = { "mct" };
+    int pipefd[2];
+    int argc = 2;
+    char *argv[2] = { "mct", NULL };
     char buffer[1024] = { 0 };
     char expected_result[1024] = { 0 };
 
@@ -47,7 +47,7 @@ Test(command_mct, success)
     client.fd = pipefd[1];
     setup_expected_result(expected_result);
     init_world(&server.world, &server.options);
-    assert(command_mct(&server, 0, argc, (char **)argv) == 0);
+    assert(command_mct(&server, &client, argc, (char **)argv) == 0);
     read(pipefd[0], buffer, 1024);
     assert(strcmp(buffer, expected_result) == 0);
     close(pipefd[0]);

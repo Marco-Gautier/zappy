@@ -22,7 +22,7 @@
 #define JE_SUIS_PAS_FIER    (-42)
 
 void    read_clients_fd(struct server *server);
-int     exec_client_command(struct server *server, int i);
+int     exec_client_command(struct server *server, struct client *client);
 void    kick_client_from_server(struct server *server, int i);
 void    send_graphical_broadcast(struct server *serve, const char *format, ...);
 int     send_client_msg(struct client *client, const char *format, ...);

@@ -76,7 +76,8 @@ client->egg_id, client->id, client->x, client->y);
     return add_event(client, event);
 }
 
-int command_fork(struct server *server, int i, int argc, char **argv)
+int command_fork(struct server *server, struct client *client,
+                 int argc, char **argv)
 {
     suseconds_t trigger_time = compute_trigger_time(42, server->options.freq);
     event_t *event;
@@ -89,12 +90,12 @@ int command_fork(struct server *server, int i, int argc, char **argv)
         return fprintf(stderr, "error during event time computing\n"), -1;
     if (!av)
         return -1;
-    snprintf(tmp, sizeof(tmp), "%d", server->clients[i]->egg_nb);
+    snprintf(tmp, sizeof(tmp), "%d", client->egg_nb);
     av[0] = "Fork";
     av[1] = tmp;
     event = create_event(trigger_time, 2, av, &fork_callback);
     if (!event)
         return fprintf(stderr, "error during event creation\n"), -1;
-    server->clients[i]->egg_nb += 1;
-    return add_event(server->clients[i], event);
+    client->egg_nb += 1;
+    return add_event(client, event);
 }

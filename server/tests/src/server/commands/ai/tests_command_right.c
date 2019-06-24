@@ -9,8 +9,6 @@
 #include <unistd.h>
 #include "zappy.h"
 
-int right_callback(struct server *s, struct client *client, int ac, char **av);
-
 Test(command_left, right_from_north)
 {
     int pipefd[2];
@@ -21,10 +19,12 @@ Test(command_left, right_from_north)
         &client,
         NULL
     };
-    struct server server = { .clients = clients };
+    struct server server = {
+        .clients = clients
+    };
     char buffer[512] = { 0 };
 
-    cr_assert_eq(pipe(pipefd), 0);
+    cr_assert(pipe(pipefd) == 0);
     server.clients[0]->fd = pipefd[1];
     cr_assert_neq(right_callback(NULL, &client, 1, NULL), -1);
     read(pipefd[0], buffer, 512);
@@ -44,10 +44,12 @@ Test(command_left, right_from_west)
         &client,
         NULL
     };
-    struct server server = { .clients = clients };
+    struct server server = {
+        .clients = clients
+    };
     char buffer[512] = { 0 };
 
-    cr_assert_eq(pipe(pipefd), 0);
+    cr_assert(pipe(pipefd) == 0);
     server.clients[0]->fd = pipefd[1];
     cr_assert_neq(right_callback(NULL, &client, 1, NULL), -1);
     read(pipefd[0], buffer, 512);
@@ -67,10 +69,12 @@ Test(command_left, right_from_south)
         &client,
         NULL
     };
-    struct server server = { .clients = clients };
+    struct server server = {
+        .clients = clients
+    };
     char buffer[512] = { 0 };
 
-    cr_assert_eq(pipe(pipefd), 0);
+    cr_assert(pipe(pipefd) == 0);
     server.clients[0]->fd = pipefd[1];
     cr_assert_neq(right_callback(NULL, &client, 1, NULL), -1);
     read(pipefd[0], buffer, 512);
@@ -90,10 +94,12 @@ Test(command_left, right_from_east)
         &client,
         NULL
     };
-    struct server server = { .clients = clients };
+    struct server server = {
+        .clients = clients
+    };
     char buffer[512] = { 0 };
 
-    cr_assert_eq(pipe(pipefd), 0);
+    cr_assert(pipe(pipefd) == 0);
     server.clients[0]->fd = pipefd[1];
     cr_assert_neq(right_callback(NULL, &client, 1, NULL), -1);
     read(pipefd[0], buffer, 512);
@@ -114,10 +120,12 @@ Test(command_right, test_right_event_creation)
     };
     struct server server = {
         .clients = clients,
-        .options.freq = 100
+        .options = {
+            .freq = 100
+        }
     };
 
-    cr_assert(command_right(&server, 0, 1, NULL) == 0);
+    cr_assert(command_right(&server, &client, 1, NULL) == 0);
     cr_assert(server.clients[0]->event != NULL);
     cr_assert(server.clients[0]->event->callback == right_callback);
 }

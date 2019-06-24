@@ -37,8 +37,8 @@ Test(exec_client_command, full_msz)
     cr_redirect_stdout();
     assert(pipe(pipefd) == 0);
     client.fd = pipefd[1];
-    assert(exec_client_command(&server, 0) != -1);
-    assert(exec_client_command(&server, 0) != -1);
+    assert(exec_client_command(&server, &client) != -1);
+    assert(exec_client_command(&server, &client) != -1);
     read(pipefd[0], buffer, sizeof(buffer));
     assert(strcmp(buffer, "msz 42 24\n") == 0);
     fflush(stdout);
@@ -68,7 +68,7 @@ Test(exec_client_command, bad_team)
 
     assert(pipe(pipefd) == 0);
     client.fd = pipefd[1];
-    assert(exec_client_command(&server, 0) == -1);
+    assert(exec_client_command(&server, &client) == -1);
     read(pipefd[0], buffer, sizeof(buffer));
     assert(strcmp(buffer, "ko\n") == 0);
 }
@@ -93,6 +93,6 @@ Test(exec_client_command, mdr)
     };
 
     assert(strcmp(client.buffer, "mdr") == 0);
-    assert(exec_client_command(&server, 0) == -1);
+    assert(exec_client_command(&server, &client) == -1);
     assert(strcmp(client.buffer, "mdr") == 0);
 }

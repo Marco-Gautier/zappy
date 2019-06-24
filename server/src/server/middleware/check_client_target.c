@@ -9,34 +9,38 @@
 #include <stdlib.h>
 #include "zappy.h"
 
-static struct client *get_client(struct client **clients, int id)
+static int my_getnbr(const char *str)
 {
-    if (clients)
-        for (size_t i = 0; clients[i] != NULL; i++)
-            if (clients[i]->id == id)
-                return clients[i];
-    return NULL;
+    size_t i;
+    int n = 0;
+
+    for (i = 0; str[i] >= '0' && str[i] <= '9'; i++)
+        n = n * 10 + (str[i] - '0');
+    return str[i] == '\0' ? n : -1;
 }
 
 /**
 ** Middleware use to check if the client target is valid
 */
 
-int check_client_target(struct server *server, int clien, int argc, char **argv)
+int check_client_target(struct server *server, struct client *client,
+                        int argc, char **argv)
 {
-    struct client *client;
     int id;
+    struct client *target = NULL;
 
-    (void)clien;
+    (void)client;
     if (argc != 2)
         return -1;
-    id = atoi(argv[1]);
-    if (id < 1)
+    id = my_getnbr(argv[1]);
+    if (id == -1)
         return -1;
-    client = get_client(server->clients, id);
-    if (!client)
+    for (size_t i = 0; server->clients[i] != NULL; i++)
+        if (server->clients[i]->id == id)
+            target = server->clients[i];
+    if (!target)
         return -1;
-    if (client->client_type != CT_AI)
+    if (target->client_type != CT_AI)
         return -1;
     return 0;
 }

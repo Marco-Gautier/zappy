@@ -55,7 +55,7 @@ static bool is_participant_valid(const struct client *a, const struct client *b)
     return a->client_type == CT_AI && a->x == b->x && a->y == b->y;
 }
 
-/*
+/**
 ** Depending on the elevation requested :
 **
 ** - You need a minimum number of players of the same level on the same square
@@ -77,7 +77,7 @@ static bool check_requirement(struct server *server, struct client *client)
         inventory_ge_cmp(&total_inv, &elevation_req[client->level - 1]);
 }
 
-static int incantation_callback(struct server *server, struct client *client,
+int incantation_callback(struct server *server, struct client *client,
 int argc, char **argv)
 {
     (void)argc;
@@ -95,21 +95,22 @@ int argc, char **argv)
     return 0;
 }
 
-int command_incantation(struct server *server, int i, int argc, char **argv)
+int command_incantation(struct server *server, struct client *client,
+                        int argc, char **argv)
 {
     suseconds_t time;
     event_t *event;
 
     (void)argc;
     (void)argv;
-    if (!check_requirement(server, server->clients[i]))
-        return send_client_msg(server->clients[i], "ko\n"), -1;
-    send_graphical_elevation_info(server, server->clients[i], START_ELEVATION);
+    if (!check_requirement(server, client))
+        return send_client_msg(client, "ko\n"), -1;
+    send_graphical_elevation_info(server, client, START_ELEVATION);
     time = compute_trigger_time(300, server->options.freq);
     if (time == -1)
         return -1;
     event = create_event(time, 0, NULL, &incantation_callback);
     if (!event)
         return -1;
-    return add_event(server->clients[i], event);
+    return add_event(client, event);
 }

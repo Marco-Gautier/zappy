@@ -11,13 +11,6 @@
 #include <criterion/criterion.h>
 #include "zappy.h"
 
-static int setup_success_test(struct server *server, int fd)
-{
-    server->clients[0]->fd = fd;
-    server->options.freq = 1;
-    return 0;
-}
-
 Test(command_sst, success)
 {
     struct client client;
@@ -25,15 +18,20 @@ Test(command_sst, success)
         &client,
         NULL
     };
-    int argc = 2;
+    struct server server = {
+        .clients = clients,
+        .options = {
+            .freq = 1
+        }
+    };
     int pipefd[2];
-    struct server server = { .clients = clients };
-    static const char * const argv[] = { "sst", "132" };
+    int argc = 2;
+    char *argv[3] = { "sst", "132", NULL };
     char buffer[512] = { 0 };
 
     cr_assert(pipe(pipefd) == 0);
-    setup_success_test(&server, pipefd[1]);
-    cr_assert(command_sst(&server, 0, argc, (char **)argv) != -1);
+    client.fd = pipefd[1];
+    cr_assert(command_sst(&server, &client, argc, (char **)argv) != -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "sst 132\n") == 0);
     cr_assert(server.options.freq == 132);
@@ -48,15 +46,20 @@ Test(command_sst, failure)
         &client,
         NULL
     };
-    int argc = 1;
+    struct server server = {
+        .clients = clients,
+        .options = {
+            .freq = 1
+        }
+    };
     int pipefd[2];
-    struct server server = { .clients = clients };
-    static const char * const argv[] = { "sst" };
+    int argc = 1;
+    char *argv[2] = { "sst", NULL };
     char buffer[512] = { 0 };
 
     cr_assert(pipe(pipefd) == 0);
-    setup_success_test(&server, pipefd[1]);
-    cr_assert(command_sst(&server, 0, argc, (char **)argv) != -1);
+    client.fd = pipefd[1];
+    cr_assert(command_sst(&server, &client, argc, (char **)argv) != -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "sst 1\n") == 0);
     cr_assert(server.options.freq == 1);

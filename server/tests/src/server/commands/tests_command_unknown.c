@@ -12,33 +12,28 @@
 #include <unistd.h>
 #include "zappy.h"
 
-static int setup_success_test(struct server *server, int fd)
+Test(command_unknown, success)
 {
-    struct client client = {
-        .fd = fd
-    };
+    struct client client;
     struct client *clients[] = {
         &client,
         NULL
     };
-
-    server->clients = clients;
-    server->options.width = 120;
-    server->options.height = 148;
-    return 0;
-}
-
-Test(command_unknown, success)
-{
+    struct server server = {
+        .clients = clients,
+        .options = {
+            .width = 120,
+            .height = 148,
+        }
+    };
     int argc = 1;
     int pipefd[2];
-    struct server server;
-    static const char * const argv[] = { "mdr" };
+    char *argv[2] = { "mdr", NULL };
     char buffer[512] = { 0 };
 
     cr_assert(pipe(pipefd) == 0);
-    setup_success_test(&server, pipefd[1]);
-    cr_assert(command_unknown(&server, 0, argc, (char **)argv) != -1);
+    client.fd = pipefd[1];
+    cr_assert(command_unknown(&server, &client, argc, (char **)argv) != -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "ko\n") == 0);
     close(pipefd[0]);

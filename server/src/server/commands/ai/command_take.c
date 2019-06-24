@@ -46,7 +46,7 @@ static int take_builtin(struct server *server, struct client *client, int cayou)
     return 0;
 }
 
-static int take_callback(struct server *server, struct client *client,
+int take_callback(struct server *server, struct client *client,
 int cayou_id, char **argv __attribute__((unused)))
 {
     if (take_builtin(server, client, cayou_id) != -1)
@@ -55,22 +55,23 @@ int cayou_id, char **argv __attribute__((unused)))
         return send_client_msg(client, "ko\n");
 }
 
-int command_take(struct server *server, int client, int argc, char **argv)
+int command_take(struct server *server, struct client *client,
+                 int argc, char **argv)
 {
     suseconds_t time;
     event_t *event;
     int cayou_id;
 
     if (argc < 2)
-        return send_client_msg(server->clients[client], "ko\n"), -1;
+        return send_client_msg(client, "ko\n"), -1;
     cayou_id = get_cayou_id(argv);
     if (cayou_id == JE_SUIS_PAS_FIER)
-        return send_client_msg(server->clients[client], "ko\n"), -1;
+        return send_client_msg(client, "ko\n"), -1;
     time = compute_trigger_time(7, server->options.freq);
     if (time == -1)
         return -1;
     event = create_event(time, cayou_id, NULL, &take_callback);
     if (!event)
         return -1;
-    return add_event(server->clients[client], event);
+    return add_event(client, event);
 }

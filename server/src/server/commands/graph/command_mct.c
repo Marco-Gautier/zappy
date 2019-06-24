@@ -10,13 +10,16 @@
 #include "zappy.h"
 #include "my.h"
 
-int command_mct_builtin(struct server *server, int client, int j)
+static const char *format = "bct %d %d";
+
+int command_mct_builtin(struct server *server, struct client *client,
+                        int height)
 {
     char buff[128];
     char **argv;
 
     for (int i = 0; i < server->options.width; i++) {
-        if (snprintf(buff, 128, "bct %d %d", i, j) == -1)
+        if (snprintf(buff, 128, format, i, height) == -1)
             return -1;
         argv = my_str_to_word_array(buff, " ");
         if (!argv)
@@ -28,12 +31,13 @@ int command_mct_builtin(struct server *server, int client, int j)
     return 0;
 }
 
-int command_mct(struct server *server, int client, int argc, char **argv)
+int command_mct(struct server *server, struct client *client,
+                int argc, char **argv)
 {
     (void)argc;
     (void)argv;
-    for (int j = 0; j < server->options.height; j++)
-        if (command_mct_builtin(server, client, j) == -1)
+    for (int height = 0; height < server->options.height; height++)
+        if (command_mct_builtin(server, client, height) == -1)
             return -1;
     return 0;
 }

@@ -8,8 +8,6 @@
 #include <criterion/criterion.h>
 #include "zappy.h"
 
-int eject_callback(struct server *s, struct client *client, int ac, char **av);
-
 Test(command_eject, test_forward_event_creation)
 {
     struct client client = { .event = NULL };
@@ -22,7 +20,7 @@ Test(command_eject, test_forward_event_creation)
         .options.freq = 100
     };
 
-    cr_assert(command_eject(&server, 0, 1, NULL) == 0);
-    cr_assert(server.clients[0]->event != NULL);
-    cr_assert(server.clients[0]->event->callback == eject_callback);
+    cr_assert(command_eject(&server, &client, 1, NULL) == 0);
+    cr_assert(client.event != NULL);
+    cr_assert(client.event->callback == eject_callback);
 }

@@ -67,7 +67,7 @@ static void exec_clients_command(struct server *server)
         if (!server->clients[i]->buffer)
             continue;
         if (strchr(server->clients[i]->buffer, '\n') != NULL)
-            exec_client_command(server, i);
+            exec_client_command(server, server->clients[i]);
     }
 }
 

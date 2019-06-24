@@ -27,11 +27,13 @@ Test(command_ppo, success)
             &client,
             NULL
         };
+        struct server server = {
+            .clients = clients
+        };
         int argc = 2;
         int pipefd[2];
-        struct server server = { .clients = clients };
         char *player_id = calloc(1, 16);
-        static const char *argv[2];
+        char *argv[2];
         char buffer[512] = {0};
         char expected[BUFSIZ] = {0};
 
@@ -40,7 +42,7 @@ Test(command_ppo, success)
         argv[1] = player_id;
         cr_assert(pipe(pipefd) == 0);
         client.fd = pipefd[1];
-        cr_assert(command_ppo(&server, 0, argc, (char **)argv) != -1);
+        cr_assert(command_ppo(&server, &client, argc, (char **)argv) != -1);
         read(pipefd[0], buffer, sizeof(buffer));
         snprintf(expected, sizeof(expected), "ppo %d %d %d %d\n", id, x, y, i);
         cr_assert(strcmp(buffer, expected) == 0);

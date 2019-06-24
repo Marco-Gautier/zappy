@@ -11,7 +11,8 @@
 
 static const char *format = "tna %s\n";
 
-int command_tna(struct server *server, int i, int argc, char **argv)
+int command_tna(struct server *server, struct client *client,
+                int argc, char **argv)
 {
     char buffer[BUFSIZ];
     char tmp[128];
@@ -24,6 +25,6 @@ int command_tna(struct server *server, int i, int argc, char **argv)
         strcat(buffer, tmp);
     }
     if (buffer[0] != '\0')
-        return send_client_msg(server->clients[i], "%s", buffer);
+        return send_client_msg(client, "%s", buffer);
     return -1;
 }

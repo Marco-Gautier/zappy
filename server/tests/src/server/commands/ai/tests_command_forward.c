@@ -9,8 +9,6 @@
 #include <unistd.h>
 #include "zappy.h"
 
-int forward_callback(struct server *s, struct client *client, int ac, char **av);
-
 Test(command_forward, forward_north)
 {
     int pipefd[2];
@@ -283,7 +281,7 @@ Test(command_forward, test_forward_event_creation)
         .options.freq = 100
     };
 
-    cr_assert(command_forward(&server, 0, 1, NULL) == 0);
+    cr_assert(command_forward(&server, &client, 1, NULL) == 0);
     cr_assert(server.clients[0]->event != NULL);
     cr_assert(server.clients[0]->event->callback == forward_callback);
 }

@@ -20,7 +20,8 @@ static const char * const argv[] = {
     NULL
 };
 
-static int foo(struct server *server, struct client *client, int ac, char **av)
+static int foo(struct server *server, struct client *client,
+               int ac, char **av)
 {
     (void)server;
     (void)client;
@@ -66,7 +67,8 @@ Test(add_event, add_1)
     assert(client.event->callback(NULL, NULL, 0, NULL) == 0);
 }
 
-static int func(struct server *server, struct client *client, int ac, char **av)
+static int func(struct server *server, struct client *client,
+                int ac, char **av)
 {
     (void)server;
     (void)client;
@@ -101,7 +103,8 @@ Test(update_events, mdr)
     argvv[2] = "singe";
     cr_redirect_stdout();
     event[0] = create_event(time, argc, argvv, callback);
-    event[1] = create_event(compute_trigger_time(100, 100), argc, argvv, callback);
+    event[1] = create_event(compute_trigger_time(100, 100),
+                            argc, argvv, callback);
     add_event(&client, event[0]);
     add_event(&client, event[1]);
     cr_assert(client.event == event[0]);

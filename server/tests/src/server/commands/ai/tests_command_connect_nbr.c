@@ -30,7 +30,7 @@ Test(command_connect_nbr, basic_connect_nbr_call)
 
     cr_assert(pipe(pipefd) == 0);
     server.clients[0]->fd = pipefd[1];
-    cr_assert(command_connect_nbr(&server, 0, 1, NULL) != -1);
+    cr_assert(command_connect_nbr(&server, &client, 1, NULL) != -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "3\n") == 0);
     close(pipefd[0]);
@@ -52,7 +52,7 @@ Test(command_connect_nbr, connect_nbr_no_team_name)
 
     cr_assert(pipe(pipefd) == 0);
     server.clients[0]->fd = pipefd[1];
-    cr_assert(command_connect_nbr(&server, 0, 1, NULL) != -1);
+    cr_assert(command_connect_nbr(&server, &client, 1, NULL) != -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "-1\n") == 0);
     close(pipefd[0]);
@@ -76,7 +76,7 @@ Test(command_connect_nbr, connect_nbr_no_max_team_nbr)
 
     cr_assert(pipe(pipefd) == 0);
     server.clients[0]->fd = pipefd[1];
-    cr_assert(command_connect_nbr(&server, 0, 1, NULL) != -1);
+    cr_assert(command_connect_nbr(&server, &client, 1, NULL) != -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "-1\n") == 0);
     close(pipefd[0]);
@@ -103,7 +103,7 @@ Test(command_connect_nbr, connect_nbr_invalid_team_name)
 
     cr_assert(pipe(pipefd) == 0);
     server.clients[0]->fd = pipefd[1];
-    cr_assert(command_connect_nbr(&server, 0, 1, NULL) != -1);
+    cr_assert(command_connect_nbr(&server, &client, 1, NULL) != -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "-1\n") == 0);
     close(pipefd[0]);

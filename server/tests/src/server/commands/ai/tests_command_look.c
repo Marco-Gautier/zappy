@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include "zappy.h"
 
-int look_callback(struct server *s, struct client *client, int ac, char **av);
+const char *res = "[player food,linemate,,sibur,deraumere,,mendiane,,phiras]\n";
 
 Test(command_look, test_look_north)
 {
@@ -214,7 +214,7 @@ Test(command_look, test_look_north_depth2)
     server.world.map[6][9].stones[C_PHIRAS] = 1;
     cr_assert(look_callback(&server, &client, 1, NULL) != 1);
     read(pipefd[0], buffer, 512);
-    cr_assert(strcmp(buffer, "[player food,linemate,,sibur,deraumere,,mendiane,,phiras]\n") == 0);
+    cr_assert(strcmp(buffer, res) == 0);
     close(pipefd[0]);
     close(pipefd[1]);
 }
@@ -258,7 +258,7 @@ Test(command_look, test_look_west_depth2)
     server.world.map[9][2].stones[C_PHIRAS] = 1;
     cr_assert(look_callback(&server, &client, 1, NULL) != 1);
     read(pipefd[0], buffer, 512);
-    cr_assert(strcmp(buffer, "[player food,linemate,,sibur,deraumere,,mendiane,,phiras]\n") == 0);
+    cr_assert(strcmp(buffer, res) == 0);
     close(pipefd[0]);
     close(pipefd[1]);
 }
@@ -302,7 +302,7 @@ Test(command_look, test_look_south_depth2)
     server.world.map[2][0].stones[C_PHIRAS] = 1;
     cr_assert(look_callback(&server, &client, 1, NULL) != 1);
     read(pipefd[0], buffer, 512);
-    cr_assert(strcmp(buffer, "[player food,linemate,,sibur,deraumere,,mendiane,,phiras]\n") == 0);
+    cr_assert(strcmp(buffer, res) == 0);
     close(pipefd[0]);
     close(pipefd[1]);
 }
@@ -346,7 +346,7 @@ Test(command_look, test_look_east_depth2)
     server.world.map[0][6].stones[C_PHIRAS] = 1;
     cr_assert(look_callback(&server, &client, 1, NULL) != 1);
     read(pipefd[0], buffer, 512);
-    cr_assert(strcmp(buffer, "[player food,linemate,,sibur,deraumere,,mendiane,,phiras]\n") == 0);
+    cr_assert(strcmp(buffer, res) == 0);
     close(pipefd[0]);
     close(pipefd[1]);
 }
@@ -363,7 +363,7 @@ Test(command_look, test_look_event_creation)
         .options.freq = 100
     };
 
-    cr_assert(command_look(&server, 0, 1, NULL) == 0);
-    cr_assert(server.clients[0]->event != NULL);
-    cr_assert(server.clients[0]->event->callback == look_callback);
+    cr_assert(command_look(&server, &client, 1, NULL) == 0);
+    cr_assert(client.event != NULL);
+    cr_assert(client.event->callback == look_callback);
 }

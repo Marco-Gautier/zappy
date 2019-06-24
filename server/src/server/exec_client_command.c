@@ -44,7 +44,8 @@ const struct command command_helper[] = {
 ** 3) Then, call the callback
 */
 
-static int exec_client_cmd(struct server *server, int client, char **argv)
+static int exec_client_cmd(struct server *server, struct client *client,
+                           char **argv)
 {
     size_t i;
     int argc = my_tablen(argv);
@@ -89,19 +90,19 @@ static char **prepare_command(struct client *client, char **tmp)
 ** Execute command in the buffer of the client n°i
 */
 
-int exec_client_command(struct server *server, int i)
+int exec_client_command(struct server *server, struct client *client)
 {
     int ret = 0;
     char *tmp;
-    char **command = prepare_command(server->clients[i], &tmp);
+    char **command = prepare_command(client, &tmp);
 
     if (!command)
         return -1;
-    if (!server->clients[i]->team_name) {
-        ret = client_join_team(server, server->clients[i], command);
+    if (!client->team_name) {
+        ret = client_join_team(server, client, command);
         if (ret == -1)
-            dprintf(server->clients[i]->fd, "ko\n");
+            dprintf(client->fd, "ko\n");
     } else
-        ret = exec_client_cmd(server, i, command);
+        ret = exec_client_cmd(server, client, command);
     return ret;
 }

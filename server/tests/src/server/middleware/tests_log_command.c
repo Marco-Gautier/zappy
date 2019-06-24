@@ -30,7 +30,7 @@ Test(log_command, mdr)
         }
     };
     int argc = 3;
-    static const char * const argv[] = {
+    char *argv[4] = {
         "msz",
         "1",
         "2",
@@ -38,7 +38,7 @@ Test(log_command, mdr)
     };
 
     cr_redirect_stdout();
-    assert(log_command(&server, 0, argc, (char **)argv) == 0);
+    assert(log_command(&server, &client, argc, (char **)argv) == 0);
     fflush(stdout);
     cr_assert_stdout_eq_str("Received command [msz, 1, 2] from client n°42\n");
 }

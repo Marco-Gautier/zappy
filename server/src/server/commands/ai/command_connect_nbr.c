@@ -8,11 +8,12 @@
 #include <stdio.h>
 #include "zappy.h"
 
-int command_connect_nbr(struct server *server, int i, int argc, char **argv)
+int command_connect_nbr(struct server *server, struct client *client,
+                        int argc, char **argv)
 {
-    int n = get_nb_free_team_slot(server, server->clients[i]->team_name);
+    int n = get_nb_free_team_slot(server, client->team_name);
 
     (void)argc;
     (void)argv;
-    return send_client_msg(server->clients[i], "%d\n", n);
+    return send_client_msg(client, "%d\n", n);
 }

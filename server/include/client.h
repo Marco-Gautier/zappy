@@ -20,6 +20,7 @@ enum direction {
 };
 
 enum client_type {
+    CT_UNDEFINED = -1,
     CT_AI,
     CT_GRAPHIC
 };

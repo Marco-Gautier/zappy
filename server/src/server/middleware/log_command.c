@@ -12,7 +12,8 @@
 ** Middleware use to log each received command on standard output
 */
 
-int log_command(struct server *server, int i, int argc, char **argv)
+int log_command(struct server *server, struct client *client,
+                int argc, char **argv)
 {
     (void)server;
     printf("Received command [");
@@ -21,6 +22,6 @@ int log_command(struct server *server, int i, int argc, char **argv)
         if (i + 1 < argc)
             printf(", ");
     }
-    printf("] from client n°%d\n", server->clients[i]->id);
+    printf("] from client n°%d\n", client->id);
     return 0;
 }

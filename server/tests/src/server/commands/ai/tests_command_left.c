@@ -9,8 +9,6 @@
 #include <unistd.h>
 #include "zappy.h"
 
-int left_callback(struct server *s, struct client *client, int ac, char **av);
-
 Test(command_left, left_from_north)
 {
     int pipefd[2];
@@ -24,12 +22,12 @@ Test(command_left, left_from_north)
     struct server server = { .clients = clients };
     char buffer[512] = { 0 };
 
-    cr_assert_eq(pipe(pipefd), 0);
+    cr_assert(pipe(pipefd) == 0);
     server.clients[0]->fd = pipefd[1];
     cr_assert_neq(left_callback(NULL, &client, 1, NULL), -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "ok\n") == 0);
-    cr_assert_eq(client.direction, D_WEST);
+    cr_assert(client.direction == D_WEST);
     close(pipefd[0]);
     close(pipefd[1]);
 }
@@ -47,12 +45,12 @@ Test(command_left, left_from_west)
     struct server server = { .clients = clients };
     char buffer[512] = { 0 };
 
-    cr_assert_eq(pipe(pipefd), 0);
+    cr_assert(pipe(pipefd) == 0);
     server.clients[0]->fd = pipefd[1];
     cr_assert_neq(left_callback(NULL, &client, 1, NULL), -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "ok\n") == 0);
-    cr_assert_eq(client.direction, D_SOUTH);
+    cr_assert(client.direction == D_SOUTH);
     close(pipefd[0]);
     close(pipefd[1]);
 }
@@ -70,12 +68,12 @@ Test(command_left, left_from_south)
     struct server server = { .clients = clients };
     char buffer[512] = { 0 };
 
-    cr_assert_eq(pipe(pipefd), 0);
+    cr_assert(pipe(pipefd) == 0);
     server.clients[0]->fd = pipefd[1];
     cr_assert_neq(left_callback(NULL, &client, 1, NULL), -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "ok\n") == 0);
-    cr_assert_eq(client.direction, D_EAST);
+    cr_assert(client.direction == D_EAST);
     close(pipefd[0]);
     close(pipefd[1]);
 }
@@ -93,12 +91,12 @@ Test(command_left, left_from_east)
     struct server server = { .clients = clients };
     char buffer[512] = { 0 };
 
-    cr_assert_eq(pipe(pipefd), 0);
+    cr_assert(pipe(pipefd) == 0);
     server.clients[0]->fd = pipefd[1];
-    cr_assert_neq(left_callback(NULL, &client, 1, NULL), -1);
+    cr_assert(left_callback(NULL, &client, 1, NULL) != -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "ok\n") == 0);
-    cr_assert_eq(client.direction, D_NORTH);
+    cr_assert(client.direction == D_NORTH);
     close(pipefd[0]);
     close(pipefd[1]);
 }
@@ -117,7 +115,7 @@ Test(command_left, test_left_event_creation)
         .options.freq = 100
     };
 
-    cr_assert(command_left(&server, 0, 1, NULL) == 0);
-    cr_assert(server.clients[0]->event != NULL);
-    cr_assert(server.clients[0]->event->callback == left_callback);
+    cr_assert(command_left(&server, &client, 1, NULL) == 0);
+    cr_assert(client.event != NULL);
+    cr_assert(client.event->callback == left_callback);
 }

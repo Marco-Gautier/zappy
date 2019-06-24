@@ -66,7 +66,6 @@ Test(read_clients_fd, 2_clients)
 Test(read_clients_fd, too_much_command_kick_client)
 {
     struct client *client = create_client(42);
-    client->buffer = strdup("");
     struct client *clients[] = {
         client,
         NULL
@@ -76,6 +75,7 @@ Test(read_clients_fd, too_much_command_kick_client)
     };
     int pipefd[2];
 
+    client->buffer = strdup("");
     close(STDOUT_FILENO);
     cr_assert(pipe(pipefd) != -1);
     server.clients[0]->fd = pipefd[0];
