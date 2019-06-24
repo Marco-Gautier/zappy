@@ -20,14 +20,14 @@ static void init(void)
 Test(parse_options, _default, .init = init)
 {
     struct server_opt options;
-    static const char * const argv[] = {
+    char *argv[2] = {
         "./zappy_server",
         NULL
     };
     int argc = ARRAY_SIZE(argv) - 1;
     char **team_names;
 
-    assert(parse_options(&options, argc, (char **)argv) != -1);
+    assert(parse_options(&options, argc, argv) != -1);
     assert(options.port == default_options.port);
     assert(options.freq == default_options.freq);
     assert(options.width == default_options.width);
@@ -42,7 +42,7 @@ Test(parse_options, _default, .init = init)
 Test(parse_options, all, .init = init)
 {
     struct server_opt options;
-    static const char * const argv[] = {
+    char *argv[15] = {
         "./zappy_server",
         "-p", "8080",
         "--frequence", "42",
@@ -54,7 +54,7 @@ Test(parse_options, all, .init = init)
     };
     int argc = ARRAY_SIZE(argv) - 1;
 
-    assert(parse_options(&options, argc, (char **)argv) != -1);
+    assert(parse_options(&options, argc, argv) != -1);
     assert(options.port == 8080);
     assert(options.freq == 42);
     assert(options.width == 21);
@@ -68,7 +68,7 @@ Test(parse_options, all, .init = init)
 Test(parse_options, bad_short_options, .init = init)
 {
     struct server_opt options;
-    static const char * const argv[] = {
+    char *argv[4] = {
         "./zappy_server",
         "-p", "mdr",
         NULL
@@ -76,7 +76,7 @@ Test(parse_options, bad_short_options, .init = init)
     int argc = ARRAY_SIZE(argv) - 1;
     char **team_names;
 
-    assert(parse_options(&options, argc, (char **)argv) == -1);
+    assert(parse_options(&options, argc, argv) == -1);
     assert(options.port == 0);
     assert(options.freq == default_options.freq);
     assert(options.width == default_options.width);
@@ -91,7 +91,7 @@ Test(parse_options, bad_short_options, .init = init)
 Test(parse_options, bad_options, .init = init)
 {
     struct server_opt options;
-    static const char * const argv[] = {
+    char *argv[7] = {
         "./zappy_server",
         "-c", "150",
         "--team-names",
@@ -101,7 +101,7 @@ Test(parse_options, bad_options, .init = init)
     int argc = ARRAY_SIZE(argv) - 1;
     char **team_names;
 
-    assert(parse_options(&options, argc, (char **)argv) != -1);
+    assert(parse_options(&options, argc, argv) != -1);
     assert(options.port == default_options.port);
     assert(options.freq == default_options.freq);
     assert(options.width == default_options.width);

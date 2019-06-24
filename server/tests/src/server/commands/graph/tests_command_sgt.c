@@ -31,7 +31,7 @@ Test(command_sgt, success)
 
     cr_assert(pipe(pipefd) == 0);
     client.fd = pipefd[1];
-    cr_assert(command_sgt(&server, &client, argc, (char **)argv) != -1);
+    cr_assert(command_sgt(&server, &client, argc, argv) != -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "sgt 132\n") == 0);
     close(pipefd[0]);

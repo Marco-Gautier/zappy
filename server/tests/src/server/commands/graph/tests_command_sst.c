@@ -31,7 +31,7 @@ Test(command_sst, success)
 
     cr_assert(pipe(pipefd) == 0);
     client.fd = pipefd[1];
-    cr_assert(command_sst(&server, &client, argc, (char **)argv) != -1);
+    cr_assert(command_sst(&server, &client, argc, argv) != -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "sst 132\n") == 0);
     cr_assert(server.options.freq == 132);
@@ -59,7 +59,7 @@ Test(command_sst, failure)
 
     cr_assert(pipe(pipefd) == 0);
     client.fd = pipefd[1];
-    cr_assert(command_sst(&server, &client, argc, (char **)argv) != -1);
+    cr_assert(command_sst(&server, &client, argc, argv) != -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "sst 1\n") == 0);
     cr_assert(server.options.freq == 1);

@@ -22,9 +22,9 @@ Test(client_join_team, bad_argc)
     struct server server = {
         .clients = clients,
     };
-    static const char * const argv[] = {"ppo", "42", NULL};
+    char *argv[3] = {"ppo", "42", NULL};
 
-    assert(client_join_team(&server, &client, (char **)argv) == -1);
+    assert(client_join_team(&server, &client, argv) == -1);
 }
 
 Test(client_join_team, join_graphic)
@@ -37,9 +37,9 @@ Test(client_join_team, join_graphic)
     struct server server = {
         .clients = clients,
     };
-    static const char * const argv[] = {"GRAPHIC", NULL};
+    char *argv[2] = {"GRAPHIC", NULL};
 
-    assert(client_join_team(&server, &client, (char **)argv) == 0);
+    assert(client_join_team(&server, &client, argv) == 0);
     assert(strcmp("GRAPHIC", client.team_name) == 0);
     assert(client.client_type == CT_GRAPHIC);
 }
@@ -60,11 +60,11 @@ Test(client_join_team, join_team1)
     struct server server = {
         .clients = clients,
     };
-    static const char * const argv[] = {"team1", NULL};
+    char *argv[2] = {"team1", NULL};
 
     close(STDOUT_FILENO);
     cr_assert(parse_options(&server.options, 0, NULL) == 0);
-    cr_assert(client_join_team(&server, &client, (char **)argv) == 0);
+    cr_assert(client_join_team(&server, &client, argv) == 0);
     cr_assert(strcmp("team1", client.team_name) == 0);
     cr_assert(client.client_type == CT_AI);
 }
@@ -95,13 +95,13 @@ Test(client_join_team, full_team)
     struct server server = {
         .clients = clients,
     };
-    static const char * const argv[] = {"team1", NULL};
+    char *argv[2] = {"team1", NULL};
 
     close(STDOUT_FILENO);
     cr_assert(parse_options(&server.options, 0, NULL) == 0);
     server.options.max_team_nbr = 1;
-    cr_assert(client_join_team(&server, &client1, (char **)argv) == 0);
+    cr_assert(client_join_team(&server, &client1, argv) == 0);
     cr_assert(strcmp("team1", client1.team_name) == 0);
     cr_assert(client1.client_type == CT_AI);
-    cr_assert(client_join_team(&server, &client2, (char **)argv) == -1);
+    cr_assert(client_join_team(&server, &client2, argv) == -1);
 }

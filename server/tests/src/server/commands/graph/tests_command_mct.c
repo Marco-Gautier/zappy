@@ -47,7 +47,7 @@ Test(command_mct, success)
     client.fd = pipefd[1];
     setup_expected_result(expected_result);
     init_world(&server.world, &server.options);
-    assert(command_mct(&server, &client, argc, (char **)argv) == 0);
+    assert(command_mct(&server, &client, argc, argv) == 0);
     read(pipefd[0], buffer, 1024);
     assert(strcmp(buffer, expected_result) == 0);
     close(pipefd[0]);

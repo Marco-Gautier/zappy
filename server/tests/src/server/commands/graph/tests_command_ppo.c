@@ -42,7 +42,7 @@ Test(command_ppo, success)
         argv[1] = player_id;
         cr_assert(pipe(pipefd) == 0);
         client.fd = pipefd[1];
-        cr_assert(command_ppo(&server, &client, argc, (char **)argv) != -1);
+        cr_assert(command_ppo(&server, &client, argc, argv) != -1);
         read(pipefd[0], buffer, sizeof(buffer));
         snprintf(expected, sizeof(expected), "ppo %d %d %d %d\n", id, x, y, i);
         cr_assert(strcmp(buffer, expected) == 0);

@@ -35,7 +35,7 @@ Test(check_client_target, true)
     int argc = 2;
     char *argv[3] = { "pin", "4", NULL };
 
-    assert(check_client_target(&server, &client1, argc, (char **)argv) == 0);
+    assert(check_client_target(&server, &client1, argc, argv) == 0);
 }
 
 Test(check_client_target, false_graphic)
@@ -55,7 +55,7 @@ Test(check_client_target, false_graphic)
     int argc = 2;
     char *argv[3] = { "pin", "4", NULL };
 
-    assert(check_client_target(&server, &client, argc, (char **)argv) == -1);
+    assert(check_client_target(&server, &client, argc, argv) == -1);
 }
 
 Test(check_client_target, false_id)
@@ -75,7 +75,7 @@ Test(check_client_target, false_id)
     int argc = 2;
     char *argv[3] = { "pin", "42", NULL };
 
-    assert(check_client_target(&server, &client, argc, (char **)argv) == -1);
+    assert(check_client_target(&server, &client, argc, argv) == -1);
 }
 
 Test(check_client_target, bad_argc)
@@ -96,7 +96,7 @@ Test(check_client_target, bad_argc)
     int argc = 1;
     char *argv[2] = { "pin", NULL };
 
-    assert(check_client_target(&server, &client, argc, (char **)argv) == -1);
+    assert(check_client_target(&server, &client, argc, argv) == -1);
 }
 
 Test(check_client_target, argv_neg)
@@ -122,7 +122,7 @@ Test(check_client_target, argv_neg)
     int argc = 2;
     char *argv[3] = { "pin", "-42", NULL };
 
-    assert(check_client_target(&server, &client1, argc, (char **)argv) == -1);
+    assert(check_client_target(&server, &client1, argc, argv) == -1);
 }
 
 Test(check_client_target, team_NULL)
@@ -142,5 +142,5 @@ Test(check_client_target, team_NULL)
     int argc = 2;
     char *argv[3] = { "pin", "42", NULL };
 
-    assert(check_client_target(&server, &client, argc, (char **)argv) == -1);
+    assert(check_client_target(&server, &client, argc, argv) == -1);
 }

@@ -39,7 +39,7 @@ Test(command_pin, success)
     assert(pipe(pipefd) == 0);
     client.fd = pipefd[1];
     client.inventory = cell;
-    assert(command_pin(&server, &client, argc, (char **)argv) != -1);
+    assert(command_pin(&server, &client, argc, argv) != -1);
     read(pipefd[0], buffer, 512);
     assert(strcmp(buffer, "pin 42 1 2 3 4 5 6 7\n") == 0);
     close(pipefd[0]);

@@ -28,7 +28,7 @@ Test(filter_graphic_request, true)
     char *argv[4] = { "bct", "2", "3", NULL };
 
     close(STDOUT_FILENO);
-    assert(filter_graphic_request(&server, &client, argc, (char **)argv) == 0);
+    assert(filter_graphic_request(&server, &client, argc, argv) == 0);
 }
 
 Test(filter_graphic_request, false)
@@ -47,5 +47,5 @@ Test(filter_graphic_request, false)
     char *argv[4] = { "bct", "2", "3", NULL };
 
     close(STDOUT_FILENO);
-    assert(filter_graphic_request(&server, &client, argc, (char **)argv) == -1);
+    assert(filter_graphic_request(&server, &client, argc, argv) == -1);
 }

@@ -30,7 +30,7 @@ Test(command_plv, success)
 
     cr_assert(pipe(pipefd) == 0);
     client.fd = pipefd[1];
-    cr_assert(command_plv(&server, &client, argc, (char **)argv) != -1);
+    cr_assert(command_plv(&server, &client, argc, argv) != -1);
     read(pipefd[0], buffer, 512);
     cr_assert(strcmp(buffer, "plv 0 132\n") == 0);
     close(pipefd[0]);

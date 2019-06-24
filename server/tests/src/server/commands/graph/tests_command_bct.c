@@ -56,10 +56,10 @@ Test(command_bct, error_bad_parameter)
         char *argv4[4] = { "bct", "10", "1", NULL };
 
         close(STDOUT_FILENO);
-        cr_assert(command_bct(&server, &client, argc, (char **)argv1) == -1);
-        cr_assert(command_bct(&server, &client, argc, (char **)argv2) == -1);
-        cr_assert(command_bct(&server, &client, argc, (char **)argv3) == -1);
-        cr_assert(command_bct(&server, &client, argc, (char **)argv4) == -1);
+        cr_assert(command_bct(&server, &client, argc, argv1) == -1);
+        cr_assert(command_bct(&server, &client, argc, argv2) == -1);
+        cr_assert(command_bct(&server, &client, argc, argv3) == -1);
+        cr_assert(command_bct(&server, &client, argc, argv4) == -1);
 }
 
 Test(command_bct, success)
@@ -89,7 +89,7 @@ Test(command_bct, success)
     client.fd = pipefd[1];
     init_world(&server.world, &server.options);
     server.world.map[3][2] = cell;
-    assert(command_bct(&server, &client, argc, (char **)argv) != -1);
+    assert(command_bct(&server, &client, argc, argv) != -1);
     read(pipefd[0], buffer, 512);
     assert(strcmp(buffer, "bct 2 3 1 2 3 4 5 6 7\n") == 0);
     close(pipefd[0]);
