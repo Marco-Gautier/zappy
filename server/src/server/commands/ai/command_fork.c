@@ -60,10 +60,15 @@ int fork_callback(struct server *s, struct client *client, int ac, char **av)
 {
     suseconds_t trigger_time = compute_trigger_time(600, s->options.freq);
     event_t *event;
+    char **tmp = malloc(sizeof(char *) * 2);
 
+    if (!tmp)
+        return -1;
+    tmp[0] = av[0];
+    tmp[1] = av[1];
     if (trigger_time == -1)
         return fprintf(stderr, "error during event time computing\n"), -1;
-    event = create_event(trigger_time, ac, av, &new_player_callback);
+    event = create_event(trigger_time, ac, tmp, &new_player_callback);
     if (!event)
         return fprintf(stderr, "error during event creation\n"), -1;
     send_graphical_broadcast(s, "enw %d %d %d %d\n",
