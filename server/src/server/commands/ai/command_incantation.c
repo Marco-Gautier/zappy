@@ -52,7 +52,7 @@ struct client *client, int mode)
 
 static bool is_participant_valid(const struct client *a, const struct client *b)
 {
-    return a->client_type == CT_AI && a->x == b->x && a->y == b->y;
+    return a->type == CT_AI && a->x == b->x && a->y == b->y;
 }
 
 /**

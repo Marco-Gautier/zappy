@@ -37,7 +37,7 @@ struct client {
     bool    hatched;
     char    *team_name;
     struct event        *event;
-    enum client_type    client_type;
+    enum client_type    type;
     enum direction      direction;
     inventory_t         inventory;
 };

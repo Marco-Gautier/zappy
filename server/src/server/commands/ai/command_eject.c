@@ -37,7 +37,7 @@ int eject_callback(struct server *s, struct client *client, int ac, char **av)
     for (size_t i = 0; s->clients[i] != NULL; i++) {
         if (s->clients[i]->id == client->id)
             continue;
-        if (s->clients[i]->client_type == CT_GRAPHIC)
+        if (s->clients[i]->type == CT_GRAPHIC)
             continue;
         if (s->clients[i]->x == client->x &&
             s->clients[i]->y == client->y) {

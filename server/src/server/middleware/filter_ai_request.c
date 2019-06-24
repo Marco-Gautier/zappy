@@ -17,7 +17,7 @@ int filter_ai_request(struct server *server, struct client *client,
 {
     (void)argc;
     (void)server;
-    if (client->client_type == CT_AI)
+    if (client->type == CT_AI)
         return 0;
     printf("Command [");
     for (int i = 0; i < argc; i++) {

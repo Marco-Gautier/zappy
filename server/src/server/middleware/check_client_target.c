@@ -40,7 +40,7 @@ int check_client_target(struct server *server, struct client *client,
             target = server->clients[i];
     if (!target)
         return -1;
-    if (target->client_type != CT_AI)
+    if (target->type != CT_AI)
         return -1;
     return 0;
 }

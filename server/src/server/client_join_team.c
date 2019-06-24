@@ -56,7 +56,7 @@ int client_join_team(struct server *server, struct client *client, char **cmd)
         return -1;
     if (!strcmp(cmd[0], "GRAPHIC")) {
         client->team_name = "GRAPHIC";
-        client->client_type = CT_GRAPHIC;
+        client->type = CT_GRAPHIC;
         return 0;
     }
     slot = get_nb_free_team_slot(server, cmd[0]);

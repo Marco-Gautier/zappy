@@ -25,7 +25,7 @@ static struct client *create_client(int id)
 {
     struct client *client = malloc(sizeof(struct client));
 
-    client->client_type = CT_GRAPHIC;
+    client->type = CT_GRAPHIC;
     client->team_name = strdup("GRAPHIC");
     client->buffer = NULL;
     client->id = id;

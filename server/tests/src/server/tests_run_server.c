@@ -16,7 +16,7 @@ Test(run_server, team_win)
 {
     struct client client = {
         .team_name = "team1",
-        .client_type = CT_AI,
+        .type = CT_AI,
         .level = 6
     };
     struct client *clients[] = {

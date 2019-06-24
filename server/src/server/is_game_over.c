@@ -16,7 +16,7 @@ static int get_team_elevation(struct server *server, const char *team)
     for (size_t i = 0; server->clients[i] != NULL; i++) {
         if (!server->clients[i]->team_name)
             continue;
-        if (server->clients[i]->client_type != CT_AI)
+        if (server->clients[i]->type != CT_AI)
             continue;
         if (strcmp(team, server->clients[i]->team_name) != 0)
             continue;

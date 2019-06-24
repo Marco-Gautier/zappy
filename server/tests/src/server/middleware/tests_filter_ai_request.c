@@ -15,7 +15,7 @@
 Test(filter_ai_request, true)
 {
     struct client client = {
-        .client_type = CT_GRAPHIC
+        .type = CT_GRAPHIC
     };
     struct client *clients[] = {
         &client,
@@ -34,7 +34,7 @@ Test(filter_ai_request, true)
 Test(filter_ai_request, false)
 {
     struct client client = {
-        .client_type = CT_AI
+        .type = CT_AI
     };
     struct client *clients[] = {
         &client,

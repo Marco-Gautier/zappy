@@ -34,7 +34,7 @@ Test(is_game_over, win)
 {
     struct client client = {
         .team_name = "team1",
-        .client_type = CT_AI,
+        .type = CT_AI,
         .level = 6
     };
     struct client *clients[] = {
@@ -61,12 +61,12 @@ Test(is_game_over, lose)
 {
     struct client client = {
         .team_name = "team1",
-        .client_type = CT_AI,
+        .type = CT_AI,
         .level = 6
     };
     struct client client_no = {
         .team_name = "team1",
-        .client_type = CT_AI,
+        .type = CT_AI,
         .level = 1
     };
     struct client *clients[] = {
@@ -97,17 +97,17 @@ Test(is_game_over, mdr)
     };
     struct client client_graphic = {
         .team_name = "GRAPHIC",
-        .client_type = CT_GRAPHIC,
+        .type = CT_GRAPHIC,
         .level = 6
     };
     struct client client = {
         .team_name = "team1",
-        .client_type = CT_AI,
+        .type = CT_AI,
         .level = 6
     };
     struct client client_no = {
         .team_name = "team1",
-        .client_type = CT_AI,
+        .type = CT_AI,
         .level = 1
     };
     struct client *clients[] = {

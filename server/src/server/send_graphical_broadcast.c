@@ -18,7 +18,7 @@ void send_graphical_broadcast(struct server *server, const char *format, ...)
     for (size_t i = 0; server->clients[i] != NULL; i++) {
         if (!server->clients[i]->team_name)
             continue;
-        if (server->clients[i]->client_type != CT_GRAPHIC)
+        if (server->clients[i]->type != CT_GRAPHIC)
             continue;
         vdprintf(server->clients[i]->fd, format, ap);
     }

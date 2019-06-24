@@ -81,7 +81,7 @@ Test(update_events, mdr)
 {
     struct client client = {
         .id = 42,
-        .client_type = CT_AI,
+        .type = CT_AI,
         .team_name = "team1"
     };
     struct client *clients[] = {

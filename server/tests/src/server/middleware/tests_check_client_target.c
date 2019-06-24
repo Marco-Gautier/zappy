@@ -16,12 +16,12 @@ Test(check_client_target, true)
 {
     struct client client1 = {
         .id = 4,
-        .client_type = CT_AI,
+        .type = CT_AI,
         .team_name = "team1"
     };
     struct client client2 = {
         .id = 8,
-        .client_type = CT_AI,
+        .type = CT_AI,
         .team_name = "team1"
     };
     struct client *clients[] = {
@@ -42,7 +42,7 @@ Test(check_client_target, false_graphic)
 {
     struct client client = {
         .id = 4,
-        .client_type = CT_GRAPHIC,
+        .type = CT_GRAPHIC,
         .team_name = "team1"
     };
     struct client *clients[] = {
@@ -62,7 +62,7 @@ Test(check_client_target, false_id)
 {
     struct client client = {
         .id = 123,
-        .client_type = CT_AI,
+        .type = CT_AI,
         .team_name = "team1"
     };
     struct client *clients[] = {
@@ -82,7 +82,7 @@ Test(check_client_target, bad_argc)
 {
     struct client client = {
         .id = 123,
-        .client_type = CT_AI,
+        .type = CT_AI,
         .team_name = "team1"
     };
     struct client *clients[] = {
@@ -103,12 +103,12 @@ Test(check_client_target, argv_neg)
 {
     struct client client1 = {
         .id = 123,
-        .client_type = CT_AI,
+        .type = CT_AI,
         .team_name = "team1"
     };
     struct client client2 = {
         .id = 246,
-        .client_type = CT_AI,
+        .type = CT_AI,
         .team_name = "team1"
     };
     struct client *clients[] = {
@@ -129,7 +129,7 @@ Test(check_client_target, team_NULL)
 {
     struct client client = {
         .id = 123,
-        .client_type = CT_AI,
+        .type = CT_AI,
         .team_name = NULL
     };
     struct client *clients[] = {

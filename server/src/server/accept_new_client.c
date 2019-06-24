@@ -27,7 +27,7 @@ int fd, int id)
         .y = rand() % server_opt->height,
         .x = rand() % server_opt->width,
         .level = 1,
-        .client_type = CT_AI,
+        .type = CT_AI,
         .direction = D_NORTH,
     };
     new->inventory.food = 10;

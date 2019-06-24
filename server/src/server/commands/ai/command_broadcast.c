@@ -23,7 +23,7 @@ const char *message)
             continue;
         if (!server->clients[i]->team_name)
             continue;
-        if (server->clients[i]->client_type != CT_AI)
+        if (server->clients[i]->type != CT_AI)
             continue;
         target = server->clients[i];
         direction = broadcast_direction(&server->options, client, target);

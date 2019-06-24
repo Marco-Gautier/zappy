@@ -41,7 +41,7 @@ Test(client_join_team, join_graphic)
 
     assert(client_join_team(&server, &client, argv) == 0);
     assert(strcmp("GRAPHIC", client.team_name) == 0);
-    assert(client.client_type == CT_GRAPHIC);
+    assert(client.type == CT_GRAPHIC);
 }
 
 Test(client_join_team, join_team1)
@@ -66,7 +66,7 @@ Test(client_join_team, join_team1)
     cr_assert(parse_options(&server.options, 0, NULL) == 0);
     cr_assert(client_join_team(&server, &client, argv) == 0);
     cr_assert(strcmp("team1", client.team_name) == 0);
-    cr_assert(client.client_type == CT_AI);
+    cr_assert(client.type == CT_AI);
 }
 
 Test(client_join_team, full_team)
@@ -102,6 +102,6 @@ Test(client_join_team, full_team)
     server.options.max_team_nbr = 1;
     cr_assert(client_join_team(&server, &client1, argv) == 0);
     cr_assert(strcmp("team1", client1.team_name) == 0);
-    cr_assert(client1.client_type == CT_AI);
+    cr_assert(client1.type == CT_AI);
     cr_assert(client_join_team(&server, &client2, argv) == -1);
 }

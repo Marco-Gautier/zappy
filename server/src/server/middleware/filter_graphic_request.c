@@ -17,7 +17,7 @@ int filter_graphic_request(struct server *server, struct client *client,
 {
     (void)argc;
     (void)server;
-    if (client->client_type == CT_GRAPHIC)
+    if (client->type == CT_GRAPHIC)
         return 0;
     printf("Command [");
     for (int i = 0; i < argc; i++) {

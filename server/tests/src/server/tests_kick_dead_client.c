@@ -17,7 +17,7 @@ static struct client *create_client(bool hatched)
 
     *client = (struct client) {
         .buffer = NULL,
-        .client_type = CT_AI,
+        .type = CT_AI,
         .event = NULL,
         .hatched = hatched,
         .id = hatched + 1,
@@ -34,7 +34,7 @@ Test(kick_dead_client, mdr)
     struct client *client_hatched = create_client(true);
     struct client *client = create_client(false);
     struct client client_graphic = {
-        .client_type = CT_GRAPHIC,
+        .type = CT_GRAPHIC,
         .id = 0,
         .team_name = "GRAPHIC"
     };
